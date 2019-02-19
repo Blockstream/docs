@@ -1,0 +1,1340 @@
+<h1 id="setting-up-a-blockstream-satellite-receiver">Setting Up a Blockstream Satellite Receiver</h1>
+
+<p>This repository contains the development sources of the GNU Radio-based receiver
+for the Blockstream Satellite network.</p>
+
+<p>In order to set up your receiver system, please read the following information
+carefully. For additional help, go to the #blockstream-satellite IRC channel on
+freenode.</p>
+
+<h2 id="update-on-jan-16th-2019">Update on Jan 16th 2019</h2>
+
+<p><strong>IMPORTANT:</strong> Please note that the Blockstream Satellite network was updated on
+January 16th 2019. From this date on, the required Blockstream Satellite
+receiver version is greater than or equal to <code class="highlighter-rouge">v1.1.0</code> and Bitcoin FIBRE should
+be the version in <a href="https://github.com/bitcoinfibre/bitcoinfibre/tree/master">the master
+branch</a>.</p>
+
+<p><strong>NOTE:</strong> If you are still using the blocksat receiver application version
+<code class="highlighter-rouge">v1.0.0</code> installed via binary package, you now need to launch it with the
+command-line argument <code class="highlighter-rouge">--version 2</code>. That is, you need to run:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>blocksat-rx ...  <span class="nt">--version</span> 2
+</code></pre></div></div>
+<p>where <code class="highlighter-rouge">...</code> represents the other arguments that you use normally.</p>
+
+<p>The <code class="highlighter-rouge">--version 2</code> argument specifies that the packetization protocol embeded
+within satellite-transmitted frames is now version 2 and supports the <a href="#satellite-api">Satellite
+API</a>. From version <code class="highlighter-rouge">v1.1.0</code> onward, this is the default choice.</p>
+
+<h1 id="getting-started">Getting Started</h1>
+
+<p>During your initial set-up, you will need to go through the following steps:</p>
+
+<ol>
+  <li>Check your coverage at Blockstream’s
+ <a href="https://blockstream.com/satellite/#satellite_network-coverage">Interactive Coverage Map</a>.</li>
+  <li>Get the required hardware - software defined radio (SDR) interface, satellite
+ dish/antenna, low-noise block downconverter (LNB), power supply, mounting
+ hardware, cables and connectors.</li>
+  <li>Install the required software - Bitcoin FIBRE, GNU Radio and GR OsmoSDR.</li>
+  <li>Install the satellite receiver.</li>
+  <li>Align your satellite dish with the help of the receiver application.</li>
+</ol>
+
+<p>All of these steps are thoroughly explained next.</p>
+
+<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-generate-toc again -->
+<h1 id="table-of-contents">Table of Contents</h1>
+
+<ul>
+  <li><a href="#hardware-requirements">Hardware Requirements</a></li>
+  <li><a href="#software-installation">Software Installation</a>
+    <ul>
+      <li><a href="#from-binary-packages">From Binary Packages</a></li>
+      <li><a href="#from-source">From Source</a></li>
+    </ul>
+  </li>
+  <li><a href="#antenna-pointing">Antenna Pointing</a>
+    <ul>
+      <li><a href="#1-ideal-mounting-location">1. Ideal Mounting Location</a></li>
+      <li><a href="#2-mount-the-antenna">2. Mount the Antenna</a></li>
+      <li><a href="#3-prepare-to-locate-the-blockstream-satellite-signal">3. Prepare to Locate the Blockstream Satellite Signal</a></li>
+      <li><a href="#4-connect-the-equipment">4. Connect the Equipment</a></li>
+      <li><a href="#5-run-the-blockstream-satellite-receiver">5. Run the Blockstream Satellite Receiver</a></li>
+      <li><a href="#6-search-for-the-blockstream-satellite-signal">6. Search for the Blockstream Satellite Signal</a></li>
+      <li><a href="#7-next-steps">7. Next Steps</a></li>
+    </ul>
+  </li>
+  <li><a href="#run-the-receiver">Run the Receiver</a>
+    <ul>
+      <li><a href="#gui-mode">GUI Mode</a></li>
+      <li><a href="#console-only-mode">Console-only Mode</a></li>
+      <li><a href="#frequency-scan-mode">Frequency Scan Mode</a></li>
+      <li><a href="#split-receiver-mode">Split Receiver Mode</a></li>
+    </ul>
+  </li>
+  <li><a href="#run-bitcoin-fibre">Run Bitcoin FIBRE</a></li>
+  <li><a href="#satellite-api">Satellite API</a></li>
+  <li><a href="#frequent-issues-and-questions">Frequent issues and questions</a></li>
+</ul>
+
+<!-- markdown-toc end -->
+
+<h1 id="hardware-requirements">Hardware Requirements</h1>
+
+<p>To utilize the Blockstream Satellite network, you must have the following
+hardware at a minimum:</p>
+<ol>
+  <li><a href="#dish">Satellite dish (antenna)</a></li>
+  <li><a href="#lnb">LNB (linear polarization w/ LO stability &lt;= 200 kHz)</a></li>
+  <li><a href="#power">LNB power supply</a></li>
+  <li><a href="#mount">LNB mounting bracket</a></li>
+  <li><a href="#sdr">Software Defined Radio (SDR) interface</a></li>
+  <li><a href="#cable_conn">Cables, connectors, and mounting hardware</a></li>
+</ol>
+
+<p>These items are available from resellers around the world and we are currently
+working with a vendor to provide complete kits and components.</p>
+
+<h2 id="-1-minimum-45cm60cm-satellite-dish-bigger-is-better"><a name="dish"></a> 1. Minimum 45cm/60cm Satellite Dish (bigger is better)</h2>
+
+<p>Blockstream Satellite is designed to work with small antennas. In Ku band, it is
+expected to work with antennas of only 45cm in diameter, while in C band it is
+expected to work with 60cm or higher. However, a larger antenna is always
+better. When possible, we recommend installing an antenna larger than the
+referred minimum if one is readily available. 60cm, 90cm, and 1.2m antennas are
+readily available.</p>
+
+<p>Other than size, the only additional requirement is that the antenna will work
+with the frequency band that suits your coverage region.</p>
+
+<h3 id="satellite-frequency-bands">Satellite Frequency Bands</h3>
+
+<p>Blockstream Satellite operates in Ku band and C band, depending on region. Ku
+band is used in North America, South America, Africa and Europe. C band is used
+in Asia-Pacific region.</p>
+
+<blockquote>
+  <p>C band:     3.4 GHZ - 4.2 GHz</p>
+
+  <p>Ku band: 11.7 GHz to 12.7 GHz</p>
+
+  <p>Ka band:  17.7 GHz - 21.2 GHz</p>
+</blockquote>
+
+<p>You can always use antennas designed for higher frequencies. For example, an
+antenna designed for Ka band will work for Ku band and C band, as it is designed
+for higher frequencies than the one used by Blockstream Satellite. However, a C
+band antenna will not work for Ku band, as it is designed for frequencies lower
+than Ku band.</p>
+
+<h2 id="-2-lnb"><a name="lnb"></a> 2. LNB</h2>
+
+<p>There are 3 parameters of an LNB that must be met in order to use
+Blockstream Satellite:</p>
+
+<h3 id="frequency-range">Frequency Range</h3>
+
+<p>First, you must verify that the frequency range of the LNB encompasses the
+frequency of the Blockstream Satellite signal in your coverage area. For
+example, if you are located in North America and you are covered by the Galaxy
+18 satellite, your Blockstream Satellite frequency is 12.02285 GHz. Thus, an LNB
+that operates from 11.7 GHz to 12.2 GHz would work. In contrast, an LNB that
+operates from 10.7 GHz to 11.7 GHz would NOT work.</p>
+
+<p><strong>Note on “Universal” LNB:</strong></p>
+
+<blockquote>
+  <p>A Universal LNB, also known as Universal Ku band LNB, is one that supports two
+distinct frequency sub-bands within the Ku band, the so-called “low band” (10.7
+to 11.7 GHz) and “high band” (11.7 to 12.75 GHz). This type of LNB can indeed
+be used in a Blockstream Satellite receiver setup. However, you should be aware
+that a 22 kHz tone must be sent to the Universal LNB in order to switch its
+sub-band. Since the setup described in this guide is receiver-only, it is not
+able to generate the 22 kHz tone by itself. In this case, a “22 kHz tone
+generator” is needed. The exception would be in case the default sub-band
+(typically the low band, from 10.7 to 11.7 GHz) that the Universal LNB operates
+already suits the frequency you need in your coverage area, in which case you
+can use the LNB without a tone generator.</p>
+
+  <p>In case you do need the other sub-band (i.e. the high band) of the Universal
+LNB, you will need to place the 22 kHz tone generator inline between the LNB
+and the power inserter. This is because the tone generator uses power from the
+inserter while delivering the tone directly to the LNB.</p>
+
+  <p>Such tone generators can be found in the market as pure
+generators. Alternatively, you can get a “satellite finder” device that embeds
+a 22 kHz generator internally. If choosing the latter, it is important to note
+that the satellite finder must be one that can be used inline between the power
+supply and LNB, namely one with signal input (from LNB) and output (towards
+power inserter), i.e. with two connectors. Some finders have just a single
+connector as they are not intended to be used inline.</p>
+</blockquote>
+
+<h3 id="polarization">Polarization</h3>
+
+<p>Blockstream Satellite requires an LNB with <strong>Linear Polarization</strong>. While most
+Ku band LNBs are linearly polarized, some popular satellite TV services use
+circular polarization. A circularly polarized LNB will NOT work with Blockstream
+Satellite.</p>
+
+<p>If an LNB is described to feature horizontal or vertical polarization, then it
+is linear. In contrast, if an LNB is described as Right Hand or Left Hand
+Circular Polarized (RHCP or LHCP), then it is circular and will NOT work with
+Blockstream Satellite.</p>
+
+<h3 id="lo-stability">LO Stability</h3>
+
+<p>Most LNBs will have a local oscillator (LO) stability parameter referred to as
+“LO stability”, or metrics such as “LO accuracy” and “LO drift”. These are
+normally specified in +/- XX Hz, kHz or MHz. A stability specification of <code class="highlighter-rouge">&lt;=
++/- 200 kHz</code> is preferable for better performance. However, if you would like
+(or you need) to use a less stable LNB, it can also be used. The difference is
+that, in this case, you will need to run the system in <strong>Scan Mode</strong>, as
+described in <a href="#frequency-scan-mode">Frequency Scan Mode</a>.</p>
+
+<p>An LNB that relies on a phase-locked loop (PLL) frequency reference is typically
+more accurate and stable. Hence, we advise to look for a PLL LNB, instead of a
+traditional dielectric oscillator (DRO) LNB.</p>
+
+<p><strong>Note on LNBF:</strong></p>
+
+<blockquote>
+  <p>The feedhorn is the horn antenna that attaches to the LNB. It collects the
+signals reflected by the satellite dish and feeds them into the LNB, towards
+the receiver. The acronym LNBF stands for “LNB with feedhorn” and refers to
+the LNB that already contains an integrated feedhorn. This is the most typical
+nowadays and, for this reason, almost always the term LNB already refers to a
+LNBF implicitly. To avoid confusion, we advise to look for an LNBF.</p>
+</blockquote>
+
+<p><strong>In Summary:</strong></p>
+
+<p>You are advised to use a PLL LNBF with linear polarization and LO stability
+ideally within <code class="highlighter-rouge">+- 200 kHz</code> or less. The LNB should be suitable for the
+frequency of the satellite covering your location and preferably not a Universal
+LNB.</p>
+
+<h2 id="--3-lnb-power-inserter"><a name="power"></a>  3. LNB Power Inserter</h2>
+
+<p>Most LNBs require anywhere from 13 VDC to 30 VDC to be injected on its coaxial
+port. For TV receivers, it is normally the receiver that provides power to the
+LNB directly via the coaxial cable, so you wouldn’t see an external power supply
+in such setups. However, there are systems that rely on external power injectors
+and, for this reason, these can be found easily in the market.</p>
+
+<p>One particular technology that requires a power supply is the one known as
+“Single Wire Multiswitch” (SWM). You can look for an SWM power inserter and use
+it in your setup.</p>
+
+<p>Just be sure to check the power/voltage requirement of your LNB and ensure that
+your power injector matches. Also, note that some LNBs known as “dual
+polarization LNBs” use the supplied voltage to switch between polarization
+options. For instance, in the case of dual polarization linear LNB, to switch
+between horizontal and vertical polarization. Thus, for example, by supplying 13
+VDC you have horizontal, while with 18 VDC you have vertical
+polarization. Please consider this when pointing your antenna if that is your
+case.</p>
+
+<h2 id="-4-lnb-mounting-bracket"><a name="mount"></a> 4. LNB Mounting Bracket</h2>
+
+<p>The dish likely comes with a mounting bracket, but you’ll need one designed to
+accept a generic LNB. Also, it is good to have a bracket that is flexible for
+rotation of the LNB, so that you can control its “skew”. Although all mounting
+brackets do allow rotation, some can be limited in the rotation range.</p>
+
+<p>Such mounting brackets attach to the feed arm of the antenna and have a circular
+ring that will accept a generic LNB.</p>
+
+<h2 id="--5-software-defined-radio-interface"><a name="sdr"></a>  5. Software Defined Radio Interface</h2>
+
+<p>There are many Software Defined Radio (SDR) interfaces in the market today.
+Blockstream Satellite is currently confirmed to work with the RTL-SDR model
+R820T2. The latter is the SDR that is supported by the receiver codebase.</p>
+
+<p>SDRs other than the RTL-SDR may be used, but only if supported by <a href="https://www.gnuradio.org">GNU
+Radio</a> and if able to receive frequencies from 950 MHz
+to 1450 MHz. Note, however, that in this case the Blockstream Satellite
+Receiver’s source code must be modified to include the given SDR interface.</p>
+
+<h2 id="--6-cables-connectors-and-mounting-hardware"><a name="cable_conn"></a>  6. Cables, Connectors and Mounting Hardware.</h2>
+
+<p>You’ll need to connect your SDR to a non-powered port on the LNB power
+supply. The powered port of the power supply, in turn, will be connected to the
+LNB. You’ll need to ensure that you have the necessary coaxial cables and
+connectors to make these interfaces.</p>
+
+<p><strong>Note</strong>: Not every RTL-SDR has the same interface connector. Some use the SMA
+connector and some use MCX. Be sure to order the correct cable and adapters to
+make the necessary connections.</p>
+
+<h1 id="software-installation">Software Installation</h1>
+
+<h2 id="from-binary-packages">From Binary Packages</h2>
+
+<p>There are currently binary packages to facilitate the installation in the
+following distribution/releases:</p>
+
+<ul>
+  <li>Ubuntu bionic (18.04)</li>
+  <li>Fedora 27</li>
+  <li>Fedora 28</li>
+  <li>CentOS 7<sup>*</sup></li>
+</ul>
+
+<p>If using Ubuntu bionic, you can install the packages by running:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>add-apt-repository ppa:blockstream/satellite
+apt-get update
+apt-get install satellite
+</code></pre></div></div>
+
+<p>This should install all dependencies, including GNU Radio and GrOsmoSDR. In case
+the <code class="highlighter-rouge">add-apt-repository</code> command is not available in your system, you will need
+to run <code class="highlighter-rouge">apt install software-properties-common</code>.</p>
+
+<p>If using Fedora 27 or 28, run:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dnf copr enable blockstream/satellite
+dnf install satellite
+</code></pre></div></div>
+
+<p>If the command <code class="highlighter-rouge">copr enable</code> is not available, you will need to install
+<code class="highlighter-rouge">dnf-plugins-core</code>.</p>
+
+<p>Lastly, if using CentOS 7, assuming you have EPEL package installed, run:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yum copr enable blockstream/satellite
+yum install satellite
+</code></pre></div></div>
+
+<p>Similarly, if <code class="highlighter-rouge">copr enable</code> is not available in your system, you need to install
+<code class="highlighter-rouge">yum-plugin-copr</code>.</p>
+
+<p>Note that, if you don’t have the EPEL package (or another source) installed in
+your CentOS 7 system, the above won’t find the <code class="highlighter-rouge">gnuradio</code> and <code class="highlighter-rouge">gr-osmosdr</code>
+dependencies and consequently will fail. You can install EPEL using:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yum install epel-release
+</code></pre></div></div>
+
+<blockquote>
+  <p><sup>*</sup>Note regarding CentOS 7: at the moment, the binary package for
+this distribution/release installs solely the console-only receiver
+applications. It does not install the applications that feature a GUI.</p>
+</blockquote>
+
+<h2 id="from-source">From Source</h2>
+
+<h3 id="dependencies">Dependencies</h3>
+
+<h4 id="gnu-radio-and-grosmosdr">GNU Radio and GrOsmoSDR</h4>
+
+<p>The two main prerequisites to build and install the Blockstream Satellite
+receiver from source are:</p>
+
+<ul>
+  <li>GNU Radio: http://gnuradio.org (Version 3.7.10 or greater)</li>
+  <li>gr-osmosdr: https://github.com/osmocom/gr-osmosdr</li>
+</ul>
+
+<p>When installing these, just make sure to pick suitable versions. Blockstream
+Satellite works with GNU Radio version 3.7.10 or later.</p>
+
+<p>In case you are flexible with the distribution/release that you can use, we
+advise using one of the following, where GNU Radio 3.7.11 is available:</p>
+
+<ul>
+  <li>Ubuntu bionic (18.04)</li>
+  <li>Fedora 27</li>
+  <li>Fedora 28</li>
+</ul>
+
+<p>The following commands attempt to install GNU Radio version 3.7.11, but you can
+try 3.7.10 or any later version in case 3.7.11 is not available in your system:</p>
+
+<p><strong>Debian/Ubuntu</strong>:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt install gnuradio=3.7.11* gr-osmosdr
+</code></pre></div></div>
+
+<p><strong>Fedora</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dnf install gnuradio-3.7.11 gr-osmosdr gnuradio-devel
+</code></pre></div></div>
+
+<p><strong>RHEL/CentOS</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yum install gnuradio-3.7.11 gr-osmosdr gnuradio-devel
+</code></pre></div></div>
+
+<p><strong>NOTE 1:</strong> For the Fedora/RHEL/CentOS distributions, note that the GNU Radio
+development package (<code class="highlighter-rouge">gnuradio-devel</code>) package is also needed. It is included in
+the above commands.</p>
+
+<p><strong>NOTE 2:</strong> In CentOS, you need the EPEL package (or another source) in order to
+find the <code class="highlighter-rouge">gnuradio</code> and <code class="highlighter-rouge">gr-osmosdr</code> packages. You can install it using:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yum install epel-release
+</code></pre></div></div>
+
+<h4 id="other-dependencies">Other Dependencies</h4>
+
+<p>Aside from GNU Radio and GrOsmoSDR, you should have <code class="highlighter-rouge">make</code>, <code class="highlighter-rouge">cmake</code> and
+<code class="highlighter-rouge">swig</code>. For completeness, install the following packages before proceeding:</p>
+
+<p><strong>Debian/Ubuntu</strong>:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt install make cmake swig pkg-config doxygen graphviz
+</code></pre></div></div>
+
+<p><strong>Fedora</strong></p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dnf install make cmake swig pkg-config doxygen graphviz gcc-c++ cppunit-devel
+</code></pre></div></div>
+
+<p><strong>RHEL/CentOS</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yum install make cmake swig pkg-config doxygen graphviz gcc-c++ cppunit-devel
+</code></pre></div></div>
+
+<h3 id="build-from-source-and-install">Build from Source and Install</h3>
+
+<h4 id="build-and-install-gr-blocksat-and-gr-framers">Build and install gr-blocksat and gr-framers</h4>
+
+<p>After installing prerequisites, the next step is to build and install the
+building blocks of the Blockstream Satellite receiver, that is, the GNU Radio
+Out-of-Tree (OOT) modules named <code class="highlighter-rouge">gr-blocksat</code> and <code class="highlighter-rouge">gr-framers</code>. To do so, at the
+root folder of the <code class="highlighter-rouge">satellite</code> repository, run:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ make framers
+$ sudo make install-framers
+$ make blocksat
+$ sudo make install-blocksat
+</code></pre></div></div>
+
+<h4 id="verify-the-python-packages">Verify the Python packages</h4>
+
+<p>Before proceeding, ensure that the installed Python packages for <em>framers</em> and
+<em>blocksat</em> can be found:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python -c "import framers; help(framers)"
+python -c "import blocksat; help(blocksat)"
+</code></pre></div></div>
+
+<p>If nothing is displayed, then follow the solution in
+<a href="#import_error">Import Error (FAQ section)</a>.
+If you are on Fedora or CentOS, you will likely need to include the path as
+follows:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export PYTHONPATH=/usr/local/lib64/python2.7/site-packages:$PYTHONPATH
+</code></pre></div></div>
+
+<h4 id="verify-the-shared-libraries">Verify the shared libraries</h4>
+
+<p>Also, to prevent any errors on the next steps, make sure that the shared
+libraries from <code class="highlighter-rouge">framers</code> and <code class="highlighter-rouge">blocksat</code> that were installed above can indeed be
+located by your system.</p>
+
+<p>If your are on Ubuntu, you will likely need to run:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ldd /usr/local/lib/python2.7/dist-packages/blocksat/_blocksat_swig.so  | grep blocksat
+</code></pre></div></div>
+
+<p>Meanwhile, if you are on Fedora/CentOS, you will probably need to run:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ldd /usr/local/lib64/python2.7/site-packages/blocksat/_blocksat_swig.so | grep blocksat
+</code></pre></div></div>
+
+<p>If the result is <code class="highlighter-rouge">not found</code>, then follow the solution in
+<a href="#seg_fault">Segmentation Fault (FAQ section)</a>. This
+will involve adding a path like <code class="highlighter-rouge">/usr/local/lib</code> (on Ubuntu) or
+<code class="highlighter-rouge">/usr/local/lib64</code> (on Fedora/CentOS) to the search path of shared libraries,
+as follows:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+
+# or
+
+export LD_LIBRARY_PATH=/usr/local/lib64:$LD_LIBRARY_PATH
+</code></pre></div></div>
+
+<p>Once the Python packages and the shared libraries are within reach, move to the
+next step.</p>
+
+<h4 id="build-and-install-the-receiver-applications">Build and install the receiver applications</h4>
+
+<p>To do so, run:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ make
+$ sudo make install
+</code></pre></div></div>
+
+<blockquote>
+  <p>NOTE: In CentOS, depending on your GNU Radio installation, it is possible that
+you are only able to build and install the receiver applications that are
+console-only (without the GUI). This is the case when you see <code class="highlighter-rouge">Block key
+"qtgui_xxx" not found</code> during the <code class="highlighter-rouge">make</code> step.</p>
+
+  <p>To do so, run:</p>
+  <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make GUI=0
+sudo make install
+</code></pre></div>  </div>
+
+  <p>Also, on a headless setup, you will need a virtual display server in order to
+build. You can follow the details on the <a href="#display_server">FAQ section</a>, but
+in summary you can overcome this by installing <code class="highlighter-rouge">xorg-x11-server-Xvfb</code> and
+running the build/install steps as follows:</p>
+
+  <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xvfb-run make GUI=0
+sudo make install
+</code></pre></div>  </div>
+</blockquote>
+
+<h3 id="possible-issues">Possible Issues:</h3>
+
+<ol>
+  <li><code class="highlighter-rouge">blocksat</code> or <code class="highlighter-rouge">framers</code> cannot be found (“ImportError”)</li>
+</ol>
+
+<p>Ensure that Python can load modules from the location where <code class="highlighter-rouge">gr-framers</code> and
+ <code class="highlighter-rouge">gr-blocksat</code> were installed. See the information in the
+ <a href="#import_error">FAQ section</a>.</p>
+
+<ol>
+  <li><em>Block key “blocksat_xxx” not found</em></li>
+</ol>
+
+<p>The above solution is applicable.</p>
+
+<ol>
+  <li>Segmentation fault</li>
+</ol>
+
+<p>If running the system on a Red Hat-derived distributions, a quick test is to
+ set the <code class="highlighter-rouge">LD_LIBRARY_PATH</code> environment variable to include the
+ <code class="highlighter-rouge">/usr/local/lib</code> (or <code class="highlighter-rouge">/usr/local/lib64</code>) path. If this is not the case or if
+ this does not solve the segmentation fault, please refer to the debugging
+ information in the <a href="#seg_fault">FAQ section</a>.</p>
+
+<ol>
+  <li>GNU Radio development package</li>
+</ol>
+
+<p>If you see the error <em>Could not find a package configuration file provided
+  by “Gnuradio”</em> during the <code class="highlighter-rouge">cmake</code> step of the above build, meaning
+  <code class="highlighter-rouge">GnuradioConfig.cmake</code> or <code class="highlighter-rouge">gnuradio-config.cmake</code> files were not found, make
+  sure to install the <code class="highlighter-rouge">gnuradio-devel</code> or <code class="highlighter-rouge">gnuradio-dev</code> package.</p>
+
+<p>Further issues are listed at the <a href="#frequent-issues-and-questions">FAQ section</a>.</p>
+
+<h1 id="antenna-pointing">Antenna Pointing</h1>
+
+<p>Aligning a satellite antenna is a precise procedure. Remember that the
+satellites are over 35,000 km (22,000 mi) away. A tenth of a degree of error
+will miss the satellite by more than 3500 km.</p>
+
+<h2 id="1-ideal-mounting-location">1. Ideal Mounting Location</h2>
+
+<p>Before mounting your satellite dish, it is important to consider the antenna
+alignment angles required for your specific location of interest. To obtain
+these, first use the tool below, available within Blockstream’s coverage page:</p>
+
+<p><a href="https://blockstream.com/satellite/#satellite-resources">Dish Alignment Tool</a></p>
+
+<p>After entering your address or latitude/longitude, this tool will give you three
+parameters, azimuth, elevation and polarization angles, explained next.</p>
+
+<blockquote>
+  <h3 id="azimuth">Azimuth</h3>
+
+  <p>The azimuth is the side to side adjustment angle of your antenna. If you think
+of the antenna fixed within a vertical plane and loose such that it can be
+rotated from side to side, the azimuth determines the direction to which it
+points after being rotated. 0 degrees refers to North, 90 degrees points to
+East, 180 degrees to South and 270 degrees to West.</p>
+</blockquote>
+
+<blockquote>
+  <h3 id="elevation">Elevation</h3>
+
+  <p>The elevation is the up and down adjustment of your antenna. The antenna
+aiming tool provides the number of degrees above the horizon to which your
+antenna must point. 0 degrees represents pointing at the horizon and 90
+degrees is pointing straight up.</p>
+</blockquote>
+
+<blockquote>
+  <h3 id="polarity">Polarity</h3>
+
+  <p>The polarization parameter is how many degrees your LNB will need to be
+rotated. Many LNBs will provide a scale of degrees to assist in setting the
+LNB skew.</p>
+</blockquote>
+
+<p>Once you have your azimuth, elevation, and polarization, you can identify the
+general direction your antenna must point. Use a compass or smartphone app to
+visually check the direction. Ensure that there are no obstacles such as trees
+or buildings in the path between your antenna location and the area of the sky
+that your antenna will point. It is important that you have clear line of sight
+to that area of the sky.</p>
+
+<p><strong>NOTE:</strong> There are many useful smartphone apps available for Android and iOS
+that will aid in pointing your antenna. Some even have augmented reality
+features that allow you to see the satellite in the sky so that you can ensure
+you have good line of sight. We advise to use such apps, as they can be quite
+helpful.</p>
+
+<p><strong>IMPORTANT:</strong> If using a compass app on a smartphone, make sure to configure
+the app such that it displays “true north”, instead of the “magnetic north”.</p>
+
+<h2 id="2-mount-the-antenna">2. Mount the Antenna</h2>
+
+<p>Now that you have verified you have clear line of sight, it is time to mount
+your antenna. Install the satellite antenna according to the directions
+accompanying it, or have it done professionally.</p>
+
+<p>If you install it yourself, proceed with the following steps:</p>
+
+<ol>
+  <li>Certify that the pole on which the dish is mounted is completely level.</li>
+  <li>Set the elevation of the antenna to the parameter provided by the antenna
+aiming tool (above). Remember this is the up and down angle. Many antennas will
+have an elevation scale on the back of the dish that you can use to set the
+approximate elevation.</li>
+  <li>Set the LNB polarization to the parameter provided by the antenna aiming
+tool. This involves rotating the LNB. There is typically a polarization rotation
+scale on the LNB or the LNB mounting bracket.</li>
+</ol>
+
+<h2 id="3-prepare-to-locate-the-blockstream-satellite-signal">3. Prepare to Locate the Blockstream Satellite Signal</h2>
+
+<p>To locate the Blockstream Satellite signal and perform fine adjustments to your
+antenna alignment, you will need:</p>
+
+<ul>
+  <li>Computer connected to an SDR interface and with both GNU Radio and Blockstream
+Satellite Receiver installed.</li>
+  <li>LNB power supply with electricity to power it.</li>
+  <li>Coax cable to connect LNB to LNB power supply.</li>
+  <li>Cable/adapters to connect the SDR to the LNB power supply. If using an RTL-SDR
+that has SMA output and a power supply with F female connector in the input (the
+most typical case), use a cable that has SMA male on one end and F male on the
+other, or use a normal SMA cable (male on both ends) together with an SMA female
+to F male adapter.</li>
+</ul>
+
+<p><strong>NOTE:</strong> This process is more easily performed with a laptop than can be
+watched while moving the antenna. If you are not able to have a computer at the
+antenna site, you’ll need two people: one to move the antenna and one to monitor
+the laptop.</p>
+
+<h2 id="4-connect-the-equipment">4. Connect the Equipment</h2>
+
+<ol>
+  <li>With power disconnected from the LNB power supply, connect the SDR to the
+<strong>non-powered</strong> port on the LNB power supply.</li>
+</ol>
+
+<p><strong>IMPORTANT</strong>: Do NOT connect the powered port of the LNB power supply to the
+SDR interface. Permanent damage may occur to your SDR and/or your computer.</p>
+
+<ol>
+  <li>
+    <p>Connect the <strong>powered</strong> port of the LNB power supply to the LNB using coaxial
+cable.</p>
+  </li>
+  <li>
+    <p>Turn the LNB power supply on.</p>
+  </li>
+</ol>
+
+<blockquote>
+  <p>NOTE: If using a power injector designed for “Single Wire Multiswitch” (SWM)
+systems, the ports are typically labeled as follows. The <strong>non-powered</strong> port
+is labeled as “Signal to IRD”, which means “signal to integrated
+receiver/decoder”. This is the port that should be connected to the
+RTL-SDR. The <strong>powered</strong> port, in turn, is labeled “Signal to SWM”. This is the
+port that should be connected to the LNB.</p>
+</blockquote>
+
+<h2 id="5-run-the-blockstream-satellite-receiver">5. Run the Blockstream Satellite Receiver</h2>
+
+<p>You are almost ready to run the receiver. The only missing step is to compute
+the frequency to be passed as argument to the receiver application.</p>
+
+<h3 id="-compute-the-frequency-parameter"><a name="freq_param"></a> Compute the frequency parameter</h3>
+
+<p>The frequency parameter is computed based on the frequency of the satellite
+covering your location and the frequency of your LNB’s local oscillator (LO)
+frequency, so it is specific to your setup.  In particular, it is given by the
+difference between the two frequencies, as follows:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>frequency_parameter = your_satellite_frequency - your_lnb_lo_frequency
+</code></pre></div></div>
+
+<p>To find your satellite’s frequency, first go to
+<a href="https://blockstream.com/satellite/#satellite_network-coverage">blockstream.com/satellite</a>
+and understand which one is your satellite (covering your location). You should
+see the frequency listed in MHz. Then adjust for your LNB LO frequency.</p>
+
+<p>For example, if your LNB has an LO frequency of 10750 MHz and you’re connecting
+to Eutelsat 113 at 12026.15 MHz, the frequency parameter becomes 1276.15 MHz,
+that is:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>12026.15 - 10750.00 = 1276.15 MHz.
+ ^            ^          ^
+ ^            ^          ^
+sat_freq - lnb_freq = freq_param
+</code></pre></div></div>
+
+<h3 id="run-the-receiver-application-gui-mode">Run the Receiver application (GUI mode)</h3>
+
+<p>Assuming you have built and installed the receiver, now you can run:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>blocksat-rx-gui -f [freq_in_hz] -g [gain]
+</code></pre></div></div>
+
+<p><a name="rx_parameters"></a> <strong>Parameters:</strong></p>
+
+<ul>
+  <li><code class="highlighter-rouge">freq_in_hz</code>: the frequency parameter, <strong>specified in units of Hz</strong>. That is,
+in the previous example where the computed frequency was 1276.15 MHz, the
+parameter would be specified as 1276150000 Hz.</li>
+  <li><code class="highlighter-rouge">gain</code>: the gain parameter is a value between 0 and 50. Higher gain values may
+be required for long cable runs or LNBs with weak output. Some experimentation
+may be required to identify the best value for your application, explained
+later.</li>
+</ul>
+
+<p><strong>Example:</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>blocksat-rx-gui -f 1276150000 -g 40
+</code></pre></div></div>
+
+<h3 id="possible-issues-1">Possible Issues</h3>
+
+<ul>
+  <li>Ensure that your <code class="highlighter-rouge">PYTHONPATH</code> environment variable is set to the installed
+location of <code class="highlighter-rouge">gr-framers</code> and <code class="highlighter-rouge">gr-blocksat</code>. Usually
+<code class="highlighter-rouge">/usr/local/lib64/python2.7/site-packages</code> on RedHat/Fedora or
+<code class="highlighter-rouge">/usr/local/lib64/python2.7/dist-packages</code> on Ubuntu.</li>
+  <li>Ensure your <code class="highlighter-rouge">LD_LIBRARY_PATH</code> environment variable is set. Typically
+<code class="highlighter-rouge">/usr/local/lib64</code>.</li>
+</ul>
+
+<h2 id="6-search-for-the-blockstream-satellite-signal">6. Search for the Blockstream Satellite Signal</h2>
+
+<ol>
+  <li>
+    <p>After running <code class="highlighter-rouge">blocksat-rx-gui</code> according to the above guidelines, click on the
+ <code class="highlighter-rouge">Freq. Sync</code> tab in the GUI.</p>
+  </li>
+  <li>
+    <p>Keep the elevation angle fixed and very slowly move the antenna side to side
+ (vary the azimuth angle), until you begin to see a pattern that looks like
+ this:</p>
+  </li>
+</ol>
+
+<p><img src="doc/spectrum_found.png?raw=true" alt="Spectrum Found" title="Spectrum Found" /></p>
+
+<p>Notice in the spectrum plot that some energy is appearing within the range of
+frequencies that is under observation. Ideally you would see the prominent
+energy as a flat level spanning a frequency band (in the horizontal axis) of
+approximately 200 kHz, which corresponds to Blockstream Satellite’s system
+bandwidth.</p>
+
+<p><strong>Still not found?</strong> Try adjusting the elevation.</p>
+
+<blockquote>
+  <p>If after moving your antenna left and right across a wide range of azimuth over
+which you expect to see the signal you find that you still need to adjust your
+elevation, increase your elevation by 1 degree. Then, sweep the antenna left
+and right through a wide azimuth range again. You may need to repeat this
+increasing by several degrees and decreasing by several degrees of elevation
+before you are able to find the signal.</p>
+</blockquote>
+
+<p><strong>REMEMBER:</strong></p>
+
+<blockquote>
+  <p>Even though a single degree may seem like a minuscule movement, each degree is
+tens of thousands of kilometers over the 36,000 kilometers to geosynchronous
+orbit.</p>
+</blockquote>
+
+<ol>
+  <li>Once the satellite signal is observed by the receiver, the latter applies a
+ coarse frequency correction to center the signal energy around the nominal
+ frequency. In the spectrum plot, this translates into the spectrum being
+ centralized (around 0 Hz):</li>
+</ol>
+
+<p><img src="doc/spectrum_found_freq_corrected.png?raw=true" alt="Coarse Frequency Correction" title="Coarse Frequency Correction" /></p>
+
+<p>You can also get frequency correction information from the console logs, which
+will display a message following the pattern that follows:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>--------------------------------------------------------------------------------
+[Timestamp] Carrier Frequency Offset: xxx kHz (CORRECTED)
+--------------------------------------------------------------------------------
+</code></pre></div></div>
+
+<p><strong>NOTE</strong></p>
+
+<blockquote>
+  <p>If you successfully see the flat 200 kHz signal band, but you don’t see it
+being centralized as above, you can try running in “scan mode”. To do so, just
+relaunch the application using the <code class="highlighter-rouge">-s</code> flag. For example, run:</p>
+
+  <p><code class="highlighter-rouge">blocksat-rx-gui -f 1276150000 -g 40 -s</code></p>
+</blockquote>
+
+<ol>
+  <li>Once you have located the signal and frequency correction is operating
+ successfully, switch to the <code class="highlighter-rouge">Frame Sync</code> tab in the GUI. In particular,
+ observe the plot entitled <strong>“Frame Timing Metric”</strong>. You should expect to see
+ a clear peak there, as follows:</li>
+</ol>
+
+<p><img src="doc/frame_sync_found_timing_metric.png?raw=true" alt="Frame Timing Metric" title="Frame Timing Metric" /></p>
+
+<p>The peak should be strong and, importantly, it should remain in place. It can be
+in any position, but it must remain in the same position for the system to be
+reliable.</p>
+
+<p>If a steady peak has indeed been achieved, it is very likely that your receiver
+has acquired the so-called “frame synchronization” state. Have a look at the
+logs in the terminal. You should see the following message:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>##########################################
+-- Frame synchronization acquired
+</code></pre></div></div>
+
+<p>Furthermore, at this point, the following message is expected to be printed
+periodically in the console:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>--------------------------------------------------------------------------------
+[Timestamp] Frame Timing =&gt; LOCKED	 Timing Indicator: STRONG
+--------------------------------------------------------------------------------
+</code></pre></div></div>
+
+<p>If frame synchronization is not yet acquired, subtly adjust the azimuth,
+elevation and/or rotation of your LNB until you achieve improvements.</p>
+
+<ol>
+  <li>Now switch to the <code class="highlighter-rouge">Phase Sync</code> page. You should see a constellation of 4
+point clouds. The more compact the point clouds are, the better your signal
+quality:</li>
+</ol>
+
+<p><img src="doc/costs_loop_syms_found.png?raw=true" alt="Constellation Diagram" title="Constellation" /></p>
+
+<p>The higher the SNR, the more concentrated the clouds are. Hence, the next step
+is to try to optimize the SNR.</p>
+
+<p>To do so, first go back to <code class="highlighter-rouge">Freq. Sync</code> tab in the GUI. Prepare to keep an eye
+on the Blockstream Satellite signal (the 200 KHz flat level) while concurrently
+observing the SNR measurements displayed in the console. Then, make very gentle
+changes to elevation, azimuth and/or LNB skew. You should look for the logs in
+the console as the ones below. Try to get the best SNR value you can.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Timestamp] SNR [===================                     ] 8.9559 dB
+[Timestamp] SNR [===================                     ] 8.9760 dB
+[Timestamp] SNR [===================                     ] 9.0228 dB
+[Timestamp] SNR [===================                     ] 9.0793 dB
+</code></pre></div></div>
+
+<ol>
+  <li>Lastly, with the antenna fixed, we recommend performing some quick
+experiments with the gain parameter of the receiver. This is a command line
+argument to the receiver application. Try different values between 0 and 50 and
+see if the SNR improves, for example:</li>
+</ol>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Attempt 1
+blocksat-rx-gui --freq 1276150000 --gain 35
+
+# Attempt 2
+blocksat-rx-gui --freq 1276150000 --gain 45
+</code></pre></div></div>
+
+<h2 id="7-next-steps">7. Next Steps</h2>
+
+<p>Well done. Your receiver is properly set-up and you are now ready to run it
+continuously. You have two options now:</p>
+
+<ol>
+  <li>Continue running in GUI mode, namely the above <code class="highlighter-rouge">blocksat-rx-gui</code> application.</li>
+  <li>Run the lighter non-GUI receiver application, that is <code class="highlighter-rouge">blocksat-rx</code>.</li>
+</ol>
+
+<p>Once the receiver is up and running, you can run the Bitcoin FIBRE application
+receiving data via the Blockstream Satellite Network.</p>
+
+<h1 id="run-the-receiver">Run the Receiver</h1>
+
+<p>After installing the Blockstream Satellite receiver, a few receiver applications
+become available in the system. The two main applications are named
+<code class="highlighter-rouge">blocksat-rx-gui</code> and <code class="highlighter-rouge">blocksat-rx</code>. These run the full receiver, with and
+without the GUI, respectively. The other applications are explained later in
+this guide.</p>
+
+<h2 id="gui-mode">GUI Mode</h2>
+
+<p>In order to launch the receiver in GUI mode, run:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>blocksat-rx-gui -f [freq_in_hz]
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">freq_in_hz</code> is the frequency parameter, <strong>specified in units of Hz</strong>.</p>
+
+<p>See the <a href="#5-run-the-blockstream-satellite-receiver">Antenna Pointing Section</a>
+for the computation of the frequency parameter.</p>
+
+<p><strong>Example:</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>blocksat-rx-gui -f 1276150000
+</code></pre></div></div>
+
+<p>You can see a full list of optional parameter using the help:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>blocksat-rx-gui -h
+</code></pre></div></div>
+
+<h2 id="console-only-mode">Console-only Mode</h2>
+
+<p>In order to run the lighter receiver that does not provide any GUI (only console
+logs), execute:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>blocksat-rx -f [freq_in_hz]
+</code></pre></div></div>
+
+<p><strong>Example:</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>blocksat-rx -f 1276150000
+</code></pre></div></div>
+
+<h2 id="frequency-scan-mode">Frequency Scan Mode</h2>
+
+<p>The above frequency passed as argument <code class="highlighter-rouge">-f</code> to the receiver application
+corresponds to the nominal (the ideal) frequency for your receiver. However, in
+practice, the LNB deviates and does not place the satellite signal in this exact
+frequency. This behavior is perfectly acceptable and is solved by the frequency
+correction algorithm that runs in the Blockstream Satellite receiver, which can
+correct up to an error of approximately <code class="highlighter-rouge">+- 200</code> kHz.</p>
+
+<p>However, depending on the quality of your LNB, it is possible that the error
+exceeds the correctable range. In this case, in order to find the satellite
+signal during the receiver initialization, you should run in <strong>scan mode</strong>. This
+will sweep a wider range of frequencies and stop as soon as the Blockstream
+Satellite signal is found. By default, this procedure can take up to a bit more
+than a minute, but will likely complete earlier, depending on the magnitude of
+the frequency error introduced by your hardware. Also, by default it sweeps a
+range of approximately <code class="highlighter-rouge">3.5</code> MHz around the nominal frequency.</p>
+
+<p>To run in scan mode, use the <code class="highlighter-rouge">-s</code> flag in either the <code class="highlighter-rouge">blocksat-rx-gui</code>,
+<code class="highlighter-rouge">blocksat-rx</code> or <code class="highlighter-rouge">blocksat-rx-lower</code> (see below) application:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>blocksat-rx -f 1276150000 -s
+</code></pre></div></div>
+
+<p>If the specs of your LNB guarantee an error/stability that is less than <code class="highlighter-rouge">+- 1.75
+MHz</code> (check the specification for “Stability” or “L.O. Stability”), then you can
+configure a narrower search range to ensure a faster scan. For example:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>blocksat-rx -f 1276150000 -s -n 4
+</code></pre></div></div>
+
+<p>Argument <code class="highlighter-rouge">-n</code> above determines the number of scan iterations. In this
+case, it is reduced from 8 (default value) to 4, so that a range of
+approximately <code class="highlighter-rouge">1.75</code> MHz (<code class="highlighter-rouge">+- 0.875</code> MHz) is scanned.</p>
+
+<p>For more options, check the help:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>blocksat-rx -h
+</code></pre></div></div>
+
+<h2 id="split-receiver-mode">Split Receiver Mode</h2>
+
+<p>The split receiver mode is intended to support the case where one computer (SDR
+host) is connected to the SDR/LNB/dish and the data is ultimately supposed to be
+processed at another host. This can be useful when, due to space and cabling
+limitations, it is preferable to use a small form factor computer connected to
+the antenna.</p>
+
+<p>In this mode, the receiver stack is split between the SDR host and the PC. The
+SDR host implements the lower part of the stack, namely the layer that is closer
+to the physical medium. The other host, then, implements the upper part of the
+stack and delivers the data to the Bitcoin FIBRE application. They communicate
+to each other via TCP/IP.</p>
+
+<p>To use this setup, first, in the SDR host, run:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>blocksat-rx-lower -f [freq_in_hz] -i [IP] -p [Port]
+</code></pre></div></div>
+<p>where <code class="highlighter-rouge">[ip]</code> should be set to the IP address of the local
+network interface and port is the TCP port to be used.</p>
+
+<p><strong>NOTE</strong>:</p>
+
+<blockquote>
+  <ol>
+    <li>The <code class="highlighter-rouge">blocksat-rx-lower</code> application behaves as TCP server, so it should be
+executed first.</li>
+    <li>In case multiple network interfaces are used in the SDR host, make sure to
+use the IP address of the interface that is in the same network of the PC.</li>
+  </ol>
+</blockquote>
+
+<p>Then, in the PC, run:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>blocksat-rx-upper -i [Server IP] -p [Server Port]
+</code></pre></div></div>
+<p>where <code class="highlighter-rouge">[Server IP]</code> and <code class="highlighter-rouge">[Server Port]</code> are the ones that were used for the
+<code class="highlighter-rouge">blocksat-rx-lower</code> application (i.e. the TCP server address/port).</p>
+
+<p><strong>NOTE</strong>:</p>
+<blockquote>
+  <ol>
+    <li>The upper Rx behaves as client to the TCP server opened in the lower Rx.</li>
+    <li>The receive data flow streamed from the SDR host to the PC requires around
+10 to 12 Mbps.</li>
+  </ol>
+</blockquote>
+
+<p><strong>Example:</strong></p>
+
+<p>SDR host:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>blocksat-rx-lower -f 1276150000 -i 10.0.0.1 -p 5201
+</code></pre></div></div>
+
+<p>PC:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>blocksat-rx-upper -i 10.0.0.1 -p 5201
+</code></pre></div></div>
+
+<p><strong>GUI Mode:</strong></p>
+
+<p>There are also Rx Lower and Rx Upper applications featuring a real-time GUI for
+debugging and monitoring. These are named with <code class="highlighter-rouge">-gui</code> suffix. Following the
+above example, the GUI applications would be launched similarly by:</p>
+
+<p>SDR host:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>blocksat-rx-lower-gui -f 1276150000 -i 10.0.0.1 -p 5201
+</code></pre></div></div>
+
+<p>PC:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>blocksat-rx-upper-gui -i 10.0.0.1 -p 5201
+</code></pre></div></div>
+
+<h1 id="run-bitcoin-fibre">Run Bitcoin FIBRE</h1>
+
+<p>In case you don’t have Bitcoin FIBRE installed, do so before proceeding. Make
+sure to use <a href="https://github.com/bitcoinfibre/bitcoinfibre/tree/master">the master
+branch</a>, which is the
+one currently being used by the Blockstream Satellite transmitter.</p>
+
+<p>For more information about Bitcoin FIBRE, refer to:</p>
+
+<blockquote>
+  <p>Bitcoin FIBRE: http://bitcoinfibre.org</p>
+</blockquote>
+
+<p>Note that the Blockstream Satellite receiver feeds received data into an output
+named pipe that is supposed to be read by the Bitcoin FIBRE application. Hence,
+you need to point FIBRE to the named pipe file accordingly. You can start
+<code class="highlighter-rouge">bitcoind</code> with the following parameters:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./bitcoind -fecreaddevice=/tmp/blocksat/bitcoinfibre
+</code></pre></div></div>
+
+<blockquote>
+  <p><strong>NOTE 1:</strong> The Blockstream Satellite receiver will create the
+<code class="highlighter-rouge">/tmp/blocksat/bitcoinfibre</code> file.</p>
+</blockquote>
+
+<blockquote>
+  <p><strong>NOTE 2:</strong> Bitcoin Fibre uses the same <code class="highlighter-rouge">bitcoin.conf</code> configuration file as
+Bitcoin Core. Configure as needed.</p>
+</blockquote>
+
+<h1 id="satellite-api">Satellite API</h1>
+
+<p>Example Python applications for interaction with the Satellite API are available
+in the <code class="highlighter-rouge">api/examples</code> directory. Please refer to the <a href="api/examples/">documentation
+there</a>.</p>
+
+<p>For more information regarding the Satellite API, please visit
+<a href="https://blockstream.com/satellite-api/">blockstream.com/satellite-api</a> or the
+documentation in the <a href="api/"><code class="highlighter-rouge">api</code> directory</a>.</p>
+
+<h1 id="frequent-issues-and-questions">Frequent issues and questions</h1>
+
+<h3 id="build-and-installation">Build and Installation</h3>
+
+<ol>
+  <li>No binary package available for GNU Radio 3.7.10 or later</li>
+</ol>
+
+<p>If a package is not available for 3.7.10+, we recommend either looking for a
+  repository that includes such a version or installing via PyBOMBS. For the
+  latter, see the instructions in the
+  <a href="https://github.com/gnuradio/pybombs#quickstart">PyBOMBS repository</a>.</p>
+
+<ol>
+  <li>Error during build: could not find <code class="highlighter-rouge">GnuradioConfig.cmake</code> or
+ <code class="highlighter-rouge">gnuradio-config.cmake</code>.</li>
+</ol>
+
+<p>The complete error is <em>Could not find a package configuration file provided
+  by “Gnuradio” with any of the following names: <code class="highlighter-rouge">GnuradioConfig.cmake,
+  gnuradio-config.cmake</code></em>.</p>
+
+<p>These tools are needed in order to build the modules that are used by the
+  receiver (at <code class="highlighter-rouge">satellite/gr-blocksat/</code>). The role of these scripts is
+  thoroughly described in the
+  <a href="https://wiki.gnuradio.org/index.php/OutOfTreeModulesConfig">GNU Radio wiki</a>
+  . As explained there, these files are found in
+  <code class="highlighter-rouge">$prefix/lib/cmake/gnuradio</code>, where <code class="highlighter-rouge">$prefix</code> is the path where GNU Radio is
+  installed (e.g. <code class="highlighter-rouge">/usr/local</code>). If not sure about your own prefix, run:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  gnuradio-config-info --prefix
+</code></pre></div></div>
+
+<p>Then, check whether <code class="highlighter-rouge">GnuradioConfig.cmake</code> or <code class="highlighter-rouge">gnuradio-config.cmake</code> is
+  available there in the <code class="highlighter-rouge">lib/cmake/gnuradio</code> folder. If not, it is likely
+  that you need to install a separate GNU Radio development package. These are
+  named <code class="highlighter-rouge">gnuradio-devel</code> or <code class="highlighter-rouge">gnuradio-dev</code>, depending on distro. For example,
+  on Fedora, use:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> sudo dnf install gnuradio-devel
+</code></pre></div></div>
+
+<ol>
+  <li><code class="highlighter-rouge">Block key "rtlsdr_source" not found</code></li>
+</ol>
+
+<p>This can occur in case the <code class="highlighter-rouge">gr-osmosdr</code> package is not installed, so you
+  should double check this first.</p>
+
+<p>Also, it can happen in case you have multiple GNU Radio installations, with
+  conflicting <code class="highlighter-rouge">grc.conf</code> files. To verify whether this is the case, first
+  check if “rtlsdr_source” is indeed missing. Search for <code class="highlighter-rouge">rtlsdr_source.xml</code>:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  sudo find / -name *rtlsdr_source.xml
+</code></pre></div></div>
+
+<p>If GNU Radio is installed in prefix <code class="highlighter-rouge">/usr/local</code>, you would see it there:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  /usr/local/share/gnuradio/grc/blocks/rtlsdr_source.xml
+</code></pre></div></div>
+
+<p>Now, check the paths for GNU Radio blocks in each of your <code class="highlighter-rouge">grc.conf</code>
+  files. In particular, check if the above <code class="highlighter-rouge">rtlsdr_source</code> path is
+  included. You can use:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  sudo find / -name grc.conf -exec \
+      echo -e "\nBlock paths at {}:\n" \;\
+      -exec grep "blocks_path" {} \;
+</code></pre></div></div>
+
+<p>If <code class="highlighter-rouge">rtlsdr_source.xml</code> exists and a <code class="highlighter-rouge">grc.conf</code> points to its path, ensure
+  that your GNU Radio Companion instance is loading this <code class="highlighter-rouge">grc.conf</code>.</p>
+
+<ol>
+  <li>Error during build <em>No rule to make target <code class="highlighter-rouge">swig/framers_swig.py</code></em>:</li>
+</ol>
+
+<p>The complete error message is: <code class="highlighter-rouge">No rule to make target
+  'swig/framers_swig.py', needed by 'swig/framers_swig.pyc'. Stop</code>.
+  This refers to the <code class="highlighter-rouge">framers_swig.pyc</code> file, which is built and
+  installed by <code class="highlighter-rouge">make framers; make install framers</code>. If you are
+  seeing this error and you can confirm that the referred file
+  exists within your Python <code class="highlighter-rouge">site-packages</code> or <code class="highlighter-rouge">dist-packages</code>
+  folder (depending on distro), try building the Rx applications
+  using parallel recipe execution, that is, using for example:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  make -j4
+</code></pre></div></div>
+
+<ol>
+  <li>“CppUnit” required to compile blocksat</li>
+</ol>
+
+<p>Install the development CppUnit library. For example, on CentOS,
+  run:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  sudo yum install cppunit-devel
+</code></pre></div></div>
+
+<ol>
+  <li><a name="display_server"></a> Error <code class="highlighter-rouge">‘list’ object has no attribute ‘get’</code> on headless CentOS build.</li>
+</ol>
+
+<p>The build of the Rx applications (launched by <code class="highlighter-rouge">make</code>) relies on
+  the GNU Radio Companion Compiler (“grcc”) tool, which in turn
+  requires a display server. To overcome this on a headless
+  environment, you can build using X virtual framebuffer (Xvfb).</p>
+
+<p>On CentOS, you can install Xvfb using:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  sudo yum install xorg-x11-server-Xvfba
+</code></pre></div></div>
+
+<p>Then, run “make” from inside a virtual window server using:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  xvfb-run make
+</code></pre></div></div>
+
+<p>Furthermore, note that, in a headless environment, it is possible
+  that your GNU Radio installation does not include
+  <a href="https://www.gnuradio.org/doc/doxygen/page_qtgui.html">QT GUI</a>. You
+  can double check that by launching an interactive Python shell and
+  trying to import QT GUI:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  from gnuradio import qtgui
+</code></pre></div></div>
+
+<p>If the above does not work, meaning you don’t have QT GUI
+  installed, the above build using <code class="highlighter-rouge">make</code> is still prone to
+  failure. This is because the GUI-based Rx applications rely on QT
+  GUI and the “grcc” tool attempts to find the GUI blocks during
+  build. However, note that you can still build solely the non-GUI
+  Rx applications. You can do so using:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  xvfb-run make GUI=0
+</code></pre></div></div>
+
+<ol>
+  <li>Unable to locate gnuradio via <code class="highlighter-rouge">apt-get</code></li>
+</ol>
+
+<p>When trying to install <code class="highlighter-rouge">gnuradio</code> in Ubuntu via <code class="highlighter-rouge">apt-get</code>, you see:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  $ sudo apt-get install gnuradio
+  Reading package lists... Done
+  Building dependency tree
+  Reading state information... Done
+  E: Unable to locate package gnuradio
+</code></pre></div></div>
+
+<p>This is likely because “Universe” Ubuntu repositories are disabled. Proceed
+  with the following steps:</p>
+
+<ol>
+  <li>Open “System Settings”, then “Software &amp; Updates”.</li>
+  <li>Enable downloads from “Community-maintained free and open-source software (universe)”.</li>
+  <li>Close and reload.</li>
+</ol>
+
+<h3 id="receiver-execution">Receiver Execution</h3>
+
+<ol>
+  <li>Permission to access the RTL-SDR dongle</li>
+</ol>
+
+<p>When running the receiver, your user needs to have permission to access the
+  RTL-SDR. Try running <code class="highlighter-rouge">rtl_test</code> and check if it works. If it does not, but
+  <code class="highlighter-rouge">sudo rtl_test</code> does work, you should configure your udev rules for your
+  RTL-SDR device, see <a href="https://github.com/osmocom/rtl-sdr/blob/master/rtl-sdr.rules">the list of rules in the RTL-SDR repository</a>. If after that
+  it still does not work for your user, you can try adding your user to the
+  <code class="highlighter-rouge">rtlsdr</code> group. That is:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  usermod -a -G rtlsdr your_user`
+</code></pre></div></div>
+
+<ol>
+  <li><a name="import_error"></a>ImportError: No module named xxx (for example
+ “ImportError: No module named framers”)</li>
+</ol>
+
+<p>Make sure that the Blockstream Satellite receiver Python modules can be found
+ in your system. Assuming 64-bit systems, the default path will either be
+ <code class="highlighter-rouge">/usr/local/lib64/python2.7/site-packages</code> on RedHat/Fedora or
+ <code class="highlighter-rouge">/usr/local/lib/python2.7/dist-packages</code> on Ubuntu. Double check by looking
+ into one of these directories and searching for <code class="highlighter-rouge">framers</code> and <code class="highlighter-rouge">blocksat</code>
+ folders.</p>
+
+<p>In case you can’t find these folders, you can manually discover where the
+ modules are located. For example, by running:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> sudo find / -name *framers_swig.py*
+</code></pre></div></div>
+
+<p>If, for instance, you verify that the modules are indeed located at
+ <code class="highlighter-rouge">/usr/local/lib64/python2.7/site-packages/</code>, then Python must be able to find
+ modules in this path. You can check the directories on your Python path
+ (including default paths) by running:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> python -c "import sys; print '\n'.join(sys.path)"
+</code></pre></div></div>
+
+<p>In case the directory of interest is not included in the list by default, you
+ can add it using the <code class="highlighter-rouge">PYTHONPATH</code> environmental variable. This variable holds
+ a colon-separated list of directories. In the given example, you would add
+ the directory by executing:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> export PYTHONPATH=/usr/local/lib64/python2.7/site-packages:$PYTHONPATH
+</code></pre></div></div>
+
+<ol>
+  <li><a name="seg_fault"></a>Segmentation fault</li>
+</ol>
+
+<p>If when running the receiver the program exits due to <code class="highlighter-rouge">segmentation fault</code>,
+  you can check whether this is related to the Blockstream Satellite GNU Radio
+  out-of-tree (OOT) modules. By OOT modules, we mean the <code class="highlighter-rouge">framers</code> and
+  <code class="highlighter-rouge">blocksat</code> modules, the former within the <code class="highlighter-rouge">gr-framers</code> folder and the latter
+  within the <code class="highlighter-rouge">gr-blocksat</code> folder of the root folder in this project. In the
+  sequel, we will take the <code class="highlighter-rouge">blocksat</code> module as reference in the examples, but
+  the same procedure applies to the <code class="highlighter-rouge">framers</code> module.</p>
+
+<p>Before starting to debug, ensure that <code class="highlighter-rouge">ldconfig</code> is (or was) executed after
+  module installation. This step is automatically executed when running <code class="highlighter-rouge">sudo
+  make install-blocksat</code> or <code class="highlighter-rouge">sudo make install-framers</code>. Hence, it can be
+  skipped in case you installed the modules using the instructed “make
+  install” commands (check the install logs).</p>
+
+<p>Next, you should verify that the “blocksat” (or “framers”) module can be
+  successfully imported in Python. To do so, run:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  python2.7 -c "import blocksat"
+</code></pre></div></div>
+
+<p>If nothing is printed, it means that the module can indeed be imported. The
+  segmentation fault is likely not related to this module, so try the same on
+  the other module (“framers”). In contrast, if you see segmentation fault, we
+  advise to debug shared libraries.</p>
+
+<p>There are two things to verify regarding shared libraries: 1) that they can
+  be located and 2) that they can be correctly loaded. To double check that
+  the <em>blocksat</em> shared libraries can be found, you can inspect the <code class="highlighter-rouge">ldd</code>
+  output on the swig-generated shared library files. For example, assuming
+  that your library path is at <code class="highlighter-rouge">/usr/local/lib/python2.7/dist-packages</code>
+  (e.g. on Ubuntu), you can run:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  ldd /usr/local/lib/python2.7/dist-packages/blocksat/_blocksat_swig.so  | grep blocksat
+</code></pre></div></div>
+
+<p>If your library is instead at <code class="highlighter-rouge">/usr/local/lib64/python2.7/site-packages</code>
+  (e.g. on Fedora), run:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  ldd /usr/local/lib64/python2.7/site-packages/blocksat/_blocksat_swig.so | grep blocksat
+</code></pre></div></div>
+
+<p>The above command should point to the shared library <code class="highlighter-rouge">.so</code> file. If,
+  instead, you see “not found”, double check that the location of the module’s
+  library is indeed being searched by the Linux program loader. First, check
+  the directories listed or included in <code class="highlighter-rouge">/etc/ld.so.conf</code>. If the directory of
+  interest is not in this list, you can include it by using the
+  <code class="highlighter-rouge">LD_LIBRARY_PATH</code> environmental variable. This variable is a colon-separated
+  set of directories, so that, for example, to add the path <code class="highlighter-rouge">/usr/local/lib</code>
+  you can run:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+</code></pre></div></div>
+
+<p>When the above <code class="highlighter-rouge">ldd</code> command already points to the shared library file, but
+  the <code class="highlighter-rouge">import blocksat</code> Python command still fails, then it is likely that
+  the problem is in the library itself. This can be inspected by looking at
+  the library loading logs. To do so, set the <code class="highlighter-rouge">LD_DEBUG</code> environmental
+  variable to <code class="highlighter-rouge">libs</code> and then attempt to import the module in Python. For
+  example, for the <code class="highlighter-rouge">blocksat</code> module, run:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  LD_DEBUG=libs python -c "import blocksat" 2&gt;&amp;1 | grep "blocksat"
+</code></pre></div></div>
+
+<p>Subsequently, check the occurrences of “blocksat” in the logs and check
+  whether they are error-free. If not, then there is probably a problem in the
+  source code. In this case, please feel free to raise an issue or contact us
+  directly.</p>

@@ -1,0 +1,288 @@
+<h1 id="blockstream-satellite-cookbooks">Blockstream Satellite Cookbooks</h1>
+
+<h1 id="example-applications-for-data-transmission-via-api">Example Applications for Data Transmission via API</h1>
+
+<p>This directory contains example scripts for sending and receiving data through the Blockstream Satellite API. The first example illustrates how a user can create its own user application-specific protocol for sending data through the API. In particular, it illustrates a case in which data is transmitted alongside user-defined metadata fields. The second example, in turn, illustrates the transmission of a file to the Satellite API server. Lastly, the third example illustrates how one can simulate the output of the Blockstream Satellite receiver while fetching data directly from the Satellite API via the Internet, rather than receiving data via the satellite link.</p>
+
+<p><img src="../../doc/api_architecture.png?raw=true" alt="Blockstream Satellite API Architecture" title="Blockstream Satellite API Architecture" /></p>
+
+<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-generate-toc again -->
+<h2 id="contents">Contents</h2>
+
+<ul>
+  <li><a href="#environment">Environment</a></li>
+  <li><a href="#example-1-sending-data-in-a-user-defined-protocol">Example 1: Sending data in a user-defined protocol</a></li>
+  <li><a href="#example-2-sending-files-directly">Example 2: Sending files directly</a></li>
+  <li><a href="#example-3-testing-the-api-while-receiving-data-directly-via-internet">Example 3: Testing the API while receiving data directly via Internet</a></li>
+  <li><a href="#further-information">Further Information</a></li>
+</ul>
+
+<!-- markdown-toc end -->
+
+<h2 id="environment">Environment</h2>
+
+<p>The first step in order to use the examples that follow is to prepare the
+environment.</p>
+
+<p>For Python, create a virtual environment with the packages listed in the
+<code class="highlighter-rouge">requirements.txt</code> file of this directory. For example, if using
+<em>virtualenvwrapper</em>, run the following:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkvirtualenv --python=`which python2` -r requirements.txt blocksat-api
+</code></pre></div></div>
+
+<p>Note this virtual environment will be required for all example scripts described
+in this page. Hence, once you open a new terminal session in order to launch one
+of the example applications, ensure to activate the environment again. For
+example, assuming you are using <code class="highlighter-rouge">virtualenvwrapper</code>, run the following on every
+new terminal session:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> workon blocksat-api
+</code></pre></div></div>
+
+<blockquote>
+  <p>NOTE: for a quick introduction to <em>virtualenvwrapper</em> visit their
+<a href="https://virtualenvwrapper.readthedocs.io/en/latest/index.html#introduction">introduction
+page</a>.
+Also, after installing <em>virtualenvwrapper</em>, make sure to follow the shell
+startup instructions on <a href="https://virtualenvwrapper.readthedocs.io/en/latest/install.html#shell-startup-file">their
+documentation</a>.</p>
+</blockquote>
+
+<p>Next, generate a key pair for encryption (prior to transmission) and decryption
+(on reception). You can do so by running the helper script below:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./generate_keys.py
+</code></pre></div></div>
+
+<p>Note that by default this will create the <code class="highlighter-rouge">.gnupg</code> directory in the local
+(<code class="highlighter-rouge">examples</code>) directory. This directory is where the GPG public and secret
+keyrings are stored.</p>
+
+<p>If you could not use the above helper script successfully, or if you prefer, you
+can also generate keys on a local <code class="highlighter-rouge">.gnupg</code> directory with:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkdir .gnupg
+gpg --full-generate-key --homedir .gnupg
+</code></pre></div></div>
+
+<blockquote>
+  <p>NOTE: you may need to use an absolute path for the <code class="highlighter-rouge">--homedir</code> argument above.</p>
+</blockquote>
+
+<p>Alternatively, you can use your own pre-existing GPG keys.</p>
+
+<h2 id="example-1-sending-data-in-a-user-defined-protocol">Example 1: Sending data in a user-defined protocol</h2>
+
+<p>This example uses two scripts of the <code class="highlighter-rouge">examples</code> directory:</p>
+
+<ol>
+  <li>API data sender</li>
+  <li>API data reader</li>
+</ol>
+
+<p>The <em>API data sender</em> by default places a user-specified file into a data
+structure and then sends the entire structure to the API. The structure carries
+the file name as a string and also contains a CRC32 checksum that can be used
+for data integrity check on the receiver side. The entire structure is first
+encrypted using GnuPG and then posted via HTTPS to the Blockstream Satellite
+API.</p>
+
+<p>Meanwhile, the <em>API data reader</em> application waits for data written by the
+Blockstream Satellite receiver into the pipe file at <code class="highlighter-rouge">/tmp/blocksat/api</code>. It
+continuously reads this named pipe, decrypts the incoming data, validates the
+integrity of the data and then saves the unpacked files. The integrity
+validation is done by computing the CRC32 checksum of the received data and
+comparing it with the checksum that is advertised on the header of the incoming
+data structure. Ultimately, the incoming file is saved in the <code class="highlighter-rouge">downloads/</code>
+folder with the name that is given in the header.</p>
+
+<p>In order to run the example, first ensure that the Blocksat receiver (or the
+demo receiver of <a href="#example-3-receiving-data-from-the-api-sandbox">Example 3</a>)
+is running. Next, ensure that you are using the correct Python virtual
+environment. If using <code class="highlighter-rouge">virtualenvwrapper</code>, run:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>workon blocksat-api
+</code></pre></div></div>
+
+<p>Then, launch the API data reader as follows:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./api_data_reader.py
+</code></pre></div></div>
+
+<p>The reader will wait for data to appear in the API named pipe (at
+<code class="highlighter-rouge">/tmp/blocksat/api</code>).</p>
+
+<p>Next, send some data. On another terminal session, activate the Python virtual
+environment once again (e.g. with <code class="highlighter-rouge">workon blocksat-api</code>). Then, post a file of
+your choice for transmission via Blockstream Satellite:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./api_data_sender.py -f filename
+</code></pre></div></div>
+
+<p>where <code class="highlighter-rouge">filename</code> is the path to the file you want to send.</p>
+
+<blockquote>
+  <p>Note: the script will encrypt the data structure prior to posting to the API,
+so there is no need to encrypt the data before calling it.</p>
+</blockquote>
+
+<p>Subsequently, get the <em>Lightning Invoice Number</em> that was printed by the API
+data sender on the console and pay.</p>
+
+<p>Once the API server effectively transmits your data, the data is expected to pop
+at the API data reader application. In the end, the received file will be saved
+in the <code class="highlighter-rouge">downloads</code> folder.</p>
+
+<p>For further understanding, you can compare the received file with the one that
+was sent. For example, by running <code class="highlighter-rouge">md5sum</code> on both files. Also, you can test
+what happens when trying to decrypt with wrong keys. For example, generate
+another key pair by creating a second GnuPG home directory:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./generate_keys.py --gnupghome .gnupg-alt
+</code></pre></div></div>
+
+<p>Then, send the file using one GnuPG home and try to decrypt using another. For
+example, send with the alternative GnuPG home:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./api_data_sender.py -f filename --gnupghome .gnupg-alt
+</code></pre></div></div>
+
+<p>Assuming the API data reader is still running with the default GnuPG home
+directory, you should expect decryption to fail in this case.</p>
+
+<p>Note that, in practice, data written by the Blocksat Receiver in the API named
+pipe (at <code class="highlighter-rouge">/tmp/blocksat/api</code>) multiplexes transmissions from all users of the
+Satellite API. Hence, the application is expected to fail decryption several
+times until it finds the data for which it is actually a recipient of.</p>
+
+<h2 id="example-2-sending-files-directly">Example 2: Sending files directly</h2>
+
+<p>In this example, the goal is to send a file directly to the API, without placing
+it on any user-specific protocol.</p>
+
+<p>The same two scripts of Example 1 are used, except for different command-line
+arguments:</p>
+
+<ol>
+  <li>API data sender</li>
+  <li>API data reader</li>
+</ol>
+
+<p>In this case, launch the API data reader as follows:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./api_data_reader.py --save-raw
+</code></pre></div></div>
+
+<p>Next, send some data using:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./api_data_sender.py -f filename --send-raw
+</code></pre></div></div>
+
+<p>Note that the <code class="highlighter-rouge">--send-raw</code> flag means that the data is sent as it is, without
+any additional protocol framing.</p>
+
+<p>Once the Blocksat receiver outputs your data into the API output pipe, the
+reader will receive this data and retrieve the file.</p>
+
+<p>Note that, just like in Example 1, this example also handles encryption
+internally. That is, you can point to a non-encrypted file and the data sender
+will encrypt it internally. The reader will then decrypt the data.</p>
+
+<p>This use case is also useful when sending a file directly via the <a href="https://blockstream.com/satellite-queue/">form in the
+API web page</a>. In this case, the file
+can be retrieved on the Blocksat receiver side by running the API data reader as
+above. The only difference is that in this case you will need to encrypt the
+file offline, before uploading to the form in the API web page. This is because
+the <em>API data reader</em> application by default assumes the incoming data is
+encrypted with the keys that are available in the local GnupG home directory.</p>
+
+<p>To encrypt a file offline, you can run for example:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gpg --encrypt --recipient pub_key_id_or_email filename
+</code></pre></div></div>
+
+<p>where <code class="highlighter-rouge">pub_key_id_or_email</code> can be either the public key ID of the target
+recipient or its e-mail.</p>
+
+<p>Alternatively, you can run the API data reader in “plaintext mode”. This will
+allow you to receive plaintext files uploaded directly via the <a href="https://blockstream.com/satellite-queue/">API
+website</a>, or any other plaintext
+transmission broadcast via the satellite network. However, please be aware that
+in this case <strong>all</strong> API transmissions will be saved to the <code class="highlighter-rouge">downloads</code> folder,
+rather than solely the ones that can be decrypted with the GPG keys you
+possess. To run in this mode, execute:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./api_data_reader.py --plaintext
+</code></pre></div></div>
+
+<h2 id="example-3-testing-the-api-while-receiving-data-directly-via-internet">Example 3: Testing the API while receiving data directly via Internet</h2>
+
+<p>This example illustrates the scenario in which instead of receiving data with
+the actual Blockstream Satellite receiver (i.e. the <code class="highlighter-rouge">blocksat-rx</code> application),
+you fetch data directly from the API through the Internet.</p>
+
+<p>Now, you will need three scripts from the <code class="highlighter-rouge">examples</code> directory:</p>
+
+<ol>
+  <li>API data sender</li>
+  <li>API data reader</li>
+  <li>Demo receiver</li>
+</ol>
+
+<p>You can choose to use the API data sender and API data reader either as in
+<a href="#example-1-sending-data-in-a-user-defined-protocol">Example 1</a> or as in
+<a href="#example-2-sending-files">Example 2</a>. The important difference here is that the
+API data reader will read data from a named pipe that is filled by the <em>demo
+receiver</em>, rather than the actual Blockstream Satellite receiver.</p>
+
+<p>Start by activating the <code class="highlighter-rouge">blocksat-api</code> Python virtual environment. Then, run the
+demo receiver:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./demo-rx.py
+</code></pre></div></div>
+
+<p>This application will continuously wait for data broadcast directly by the API
+and then it will output the data to the same named pipe that the Blockstream
+Satellite receiver would use, namely the pipe file at <code class="highlighter-rouge">/tmp/blocksat/api</code>.</p>
+
+<blockquote>
+  <p>NOTE: in case you want to concurrently run both the actual <code class="highlighter-rouge">blocksat-rx</code>
+receiver application and the demo receiver, you will need to use another named
+pipe for the demo receiver. Otherwise, the two applications would try to use
+the same named pipe. To do so, run <code class="highlighter-rouge">./demo-rx.py -f pipe_file</code>, where
+<code class="highlighter-rouge">pipe_file</code> is the name of the other named pipe file to be used for the demo
+receiver.</p>
+</blockquote>
+
+<p>Next, assuming for the explanation that the approach of <a href="#example-1-sending-data-in-a-user-defined-protocol">Example
+1</a> is adopted, you can leave
+the data reader running with:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./api_data_reader.py
+</code></pre></div></div>
+
+<p>Finally, send a file with the API data sender application and wait until it pops
+in the data reader.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./api_data_sender.py -f filename
+</code></pre></div></div>
+
+<h2 id="further-information">Further Information</h2>
+
+<p>The API data sender script also supports bumping and deletion of orders sent to
+the API.</p>
+
+<p>For bumping, you can run:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./api_data_sender.py --bump
+</code></pre></div></div>
+
+<p>To delete an order, run:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./api_data_sender.py --delete
+</code></pre></div></div>
+
+<p>Both of these commands will ask for the UUID and the authorization token of the
+order. These were originally printed to the console by the API data sender, when
+the latter was used to send the data to the API.</p>

@@ -1,0 +1,260 @@
+<h1 class="no_toc" id="blockstream-explorer-api">Blockstream Explorer API</h1>
+<p>The <a href="https://blockstream.info">Blockstream Explorer</a> API provides developers with a number of tools to build applications that monitor and interact with the blockchains from:</p>
+<ul>
+  <li>Bitcoin mainnet</li>
+  <li>Bitcoin testnet</li>
+  <li>The Liquid Network</li>
+</ul>
+
+<p>The API uses JSON over RESTful HTTP.</p>
+
+<p><strong>Note: amounts are always represented in satoshis.</strong></p>
+
+<h2 class="no_toc" id="contents">Contents</h2>
+
+<ol id="markdown-toc">
+  <li><a href="#transactions" id="markdown-toc-transactions">Transactions</a></li>
+  <li><a href="#addresses" id="markdown-toc-addresses">Addresses</a></li>
+  <li><a href="#blocks" id="markdown-toc-blocks">Blocks</a></li>
+  <li><a href="#transaction-format" id="markdown-toc-transaction-format">Transaction format</a></li>
+  <li><a href="#block-format" id="markdown-toc-block-format">Block format</a></li>
+</ol>
+
+<h2 id="transactions">Transactions</h2>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">GET</span><span class="w"> </span><span class="err">/tx/</span><span class="p">:</span><span class="err">txid</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Returns information about the transaction.</p>
+
+<p>Available fields: <code class="highlighter-rouge">txid</code>, <code class="highlighter-rouge">version</code>, <code class="highlighter-rouge">locktime</code>, <code class="highlighter-rouge">size</code>, <code class="highlighter-rouge">weight</code>, <code class="highlighter-rouge">fee</code>, <code class="highlighter-rouge">vin</code>, <code class="highlighter-rouge">vout</code> and <code class="highlighter-rouge">status</code>
+(see <a href="#transaction-format">transaction format</a> for details).</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">GET</span><span class="w"> </span><span class="err">/tx/</span><span class="p">:</span><span class="err">txid/status</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Returns the transaction confirmation status.</p>
+
+<p>Available fields: <code class="highlighter-rouge">confirmed</code> (boolean), <code class="highlighter-rouge">block_height</code> (optional) and <code class="highlighter-rouge">block_hash</code> (optional).</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">GET</span><span class="w"> </span><span class="err">/tx/</span><span class="p">:</span><span class="err">txid/hex</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Returns the raw transaction in hex.</p>
+
+<!--
+### `GET /tx/:txid/merkle-proof`
+
+Returns a merkle inclusion proof for the transaction.
+
+*Currently uses Electrum's merkle proof format, will eventually be changed to use the `merkleblock` format.*
+-->
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">GET</span><span class="w"> </span><span class="err">/tx/</span><span class="p">:</span><span class="err">txid/outspend/</span><span class="p">:</span><span class="err">vout</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Returns the spending status of a transaction output.</p>
+
+<p>Available fields: <code class="highlighter-rouge">spent</code> (boolean), <code class="highlighter-rouge">txid</code> (optional), <code class="highlighter-rouge">vin</code> (optional) and <code class="highlighter-rouge">status</code> (optional, the status of the spending tx).</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">GET</span><span class="w"> </span><span class="err">/tx/</span><span class="p">:</span><span class="err">txid/outspends</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Returns the spending status of all transaction outputs.</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">GET</span><span class="w"> </span><span class="err">/broadcast?tx=&lt;rawtx&gt;</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Broadcast <code class="highlighter-rouge">&lt;rawtx&gt;</code> (the raw transaction in hex) to the network.
+Returns the <code class="highlighter-rouge">txid</code> on success.</p>
+
+<h2 id="addresses">Addresses</h2>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">GET</span><span class="w"> </span><span class="err">/address/</span><span class="p">:</span><span class="err">address</span><span class="w">
+</span><span class="err">GET</span><span class="w"> </span><span class="err">/scripthash/</span><span class="p">:</span><span class="err">hash</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Get information about an address/scripthash.</p>
+
+<p>Available fields: <code class="highlighter-rouge">address</code>/<code class="highlighter-rouge">scripthash</code>, <code class="highlighter-rouge">chain_stats</code> and <code class="highlighter-rouge">mempool_stats</code>.</p>
+
+<p><code class="highlighter-rouge">{chain,mempool}_stats</code> each contain an object with <code class="highlighter-rouge">tx_count</code>, <code class="highlighter-rouge">funded_txo_count</code>, <code class="highlighter-rouge">funded_txo_sum</code>, <code class="highlighter-rouge">spent_txo_count</code> and <code class="highlighter-rouge">spent_txo_sum</code>.</p>
+
+<p>Elements-based chains don’t have the <code class="highlighter-rouge">{funded,spent}_txo_sum</code> fields.</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">GET</span><span class="w"> </span><span class="err">/address/</span><span class="p">:</span><span class="err">address/txs</span><span class="w">
+</span><span class="err">GET</span><span class="w"> </span><span class="err">/scripthash/</span><span class="p">:</span><span class="err">hash/txs</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Get transaction history for the specified address/scripthash, sorted with newest first.</p>
+
+<p>Returns up to 50 mempool transactions plus the first 25 confirmed transactions.
+You can request more confirmed transactions using <code class="highlighter-rouge">:last_seen_txid</code>(see below).</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">GET</span><span class="w"> </span><span class="err">/address/</span><span class="p">:</span><span class="err">address/txs/chain</span><span class="p">[</span><span class="err">/</span><span class="p">:</span><span class="err">last_seen_txid</span><span class="p">]</span><span class="w">
+</span><span class="err">GET</span><span class="w"> </span><span class="err">/scripthash/</span><span class="p">:</span><span class="err">hash/txs/chain</span><span class="p">[</span><span class="err">/</span><span class="p">:</span><span class="err">last_seen_txid</span><span class="p">]</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Get confirmed transaction history for the specified address/scripthash, sorted with newest first.</p>
+
+<p>Returns 25 transactions per page. More can be requested by specifying the last txid seen by the previous query.</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">GET</span><span class="w"> </span><span class="err">/address/</span><span class="p">:</span><span class="err">address/txs/mempool</span><span class="w">
+</span><span class="err">GET</span><span class="w"> </span><span class="err">/scripthash/</span><span class="p">:</span><span class="err">hash/txs/mempool</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Get unconfirmed transaction history for the specified address/scripthash.</p>
+
+<p>Returns up to 50 transactions (no paging).</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">GET</span><span class="w"> </span><span class="err">/address/</span><span class="p">:</span><span class="err">address/utxo</span><span class="w">
+</span><span class="err">GET</span><span class="w"> </span><span class="err">/scripthash/</span><span class="p">:</span><span class="err">hash/utxo</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Get the list of unspent transaction outputs associated with the address/scripthash.</p>
+
+<p>Available fields: <code class="highlighter-rouge">txid</code>, <code class="highlighter-rouge">vout</code>, <code class="highlighter-rouge">value</code> and <code class="highlighter-rouge">status</code> (with the status of the funding tx).
+Elements-based chains have an additional <code class="highlighter-rouge">asset</code> field.</p>
+
+<h2 id="blocks">Blocks</h2>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">GET</span><span class="w"> </span><span class="err">/block/</span><span class="p">:</span><span class="err">hash</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Returns information about a block.</p>
+
+<p>Available fields: <code class="highlighter-rouge">id</code>, <code class="highlighter-rouge">height</code>, <code class="highlighter-rouge">version</code>, <code class="highlighter-rouge">timestamp</code>, <code class="highlighter-rouge">bits</code>, <code class="highlighter-rouge">nonce</code>, <code class="highlighter-rouge">merkle_root</code>, <code class="highlighter-rouge">tx_count</code>, <code class="highlighter-rouge">size</code>, <code class="highlighter-rouge">weight</code> and <code class="highlighter-rouge">previousblockhash</code>.
+Elements-based chains have an additional <code class="highlighter-rouge">proof</code> field.
+See <a href="#block-format">block format</a> for more details.</p>
+
+<p>The response from this endpoint can be cached indefinitely.</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">GET</span><span class="w"> </span><span class="err">/block/</span><span class="p">:</span><span class="err">hash/status</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Returns the block status.</p>
+
+<p>Available fields: <code class="highlighter-rouge">in_best_chain</code> (boolean, false for orphaned blocks), <code class="highlighter-rouge">next_best</code> (the hash of the next block, only available for blocks in the best chain).</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">GET</span><span class="w"> </span><span class="err">/block/</span><span class="p">:</span><span class="err">hash/txs</span><span class="p">[</span><span class="err">/</span><span class="p">:</span><span class="err">start_index</span><span class="p">]</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Returns a list of transactions in the block (up to 25 transactions beginning at <code class="highlighter-rouge">start_index</code>).</p>
+
+<p>Transactions returned here do not have the <code class="highlighter-rouge">status</code> field, since all the transactions share the same block and confirmation status.</p>
+
+<p>The response from this endpoint can be cached indefinitely.</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">GET</span><span class="w"> </span><span class="err">/block/</span><span class="p">:</span><span class="err">hash/txids</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Returns a list of all txids in the block.</p>
+
+<p>The response from this endpoint can be cached indefinitely.</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">GET</span><span class="w"> </span><span class="err">/block-height/</span><span class="p">:</span><span class="err">height</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Returns the hash of the block currently at <code class="highlighter-rouge">height</code>.</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">GET</span><span class="w"> </span><span class="err">/blocks</span><span class="p">[</span><span class="err">/</span><span class="p">:</span><span class="err">start_height</span><span class="p">]</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Returns the 10 newest blocks starting at the tip or at <code class="highlighter-rouge">start_height</code> if specified.</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">GET</span><span class="w"> </span><span class="err">/blocks/tip/height</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Returns the height of the last block.</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">GET</span><span class="w"> </span><span class="err">/blocks/tip/hash</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Returns the hash of the last block.</p>
+
+<h2 id="transaction-format">Transaction format</h2>
+
+<ul>
+  <li><code class="highlighter-rouge">txid</code></li>
+  <li><code class="highlighter-rouge">version</code></li>
+  <li><code class="highlighter-rouge">locktime</code></li>
+  <li><code class="highlighter-rouge">size</code></li>
+  <li><code class="highlighter-rouge">weight</code></li>
+  <li><code class="highlighter-rouge">fee</code></li>
+  <li><code class="highlighter-rouge">vin[]</code>
+    <ul>
+      <li><code class="highlighter-rouge">txid</code></li>
+      <li><code class="highlighter-rouge">vout</code></li>
+      <li><code class="highlighter-rouge">is_coinbase</code></li>
+      <li><code class="highlighter-rouge">scriptsig</code></li>
+      <li><code class="highlighter-rouge">scriptsig_asm</code></li>
+      <li><code class="highlighter-rouge">sequence</code></li>
+      <li><code class="highlighter-rouge">witness[]</code></li>
+      <li><code class="highlighter-rouge">prevout</code> (previous output in the same format as in <code class="highlighter-rouge">vout</code> below)</li>
+      <li><em>(Elements only)</em></li>
+      <li><code class="highlighter-rouge">is_pegin</code></li>
+      <li><code class="highlighter-rouge">issuance</code> (available for asset issuance transactions, <code class="highlighter-rouge">null</code> otherwise)
+        <ul>
+          <li><code class="highlighter-rouge">is_reissuance</code></li>
+          <li><code class="highlighter-rouge">asset_blinding_nonce</code></li>
+          <li><code class="highlighter-rouge">asset_entropy</code></li>
+          <li><code class="highlighter-rouge">assetamount</code> or <code class="highlighter-rouge">assetamountcommitment</code></li>
+          <li><code class="highlighter-rouge">tokenamount</code> or <code class="highlighter-rouge">tokenamountcommitment</code></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">vout[]</code>
+    <ul>
+      <li><code class="highlighter-rouge">scriptpubkey</code></li>
+      <li><code class="highlighter-rouge">scriptpubkey_asm</code></li>
+      <li><code class="highlighter-rouge">scriptpubkey_type</code></li>
+      <li><code class="highlighter-rouge">scriptpubkey_address</code></li>
+      <li><code class="highlighter-rouge">value</code></li>
+      <li><em>(Elements only)</em></li>
+      <li><code class="highlighter-rouge">valuecommitment</code></li>
+      <li><code class="highlighter-rouge">asset</code> or <code class="highlighter-rouge">assetcommitment</code></li>
+      <li><code class="highlighter-rouge">pegout</code> (available for peg-out outputs, <code class="highlighter-rouge">null</code> otherwise)
+        <ul>
+          <li><code class="highlighter-rouge">genesis_hash</code></li>
+          <li><code class="highlighter-rouge">scriptpubkey</code></li>
+          <li><code class="highlighter-rouge">scriptpubkey_asm</code></li>
+          <li><code class="highlighter-rouge">scriptpubkey_address</code></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">status</code>
+    <ul>
+      <li><code class="highlighter-rouge">confirmed</code> (boolean)</li>
+      <li><code class="highlighter-rouge">block_height</code> (available for confirmed transactions, <code class="highlighter-rouge">null</code> otherwise)</li>
+      <li><code class="highlighter-rouge">block_hash</code> (available for confirmed transactions, <code class="highlighter-rouge">null</code> otherwise)</li>
+      <li><code class="highlighter-rouge">block_time</code> (available for confirmed transactions, <code class="highlighter-rouge">null</code> otherwise)</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="block-format">Block format</h2>
+
+<ul>
+  <li><code class="highlighter-rouge">id</code></li>
+  <li><code class="highlighter-rouge">height</code></li>
+  <li><code class="highlighter-rouge">version</code></li>
+  <li><code class="highlighter-rouge">timestamp</code></li>
+  <li><code class="highlighter-rouge">bits</code></li>
+  <li><code class="highlighter-rouge">nonce</code></li>
+  <li><code class="highlighter-rouge">merkle_root</code></li>
+  <li><code class="highlighter-rouge">tx_count</code></li>
+  <li><code class="highlighter-rouge">size</code></li>
+  <li><code class="highlighter-rouge">weight</code></li>
+  <li><code class="highlighter-rouge">previousblockhash</code></li>
+  <li><em>(Elements only)</em></li>
+  <li><code class="highlighter-rouge">proof</code>
+    <ul>
+      <li><code class="highlighter-rouge">challenge</code></li>
+      <li><code class="highlighter-rouge">challenge_asm</code></li>
+      <li><code class="highlighter-rouge">solution</code></li>
+      <li><code class="highlighter-rouge">solution_asm</code></li>
+    </ul>
+  </li>
+</ul>
