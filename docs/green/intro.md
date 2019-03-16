@@ -34,7 +34,7 @@ Always be sure to check the 3-letter currency ticker before sending any coins, a
 Blockstream Green is available for Android and iOS.
 
 
-## Testnet Versions
+## Testnet Versions
 
 Bitcoin has an alternative network known as ‘testnet’. This testnet network is just like the real Bitcoin network (which is known as ‘mainnet’), but with worthless coins, so that people can test features and applications without the risk of losing real coins.
 
