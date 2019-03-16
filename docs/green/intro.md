@@ -31,7 +31,7 @@ Always be sure to check the 3-letter currency ticker before sending any coins, a
 
 ## Platforms Supported
 
-Blockstream Green is available for Android, iOS, Windows, Mac OS X, and Linux.
+Blockstream Green is available for Android and iOS.
 
 
 ## Testnet Versions
