@@ -4,8 +4,6 @@ title: Satellite
 nav_order: 3
 has_children: true
 permalink: /docs/satellite
-has_toc: false
-nav_exclude: true
 ---
 
 # Satellite Docs

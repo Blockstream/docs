@@ -8,3 +8,9 @@ search_enabled: true
 aux_links:
     "Suggest a change via GitHub":
       - "//github.com/blockstream/docs"
+
+exclude:
+    - c-lightning
+    - explorer
+    - liquid
+    - satellite
