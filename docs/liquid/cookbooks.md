@@ -3,7 +3,6 @@ layout: default
 title: Cookbooks
 nav_order: 2
 parent: Liquid
-has_toc: false
 ---
 
 # Blockstream Liquid API Cookbooks
