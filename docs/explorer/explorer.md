@@ -8,7 +8,7 @@ permalink: /docs/explorer
 
 # Welcome to the Blockstream Explorer Docs
 
-![The Blockstream Explorer](https://nwoodfine.github.io/blockstream-docs/docs/assets/blockstream_explorer.png)
+![The Blockstream Explorer](/assets/blockstream_explorer.png)
 
 [Blockstream Explorer](//blockstream.info) is a performance and privacy-focused block explorer that supports Bitcoin mainnet, Bitcoin testnet, and the Liquid Network. Regular users can obtain comprehensive blockchain data from the [web interface](//blockstream.info), and developers can add blockchain support to their apps via the fully-featured API.
 
