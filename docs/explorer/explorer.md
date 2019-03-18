@@ -4,6 +4,8 @@ title: Explorer
 nav_order: 4
 has_children: true
 permalink: /docs/explorer
+has_toc: false
+nav_exclude: true
 ---
 
 # Welcome to the Blockstream Explorer Docs
