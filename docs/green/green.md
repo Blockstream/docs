@@ -2,6 +2,7 @@
 layout: default
 title: Green
 nav_order: 2
+nav_color: green
 has_children: true
 permalink: /docs/green
 --- 
