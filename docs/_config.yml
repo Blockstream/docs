@@ -1,0 +1,16 @@
+remote_theme: Blockstream/docs-theme
+color_scheme: "dark"
+
+# Enable or disable the site search
+search_enabled: true
+
+# Aux links for the upper right navigation
+aux_links:
+    "Suggest a change via GitHub":
+      - "//github.com/blockstream/docs"
+
+exclude:
+    - c-lightning
+    - explorer
+    - liquid
+    - satellite
