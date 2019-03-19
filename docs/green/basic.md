@@ -18,11 +18,11 @@ You will also need to access your wallet with your mnemonic if you or someone el
 
 ## Balance and Transaction List
 
-The main page you’ll be using in Blockstream Green is “Transaction List”.
+The main screen you’ll be using in Blockstream Green will display your wallet’s balance in Bitcoin and its approximate value in your selected fiat currency.
 
-You’ll be able to see your wallet’s balance in Bitcoin and its approximate value in your selected fiat currency.
+Directly below this will be the send and receive buttons.
 
-This is also where you can view all of your wallet’s incoming and outgoing transactions. Transactions are listed in chronological order, starting with the most recent transactions at the top.
+You can also view from this screen all of your wallet’s incoming and outgoing transactions. Transactions are listed in reverse chronological order, starting with the most recent transactions at the top.
 
 You’ll be able to see the date, time, amount (in Bitcoin and fiat currency), and confirmation status of any transactions. You can also select any transaction to get more information about it, such as its Transaction Hash, which can be used as a proof-of-payment.
 
@@ -31,7 +31,7 @@ You’ll be able to see the date, time, amount (in Bitcoin and fiat currency), a
 
 To receive Bitcoin, all you need to do is provide a receiving address to the sender.
 
-A Bitcoin receiving address is a string of numbers and letters. You can create a receiving address by going to the “Receive” screen. (Your wallet will generate a new receiving address for each new incoming transaction. While it is possible to reuse old addresses, we strongly advise against this because it lessens your privacy).
+A Bitcoin receiving address is a string of numbers and letters. You can create a receiving address by selecting “Receive” from the main screen. Your wallet will generate a new receiving address each time you prompt it for one. While it is possible to reuse old addresses, we strongly advise against this because it lessens your privacy.
 
 Once you can see what your new address is, you’ll need to communicate it to the sender. If you need to send over a distance, a text message or email is an effective way to do it. It’s always better to copy and paste addresses rather than manually type them out, and you should also double or triple check every time, especially for larger amounts. If the address is wrong, any bitcoins sent can become lost forever, so be very careful!
 
@@ -42,7 +42,7 @@ Once someone has sent a transaction to your Blockstream Green wallet, it should 
 
 ## Sending Transactions
 
-To send a transaction, navigate to the “Send” page in your wallet.
+To send a transaction, select “Send” from the main screen.
 
 You will need to get the receiving address from the recipient, and enter it (either by typing or pasting it in, or by scanning the receiver’s QR code).
 
@@ -50,7 +50,7 @@ Then, you can input the amount of Bitcoin that you want to send, and hit send.
 
 Your wallet will also automatically calculate a fee for your transaction, which is necessary to have the network accept it. (You can manually set fees if you like, so check out our advanced section on this topic if you want to learn about this in more detail.)
 
-After you have sent a transaction, you need to wait for the network to confirm it, which can take a bit of time. You can check the status of a transaction by looking into your transaction history on the “Transactions” page.
+After you have sent a transaction, you need to wait for the network to confirm it, which can take a bit of time. You can check the status of a transaction by looking into your transaction history on the main screen.
 
 
 ## What Happens After a Transaction Is Sent
@@ -63,12 +63,12 @@ To become confirmed, a transaction needs to be included in a block. Blocks are c
 
 Depending on how busy the network is, and how high a fee the sender paid, the transaction may not be included in the next block.
 
-Once the transaction has been included in a block, it has 1 "confirmation". Every block mined after that earns it another confirmation. The industry standard is to wait for 6 confirmations before considering a transaction to be confirmed, at which point you can be confident that it has been received and can not be cancelled. You will be able to see the confirmations accumulate on your wallet's transaction page.
+Once the transaction has been included in a block, it has 1 "confirmation". Every block mined after that earns it another confirmation. The industry standard is to wait for 6 confirmations before considering a transaction to be confirmed, at which point you can be confident that it has been received and can not be reversed or redirected. You will be able to see the confirmations accumulate on your wallet's default screen.
 
 
 ## Our Multisignature Model
 
-Blockstream Green wallets use a special transaction format different from most wallets in the industry.
+Blockstream Green wallets use a special transaction format different from most other Bitcoin wallets.
 
 Most other storage services in Bitcoin are either “custodial” or “non-custodial without 2FA security”.
 
@@ -76,7 +76,9 @@ Custodial services, such as exchanges, hold your Bitcoin for you. This also mean
 
 Other non-custodial wallets do not have those issues, but it also means that if someone steals your mnemonic or gain access to your wallet, they can steal all of your coins. The secrecy of your mnemonic is the only thing protecting your coins with these wallets.
 
-Coins in Blockstream Green wallets have two different spend conditions.
+With Blockstream Green, we get you benefits of both types.
+
+This is possible because coins in Blockstream Green wallets have two different spend conditions.
 
 The first way to spend coins is using signatures from 2 different keys to send coins. One is held by the user in the form of the mnemonic, which the service  never knows. The other is stored on our server, and we sign your transactions with it after any 2FA you have enabled verifies the transaction.
 
@@ -86,14 +88,14 @@ On the user side, even if someone steals your mnemonic, they cannot spend your c
 
 The second way to spend coins becomes available after your two factor recovery period expires. Once this happens,  you can spend your coins without our service needing to also sign. This is to ensure that no matter what happens, you can always get your coins back.
 
-Our signature scheme also allows us to enforce 2FA security, spending limits, and other extra options. These features do not exist in typical Bitcoin wallets.
+Our signature scheme also allows us to enforce 2FA security, 2FA spending thresholds, and other extra options. These features do not exist in typical Bitcoin wallets.
 
 
 ## Redeposits
 
 As explained above, coins in your main Blockstream Green wallet (or a 2of2 simple account) require 2 signatures to be spent: one from you and one from Blockstream Green. In order to protect you from loss of access to your coins should Blockstream Green become unavailable, there is an alternative spend condition which requires only the user’s signature, provided that a certain period of time has passed.
 
-If the service becomes unavailable, you simply wait for the specified period (1 year by default), then sign and send the transaction using our open source recovery tool garecovery.
+If the service becomes unavailable, you simply wait for the specified period (1 year by default, which you can change from the settings), then sign and send the transaction using our open source recovery tool garecovery.
 
 After the expiry period passes, any other limits placed on your spending in Blockstream Green, such as 2FA requirements, cease to be enforceable by the service.
 
