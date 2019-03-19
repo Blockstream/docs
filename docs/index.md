@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Introduction
+title: Blockstream Docs
 nav_order: 0
 ---
 
