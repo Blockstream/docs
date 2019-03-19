@@ -8,6 +8,10 @@ Github Pages itself uses [Jeykyll](https://jekyllrb.com/) to generate static web
 
 ## How to run this site locally and make changes to it
 
+You can run a local copy of the Blockstream Docs site and test any changes you make before making a pull request. Following the steps below will allow you to set up and run a local copy of the site and pulls its theme files from the Blockstream docs theme repository so you can see exactly how your changes look.
+
+### If you have not run the site locally before...
+
 Install ruby, ruby-dev and build-essential packages:
 
 ~~~~
@@ -17,7 +21,7 @@ sudo apt-get install ruby ruby-dev build-essential
 Install the Jekyll and bundler gems:
 
 ~~~~
-gem install jekyll bundler
+sudo gem install jekyll bundler
 ~~~~
 
 Fork the https://github.com/Blockstream/docs repository to your own GitHub account
@@ -47,6 +51,8 @@ Install the dependencies required by the website's Gemfile:
 bundle install
 ~~~~
 
+### Once that is done you can just follow these steps every time you want to test your changes...
+
 Build the site and start the local server:
 
 ~~~~
@@ -55,11 +61,9 @@ bundle exec jekyll serve
 
 View the site by browsing to: http://127.0.0.1:4000
 
-Note: changes you make to the .md files will be automatically rebuilt and there is no need to restart the server to view the changes. If you make any changes to the "_config.yml" file however, you will need to stop the server using Ctrl+C and start it again using the "bundle exec jekyll serve" command.
+Note: For some changes to take effect you may need to restart the server. Use Ctrl+c to stop the server and start it again using the "bundle exec jekyll serve" command.
 
-Note: The local build does not currently use the theme used by the main website. 
-
-To propose changes:
+### To propose changes to Blockstream Docs
 
 Check the status of what files you have changed:
 
@@ -67,7 +71,7 @@ Check the status of what files you have changed:
 git status
 ~~~~
 
-Add all:
+Add the files you want to commit (or use --all to add them all):
 
 ~~~~
 git add --all

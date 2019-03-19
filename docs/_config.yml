@@ -1,4 +1,4 @@
-remote_theme: pmarsceill/just-the-docs
+remote_theme: Blockstream/docs-theme
 color_scheme: "dark"
 
 # Enable or disable the site search
@@ -8,3 +8,9 @@ search_enabled: true
 aux_links:
     "Suggest a change via GitHub":
       - "//github.com/blockstream/docs"
+
+exclude:
+    - c-lightning
+    - explorer
+    - liquid
+    - satellite

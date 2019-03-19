@@ -6,6 +6,5 @@ has_children: true
 permalink: /docs/c-lightning
 ---
 
-# Welcome to the Lightning Docs
+# Welcome to the c-lightning Docs
 
-Wow so fast and cheap
