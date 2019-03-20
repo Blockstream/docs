@@ -5,6 +5,14 @@ nav_order: 3
 parent: Green
 --- 
 
+- [Logging In](#logging-in)
+- [Balance and Transaction List](#balance-and-transaction-list)
+- [Receiving Transactions](#receiving-transactions)
+- [Sending Transactions](#sending-transactions)
+- [What Happens After a Transaction Is Sent](#what-happens-after–a-transaction-is-sent)
+- [Our Multisignature Model](#our-multisignature-model)
+- [Redeposits](#redeposits)
+
 ## Logging In
 
 After you have created your wallet, you will be presented with a login screen when you open the app.

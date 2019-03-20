@@ -5,9 +5,21 @@ nav_order: 1
 parent: Green
 --- 
 
+## ToC
+
+- [What Blockstream Green is for](#what-blockstream-green-is-for)
+- [What Blockstream Green isn’t for](#what-blockstream-green-isnt-for)
+- [Platforms Supported](#platforms-supported)
+- [Testnet Versions](#testnet-versions)
+- [You’re in Control](#youre-in-control)
+- [We’re Free! (But Bitcoin Isn’t)](#were-free-but-bitcoin-isnt)
+- [What’s Special About Blockstream Green](#whats-special-about-blockstream-green)
+
+___
+
 <img src="../../assets/green-assets/green-graphic.png" />
 
-## What Blockstream Green is for
+# What Blockstream Green is for
 
 Blockstream Green is a Bitcoin wallet - it’s a way for you to securely receive, store, and send Bitcoin.
 
@@ -18,7 +30,7 @@ Our wallet allows for convenient, instant access to your coins from a variety of
 We offer a variety of advanced features, such as letting our users set their own spending limits, watch-only access for observers, and our unique multisig security model. All of these (and more) are explained in more detail below.
 
 
-## What Blockstream Green isn’t for
+# What Blockstream Green isn’t for
 
 It is just as important to understand what Blockstream Green isn’t for.
 
@@ -29,12 +41,12 @@ Blockstream Green only supports Bitcoin (which is denoted by the 3-letter ticker
 Always be sure to check the 3-letter currency ticker before sending any coins, and only use BTC with your Blockstream Green wallet.
 
 
-## Platforms Supported
+# Platforms Supported
 
 Blockstream Green is available for [Android](https://play.google.com/store/apps/details?id=com.greenaddress.greenbits_android_wallet) and [iOS](https://itunes.apple.com/app/id1402243590).
 
 
-## Testnet Versions
+# Testnet Versions
 
 Bitcoin has an alternative network known as ‘testnet’. This testnet network is just like the real Bitcoin network (which is known as ‘mainnet’), but with worthless coins, so that people can test features and applications without the risk of losing real coins.
 
@@ -43,7 +55,7 @@ Our wallets can connect to testnet by selecting testnet from the list of network
 Wallets, addresses, and coins on the Bitcoin Testnet are completely separate from the real Bitcoin network As such, you will need to create and secure a new mainnet wallet after you are finished with testing and wish to use the real Bitcoin network. Trying to use an address, or login credentials, or mnemonic from a testnet wallet or service on the Bitcoin mainnet will not work.
 
 
-## You’re in Control
+# You’re in Control
 
 Bitcoin is an exciting new technology with many advantages, but it comes with some extra responsibilities on the users’ end. As a Bitcoin wallet provider, we at Blockstream Green do not actually grant access to your Bitcoin - you do.
 
@@ -56,7 +68,7 @@ This is not possible with Blockstream Green, as we are a non-custodial service. 
 Because of this, there are some differences between our services and user responsibilities and more traditional financial tools and services. Be sure to read the Setting Up a Wallet section for details; pay close attention to the recommended practices outlined there.
 
 
-## We’re Free! (But Bitcoin Isn’t)
+# We’re Free! (But Bitcoin Isn’t)
 
 Blockstream Green is a completely free service - we do not earn any revenue from our users, neither we collect, nor use any of their data.
 
@@ -67,7 +79,7 @@ There is no benefit to Blockstream Green for our users to pay high fees, and we 
 We do not ever receive these fees, and so have no way to return any fees to users after a transaction has been confirmed. We always show the fee that a transaction will pay so you can verify or change it before you make your transaction.
 
 
-## What’s Special About Blockstream Green
+# What’s Special About Blockstream Green
 
 For those that are already familiar with how Bitcoin wallets typically work, you may know about some of the convenience, security, and privacy features that using Bitcoin offers.
 
@@ -82,7 +94,7 @@ This gets you the best of both worlds - the full financial sovereignty and trust
 Our design enables a lot of cool features, many of which are not available in other wallets:
 
 
-### Convenience
+## Convenience
 - Easy access from anywhere
 - All access controlled by a single user mnemonic
 - A simple interface with current prices in your national currency
@@ -95,13 +107,13 @@ Our design enables a lot of cool features, many of which are not available in ot
 - Segregated Witness support for the lowest fees possible
 - Testnet network for functionality trials
 
-### Security
+## Security
 - Multiple two-factor authentication options
 - Blockstream Green signature required to move coins
 - User-Controlled transaction limits and restrictions
 - Hardware wallet support (on Andorid)
 
-### Privacy
+## Privacy
 - No KYC or identification of users necessary
 - User secrets are never transmitted to our servers or stored unencrypted on your device
 - Minimal information is stored by the service

@@ -4,8 +4,17 @@ title: Setting Up a Wallet
 nav_order: 2
 parent: Green
 --- 
+## ToC
 
-## Install a version of our app
+- [Install the app](#install-the-app)
+- [Create and Safely Record Your 24-Word Mnemonic](#create-and-safely-record-your-24-word-mnemonic)
+- [Choose a PIN for the Device](#choose-a-pin-for-the-device)
+- [Set up 2FA](#set-up-2fa)
+- [Best Practices for Creating a New Wallet](#best-practices-for-creating-a-new-wallet)
+
+___
+
+# Install the app
 
 Blockstream Green apps can be accessed through the following operating systems and apps:
 
@@ -16,7 +25,7 @@ iOS | [Blockstream Green iOS Wallet](https://itunes.apple.com/app/id1402243590)
 
 Each of our apps can also be used on Bitcoin’s testnet, which we recommend for testing new features or becoming accustomed with the setup process to avoid accidental loss of coins.
 
-## Create and Safely Record Your 24-Word Mnemonic
+# Create and Safely Record Your 24-Word Mnemonic
 
 After you’ve installed the app, you’ll have the option to log in with an existing mnemonic, or create a new wallet. To start, make sure the Bitcoin network is selected and click on “Create New Wallet”.
 
@@ -42,7 +51,7 @@ And remember: **we don't store your mnemonic in the Blockstream Green database, 
 
 It is also crucial to **never** send your mnemonic over email or text to anyone (including Blockstream Green support). Doing so can expose your mnemonic to theft, and put your coins at risk. If you ever forget and accidentally do this, we urge you to create a brand new wallet as soon as possible and move your coins to that new wallet.
 
-## Choose a PIN for that Device
+# Choose a PIN for the Device
 
 After you have recorded and confirmed your mnemonic, you will be able to choose a PIN. This is a 6 digit number that can be used to quickly access your wallet on that device.
 
@@ -58,7 +67,7 @@ As a security feature, your device will reset your PIN if you or someone else en
 
 If your PIN is reset, you will need to enter your mnemonic, which will allow you to create a new PIN for that device.
 
-## Set up 2FA
+# Set up 2FA
 
 Finally, after you have recorded and confirmed your mnemonic and set your PIN, you will be prompted to choose a 2FA method. A 2FA method is a second layer of security that a wallet’s owner must confirm before sending coins or making other critical changes in settings.
 
@@ -75,7 +84,7 @@ Using 2FA is simple: whenever you take an action that requires 2FA authorization
 2FA is most secure when it is separated from the wallet device.
 
 
-## Best Practices for Creating a New Wallet
+# Best Practices for Creating a New Wallet
 
 Creating a wallet for the first time is a straightforward process, but there are a couple of common mistakes that new Bitcoin users make.
 
