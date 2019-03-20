@@ -4,7 +4,7 @@ title: Advanced Features
 nav_order: 4
 parent: Green
 --- 
-## ToC
+## Table of Contents
 
 - [Hardware Wallets (Android)](#hardware-wallets-android)
 
