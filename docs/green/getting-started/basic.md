@@ -2,7 +2,8 @@
 layout: default
 title: Basic Usage
 nav_order: 3
-parent: Green
+parent: Getting Started
+grand_parent: Green
 --- 
 
 - [Logging In](#logging-in)

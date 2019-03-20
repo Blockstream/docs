@@ -1,9 +1,11 @@
 ---
 layout: default
-title: Advanced Features
-nav_order: 4
-parent: Green
+title: Hadrware Wallets
+nav_order: 3
+parent: Troubleshooting and Advanced Features
+grand_parent: Green
 --- 
+
 ## Table of Contents
 
 - [Hardware Wallets (Android)](#hardware-wallets-android)

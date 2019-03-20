@@ -2,7 +2,8 @@
 layout: default
 title: Introduction to Blockstream Green
 nav_order: 1
-parent: Green
+parent: Getting Started
+grand_parent: Green
 --- 
 
 ## ToC
