@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Hadrware Wallets
+title: Hardware Wallets
 nav_order: 3
 parent: Troubleshooting and Advanced Features
 grand_parent: Green
