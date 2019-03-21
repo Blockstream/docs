@@ -2,7 +2,7 @@
 layout: default
 title: Receiving Transactions
 nav_order: 5
-parent: Troubleshooting and Advanced Features
+parent: TROUBLESHOOTING AND ADVANCED FEATURES
 grand_parent: Green
 --- 
 

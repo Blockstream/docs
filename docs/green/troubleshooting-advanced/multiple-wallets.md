@@ -2,7 +2,7 @@
 layout: default
 title: Multiple Wallets and Devices
 nav_order: 4
-parent: Troubleshooting and Advanced Features
+parent: TROUBLESHOOTING AND ADVANCED FEATURES
 grand_parent: Green
 --- 
 

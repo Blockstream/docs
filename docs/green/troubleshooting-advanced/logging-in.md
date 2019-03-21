@@ -2,7 +2,7 @@
 layout: default
 title: Logging In
 nav_order: 1
-parent: Troubleshooting and Advanced Features
+parent: TROUBLESHOOTING AND ADVANCED FEATURES
 grand_parent: Green
 --- 
 

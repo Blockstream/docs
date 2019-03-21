@@ -2,7 +2,7 @@
 layout: default
 title: Sending Transactions
 nav_order: 6
-parent: Troubleshooting and Advanced Features
+parent: TROUBLESHOOTING AND ADVANCED FEATURES
 grand_parent: Green
 --- 
 

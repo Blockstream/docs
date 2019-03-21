@@ -2,7 +2,7 @@
 layout: default
 title: Basic Usage
 nav_order: 3
-parent: Getting Started
+parent: GETTING STARTED
 grand_parent: Green
 --- 
 

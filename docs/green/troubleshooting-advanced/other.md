@@ -2,7 +2,7 @@
 layout: default
 title: Other Features
 nav_order: 7
-parent: Troubleshooting and Advanced Features
+parent: TROUBLESHOOTING AND ADVANCED FEATURES
 grand_parent: Green
 --- 
 
