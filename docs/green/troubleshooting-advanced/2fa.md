@@ -50,7 +50,7 @@ Here, you will find 4 different 2FA options:
 
 To set up a new 2FA method, you choose your preferred method, and toggle the switch to turn it on.
 
-If you already had another 2FA method already set up, you will need to use it to confirm that you wish to make a change.
+If you already had another 2FA method set up, you will need to use it to confirm that you wish to make a change.
 
 Depending on the method you choose, you will then need to enter the relevant information about your chosen 2FA, and then input your first 2FA code.
 
@@ -121,7 +121,7 @@ One of the main advantages of using this as your 2FA method is that you do not n
 
 Be aware that if you lose your only device with your Google Authenticator app, you can get permanently locked out of this method. This is one of the many reasons we suggest that users keep at least two different 2FA methods activated at all times.
 
-Due to this risk, we also encourage users to backup the QR code and/or the alphanumeric code that is shown in the wallet when you set it up. This allows you to restore Google Authenticator 2FA on another device, using the Google Authenticator App, should you lose access to your first 
+Due to this risk, we also encourage users to backup the QR code and/or the alphanumeric code that is shown in the wallet when you set it up. This allows you to restore Google Authenticator 2FA on another device, using the Google Authenticator App, should you lose access to your first.
 
 If you find yourself having trouble with your 2FA (for example, the codes are not working), then please check this support page, as the problem can usually be solved using those suggestions.
 

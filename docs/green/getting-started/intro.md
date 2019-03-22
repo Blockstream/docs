@@ -53,7 +53,7 @@ Bitcoin has an alternative network known as ‘testnet’. This testnet network 
 
 Our wallets can connect to testnet by selecting testnet from the list of networks in the settings of the login page. If you are new to Bitcoin or Blockstream Green, we urge you to try things out on testnet first, so that you can get comfortable with how things work before you start using your real coins.
 
-Wallets, addresses, and coins on the Bitcoin Testnet are completely separate from the real Bitcoin network As such, you will need to create and secure a new mainnet wallet after you are finished with testing and wish to use the real Bitcoin network. Trying to use an address, or login credentials, or mnemonic from a testnet wallet or service on the Bitcoin mainnet will not work.
+Wallets, addresses, and coins on the Bitcoin Testnet are completely separate from the real Bitcoin network. As such, you will need to create and secure a new mainnet wallet after you are finished with testing and wish to use the real Bitcoin network. Trying to use an address, or login credentials, or mnemonic from a testnet wallet or service on the Bitcoin mainnet will not work.
 
 
 # You’re in Control
@@ -71,7 +71,7 @@ Because of this, there are some differences between our services and user respon
 
 # We’re Free! (But Bitcoin Isn’t)
 
-Blockstream Green is a completely free service - we do not earn any revenue from our users, neither we collect, nor use any of their data.
+Blockstream Green is a completely free service - we do not earn any revenue from our users, we neither collect, nor use any of their data.
 
 It is important to understand that all Bitcoin transactions require a fee that is built in as part of the Bitcoin protocol. This fee is paid to the miners who run expensive equipment to secure the Bitcoin network and confirm users’ transactions.
 

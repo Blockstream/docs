@@ -97,6 +97,6 @@ It is very easy for users to start accepting and sending bitcoins and delay prop
 
 Please take this process very seriously, and give it the time and attention that it needs.
 
-The other error that some people make is by using a throw-away email address for their 2FA. This can also result in loss of coins! Unless you immediately create more permanent alternative 2FA methods (which we recommend anyway), losing access to your email can be very inconvenient. Make sure you use an email address that you will be able to access in the future.
+The other error that some people make is using a throw-away email address for their 2FA. This can also result in loss of coins! Unless you immediately create more permanent alternative 2FA methods (which we recommend anyway), losing access to your email can be very inconvenient. Make sure you use an email address that you will be able to access in the future.
 
 Another situation to be aware of is creating a new wallet while there is an existing wallet on the app. You will be allowed to create as many wallets as you like on your Blockstream Green app, but it can only store one PIN at a time. This means that any new wallets won't allow PIN access on that device, and in the future must be logged into using the full mnemonic. If you wish to create a new wallet, and have your app store a PIN for the new one, you will need to first disable the PIN on the original wallet. You can do this by entering an incorrect PIN 3 times in a row, or from settings after you have logged in.
