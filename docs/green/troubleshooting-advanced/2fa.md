@@ -137,7 +137,7 @@ You start the reset process by entering an email address, which you must confirm
 
 Once you have done this the waiting period will begin. The waiting period is at least 1 year long (see below), and a countdown in days will be displayed in your wallet’s settings.
 
-If the waiting period goes by without interruption by the wallet’s owner, then the 2FA settings will be set to “disabled” except for email 2FA, which will be set to the reset email address. Then you can again use your wallet as normal, including setting up new 2FA methods.
+If the waiting period goes by without interruption by the wallet’s owner, then email 2FA will be enabled and set to the reset email address. Then you can again use your wallet as normal, including setting up new 2FA methods.
 
 The long waiting period is a crucial security measure, in case someone temporarily accessed their wallet and tried to use the reset feature to steal their coins. The waiting period gives the rightful owner of the wallet time to log in and access their wallet to cancel the 2FA reset.
 
