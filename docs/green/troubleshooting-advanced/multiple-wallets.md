@@ -28,8 +28,6 @@ Now, you want to create a separate wallet. To do this, you will need to erase yo
 
 You do this by clicking on “create new wallet” on the bottom of the “Onboarding” page, which will guide you through the new wallet setup process.
 
-You will also need to use a separate email address, since Blockstream Green will only allow one wallet per email address.
-
 Once you have generated the new wallet, you will have a separate mnemonic for that wallet, and your app will default to asking you for the PIN of that newly created wallet.
 
 If you want to switch back to your old wallet, you will need to go back to the “”Onboarding” page and select the “Restore Green Wallet” option, and enter the mnemonic of your old wallet. Then you can recreate your PIN and access your original wallet again.

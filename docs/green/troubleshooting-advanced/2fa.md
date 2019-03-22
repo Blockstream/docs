@@ -69,10 +69,6 @@ Emailed confirmation codes expire after 5 minutes, so be sure to check your emai
 
 If you aren’t receiving your emails, be sure to check your spam folder, or otherwise contact your email provider in case they are being blocked somehow.
 
-As a final point, you may only use an email address with a single wallet with Blockstream Green. This means that if you already have an existing wallet, you cannot create a new using the same email. If you have an old and unused wallet connected to an email that you wish to use, then you can either change its email address, or delete the wallet entirely, which will free up the email to be used.
-
-Those are the only methods for freeing up an email address, so if you can no longer access the wallet (due to losing the mnemonic), then you will be unable to use that email address for any future wallets.
-
 
 ## SMS 2FA
 
