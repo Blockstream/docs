@@ -91,7 +91,7 @@ For obvious reasons, never use a temporary phone number. Also, only set up your 
 
 ## Phone 2FA
 
-The final 2FA option is to have our service call your phone to read out the confirmation numbers. It functions similarly to SMS 2FA.
+The third 2FA option is to have our service call your phone to read out the confirmation numbers. It functions similarly to SMS 2FA.
 
 To activate this method, toggle the Phone option under settings->security->Two-Factor Authentication to activate it. If you have any other 2FA methods already activated, you will first need to confirm with one of them that you wish to add a new 2FA method.
 
@@ -103,7 +103,7 @@ For similar reasons to SMS 2FA, please make sure that you keep at least one othe
 
 ## Google Authenticator 2FA
 
-The second available 2FA method is using Google Authenticator.
+The final available 2FA method is using Google Authenticator.
 
 To set up this method, you will first need to download the authenticator app on Android or iOS.
 
