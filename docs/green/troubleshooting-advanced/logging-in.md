@@ -115,7 +115,7 @@ You can return and edit this anytime you are logged in as the wallet’s owner.
 
 To log in with the watch-only login, you need to return to the “Log In” screen by logging out of the main wallet. Then, instead of entering your PIN or mnemonic, tap or click on the “Watch-only Login” button on the top right corner of the home screen..
 
-This will prompt you to enter the username and password that you chose in settings, and will grant access to a limited version of the wallet only for viewing transaction history and the receiving address.
+This will prompt you to enter the username and password that you chose in settings, and will grant access to a limited version of the wallet only for viewing transaction history and receiving transactions.
 
 You can safely give this username and password out to anyone else who you want to be able to view your wallet’s activity, without having to trust them not to steal - they will be unable to ever send coins out of your wallet using this login information.
 

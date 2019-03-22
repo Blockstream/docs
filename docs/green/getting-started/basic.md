@@ -97,7 +97,7 @@ Custodial services, such as exchanges, hold your Bitcoin for you. This also mean
 
 Other non-custodial wallets do not have those issues, but it also means that if someone steals your mnemonic or gain access to your wallet, they can steal all of your coins. The secrecy of your mnemonic is the only thing protecting your coins with these wallets.
 
-With Blockstream Green, we get you benefits of both types.
+With Blockstream Green, you get the benefits of both types.
 
 This is possible because coins in Blockstream Green wallets have two different spend conditions.
 
