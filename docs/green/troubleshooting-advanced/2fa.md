@@ -43,10 +43,10 @@ Your 2FA settings are all managed through the “Settings” page, under the sec
 
 Here, you will find 4 different 2FA options:
 
-* Email
-* SMS
-* Phone
-* Google Authenticator
+- Email
+- SMS
+- Phone
+- Google Authenticator
 
 To set up a new 2FA method, you choose your preferred method, and toggle the switch to turn it on.
 
@@ -148,7 +148,7 @@ The long waiting period is a crucial security measure, in case someone temporari
 The exact formula for the waiting period is whichever of these two is longer:
 
 
-* 365 days after the reset is triggered, OR
-* 365 days plus your nLockTime period after the your wallet’s last transaction
+- 365 days after the reset is triggered, OR
+- 365 days plus your nLockTime period after the your wallet’s last transaction
 
 For example, if you have your nLockTime period set to 30 days, and your last transaction was 40 days ago, then the waiting period will be 365 days. But if you have your nLockTime period set to 90 days, and you sent a transaction 50 days, ago, then the waiting period will be 405 days (365 days + 40 days left on your nLocktime).
