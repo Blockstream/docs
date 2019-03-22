@@ -107,7 +107,7 @@ This procedure can also be used if you simply wish to be able to access a single
 
 Watch-only mode is a feature that allows the owner of a wallet to create an alternative login method that can view the activity on a wallet without being able to change any crucial settings or send coins.
 
-This can be useful for situations if you want to let someone else access your device to get a receiving address for your wallet or confirm for you that coins have been received.
+This can be useful for situations if you want to let someone else access your wallet to get a receiving address or confirm for you that coins have been received.
 
 You can add a watch-only login under the “Network” section of settings. Select “Watch-Only Login”, and then you can create the new username and password, and press save.
 
