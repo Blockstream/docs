@@ -131,7 +131,7 @@ Unfortunately, some users do not follow best practices and will lose their only 
 
 When this happens, there are two available methods. The first is to wait for the redeposit period to expire and then use our garecovery tool to send your coins to another wallet.
 
-The other option is to use our 2FA reset feature, which can be done from the “Settings” page, in security section.
+The other option is to use our 2FA reset feature, which can be done from the “Settings” page, in the Two-Factor section.
 
 You start the reset process by entering an email address, which you must confirm.
 
