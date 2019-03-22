@@ -48,7 +48,7 @@ The remedy is the same regardless of the cause: you must use your mnemonic to lo
 
 ## Trouble Entering Mnemonic
 
-When entering your mnemonic, enter the words all in lowercase, with a single space between each word. After you have typed all 24 words, you can press the submit button.
+When entering your mnemonic, enter the words all in lowercase. After you have typed all 24 words, you can press the submit button.
 
 If you are trying to enter your mnemonic and it is not working, then one of three error messages should appear.
 
@@ -64,7 +64,7 @@ You can also find the list of valid words at:
 
 You may wish to try with similar looking words if one of your words is not written down clearly. If you are missing a word or they are in the wrong order, then you will need to attempt to recover them using a wallet recovery service or tool, but this is beyond the scope of support that we can provide.
 
-Also, make sure you are using the latest version of the wallet and that you are using lower case (small letters), only a single space between words and no commas or other whitespace such as tab, leading or trailing whitespace. If you are copy and pasting your mnemonic into the text box, please try typing them as sometimes they may have been saved in an incorrect encoding.
+Also, make sure you are using the latest version of the wallet and that you are using lower case (small letters) and no commas or other whitespace such as tab, leading or trailing whitespace. If you are copy and pasting your mnemonic into the text box, please try typing them as sometimes they may have been saved in an incorrect encoding.
 
 ### Out of Order Mnemonic Words
 
