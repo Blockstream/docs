@@ -116,7 +116,7 @@ Our signature scheme also allows us to enforce 2FA security, 2FA spending thresh
 
 As explained above, coins in your main Blockstream Green wallet (or a 2of2 simple account) require 2 signatures to be spent: one from you and one from Blockstream Green. In order to protect you from loss of access to your coins should Blockstream Green become unavailable, there is an alternative spend condition which requires only the user’s signature, provided that a certain period of time has passed.
 
-If the service becomes unavailable, you simply wait for the specified period (1 year by default), then sign and send the transaction using our open source recovery tool garecovery.
+If the service becomes unavailable, you simply wait for the specified period (90 days by default), then sign and send the transaction using our open source recovery tool garecovery.
 
 After the expiry period passes, any other limits placed on your spending in Blockstream Green, such as 2FA requirements, cease to be enforceable by the service.
 
