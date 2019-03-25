@@ -113,7 +113,9 @@ You can add a watch-only login under the “Network” section of settings. Sele
 
 You can return and edit this anytime you are logged in as the wallet’s owner.
 
-To log in with the watch-only login, you need to return to the “Log In” screen by logging out of the main wallet. Then, instead of entering your PIN or mnemonic, tap or click on the “Watch-only Login” button on the top right corner of the home screen..
+To log in with the watch-only login, you need to return to the “Log In” screen by logging out of the main wallet. Then, instead of entering your PIN or mnemonic, tap or click on the __eye__ icon on the top right corner of the home screen.
+
+<img src="../../assets/green-assets/landing.png" width="250" />
 
 This will prompt you to enter the username and password that you chose in settings, and will grant access to a limited version of the wallet only for viewing transaction history and receiving transactions.
 
@@ -124,7 +126,7 @@ You can safely give this username and password out to anyone else who you want t
 
 Under Settings->Network, you can find an option that allows you to disable your PIN to log in.
 
-If you choose to disable the PIN login you will need to enter your full 24-word mnemonic every time you wish to access your wallet on that device. This can be useful for a situation where you suspect someone may have access to a device of yours and may be able to guess your PIN.
+If you choose to disable the PIN login you will need to enter your full 24-word mnemonic every time you wish to access your wallet on that device. This can be useful for a situation where you suspect someone may have access to your device and may be able to guess your PIN.
 
 You can also quickly disable, and then immediately enable again as a method to change your PIN.
 
