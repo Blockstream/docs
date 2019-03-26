@@ -28,11 +28,11 @@ Each of our apps can also be used on Bitcoin’s testnet, which we recommend for
 
 # Create and Safely Record Your 24-Word Mnemonic
 
-After you’ve installed the app, you’ll have the option to log in with an existing mnemonic, or create a new wallet. To start, make sure the Bitcoin network is selected and click on “Create New Wallet”.
+After you’ve installed the app, you’ll have the option to log in with an existing mnemonic, or create a new wallet. To start, make sure the Bitcoin network is selected and click on `Create New Wallet`.
 
 <img src="../../assets/green-assets/landing.png" width="250" align="center" />
 
-At this point, the app will generate a 24-word mnemonic to function as a backup login method for your wallet. (Our wallets use [the BIP39 standard](https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki) for generating your mnemonic and [BIP32](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki) to derive private keys from that mnemonic.)
+At this point, the app will generate a 24-word mnemonic to function as a backup login method for your wallet. (Our wallets use [the BIP39 standard](https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki) for generating your mnemonic and [BIP32](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki) to derive private keys from that mnemonic).
 
 <img src="../../assets/green-assets/menmonic-warning.png" width="250" />
 
@@ -42,7 +42,7 @@ At this point, the app will generate a 24-word mnemonic to function as a backup 
 
 It must be kept safe and accessible because if your app gets uninstalled, or your device gets lost or stolen, or you forget your PIN, or your PIN gets reset, then your mnemonic will let you access your coins again. Even if we at Blockstream Green get shut down or disappear, you can still retain control of your coins as long as you have your mnemonic.
 
-It must be kept secret because if someone else can figure out or steal your mnemonic, they may be able to steal your coins (although if you have 2FA set up, they will need to bypass that as well...but we’ll cover that in the 2FA section).
+It must be kept secret because if someone else can figure out or steal your mnemonic, they may be able to steal your coins (although if you have 2FA set up, they will need to bypass that as well...but we’ll cover that in the [Two-Factor authentication section](../troubleshooting-advanced/2fa.md)).
 
 To ensure that you safely recorded your mnemonic, you will be prompted to re-enter several of the words in the correct order.
 
@@ -66,7 +66,9 @@ Your PIN is specific to the device that it is created on. It is possible to acce
 
 As a security feature, your device will reset your PIN if you or someone else enters the wrong PIN three times in a row. This is to prevent a malicious party from continually guessing until they get your PIN right.
 
-If your PIN is reset, you will need to enter your mnemonic, which will allow you to create a new PIN for that device.
+If your PIN is reset, you will need to enter your mnemonic through `Restore Green Wallet` on the "Onboarding" screen, which will allow you to create a new PIN for that device.
+
+<img src="../../assets/green-assets/landing.png" width="250" align="center" />
 
 # Set up 2FA
 
@@ -78,7 +80,7 @@ While optional, we urge you to activate at least one 2FA method.
 
 Ideally, you should add at least 2 different 2FA options.
 
-For various reasons, our users sometimes lose access to one of their 2FA methods, and this can be very inconvenient. You can mitigate this risk by having at least 2 different 2FA methods in place. This way, if you suddenly lose access to one, you can still retain full access to your wallet, and then reset the lost 2FA method (for more details on this, see the section “Changing Your 2FA Methods”).
+For various reasons, our users sometimes lose access to one of their 2FA methods, and this can be very inconvenient. You can mitigate this risk by having at least 2 different 2FA methods in place. This way, if you suddenly lose access to one, you can still retain full access to your wallet, and then reset the lost 2FA method (for more details on this, see the section [Two-Factor authentication](../troubleshooting-advanced/2fa.md#changing-your-two-factor-authentication-settings)).
 
 Using 2FA is simple: whenever you take an action that requires 2FA authorization (sending a transaction, or changing your 2FA settings), you will confirm the action by providing a confirmation code that you will receive via your preferred 2FA method.
 
