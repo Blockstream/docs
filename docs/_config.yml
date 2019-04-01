@@ -12,7 +12,6 @@ aux_links:
 exclude:
     - c-lightning
     - explorer
-    - liquid
     - satellite
     
 repository: "Blockstream/docs"

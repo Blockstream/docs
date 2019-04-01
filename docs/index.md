@@ -14,3 +14,4 @@ We have a lot of exciting technology to cover and we're only just begining. Crea
 
 Sections:
 - [Green](docs/green)
+- [Liquid](docs/liquid)
