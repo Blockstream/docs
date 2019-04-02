@@ -3,7 +3,7 @@ layout: default
 title: Basic Usage
 nav_order: 3
 parent: GETTING STARTED
-grand_parent: Green
+grand_parent: Green Wallet
 --- 
 
 - [Logging In](#logging-in)

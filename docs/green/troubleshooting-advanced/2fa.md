@@ -3,7 +3,7 @@ layout: default
 title: Two-Factor Authentication
 nav_order: 2
 parent: TROUBLESHOOTING AND ADVANCED FEATURES
-grand_parent: Green
+grand_parent: Green Wallet
 --- 
 
 ## Table of Contents

@@ -3,7 +3,7 @@ layout: default
 title: Setting Up a Wallet
 nav_order: 2
 parent: GETTING STARTED
-grand_parent: Green
+grand_parent: Green Wallet
 --- 
 ## ToC
 

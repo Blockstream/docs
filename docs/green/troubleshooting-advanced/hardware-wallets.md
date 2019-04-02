@@ -3,7 +3,7 @@ layout: default
 title: Hardware Wallets
 nav_order: 3
 parent: TROUBLESHOOTING AND ADVANCED FEATURES
-grand_parent: Green
+grand_parent: Green Wallet
 --- 
 
 ## Table of Contents

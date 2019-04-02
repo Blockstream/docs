@@ -3,7 +3,7 @@ layout: default
 title: Logging In
 nav_order: 1
 parent: TROUBLESHOOTING AND ADVANCED FEATURES
-grand_parent: Green
+grand_parent: Green Wallet
 --- 
 
 ## Table of Contents
