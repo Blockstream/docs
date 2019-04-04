@@ -5,7 +5,7 @@ nav_order: 5
 parent: TROUBLESHOOTING AND ADVANCED FEATURES
 grand_parent: Green Wallet
 --- 
-# Understand and Using Transaction History Data
+# Understanding and Using Transaction History Data
 
 After you log in to your wallet, the default page displayed will include a list of your wallet's transaction activity, directly below the send and receive buttons. This displays, in order from newest to oldest, a history of all transactions that have entered and left your wallet.
 
