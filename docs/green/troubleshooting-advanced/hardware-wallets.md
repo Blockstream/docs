@@ -17,7 +17,7 @@ ___
 
 Blockstream Green has full functionality built-in for hardware wallets. This gets you the best of both worlds by granting you access to Blockstream Green multisig security and features, while using your hardware wallet to safely store your own private key.
 
-Currently, we support Ledger Nano S and Trezor ONE hardware wallets. You can see detailed instructions how to use each type below.
+Currently, we support Ledger Nano S and both the Trezor ONE and the Trezor T hardware wallets. You can see detailed instructions how to use each type below.
 * This setup enhances your funds security. In fact, a Blockstream Green wallet associated with a hardware wallet creates a 2-of-2 multisig wallet where your key is held in cold storage on your hardware device. The other key will be held by the Blockstream Green service and serves to authorize transactions through Two-Factor Authentication.
 
 * Your 2-of-2 Blockstream Green **is different** from any other existing single signature wallet you may have already created with your hardware wallet device with other hardware wallet managers.
