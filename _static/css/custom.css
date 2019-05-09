@@ -1,0 +1,449 @@
+@import url('https://fonts.googleapis.com/css?family=Fira+Mono');
+
+/* Fonts */
+
+@charset "UTF-8";
+
+@font-face {
+  font-family: 'DINPro';
+  src: url("../fonts/DINPro-Light.otf");
+  font-weight: 300;
+  font-style: normal; 
+}
+
+@font-face {
+  font-family: 'DINPro';
+  src: url("../fonts/DINPro-Regular.otf");
+  font-weight: normal;
+  font-style: normal; 
+}
+
+@font-face {
+  font-family: 'DINPro';
+  src: url("../fonts/DINPro-Medium.otf");
+  font-weight: medium;
+  font-style: normal; 
+}
+
+@font-face {
+  font-family: 'DINPro';
+  src: url("../fonts/DINPro-Bold.otf");
+  font-weight: bold;
+  font-style: normal; 
+}
+
+body {
+    font-family: "DINPro", "Source Sans Pro", sans-serif;
+    font-weight: 300;
+}
+
+h1, h2, .rst-content .toctree-wrapper p.caption, h3, h4, h5, h6, legend {
+    font-family: "DINPro", "Source Sans Pro", sans-serif;
+}
+
+.rst-content pre.literal-block, .rst-content div[class^='highlight'] pre, .rst-content .linenodiv pre {
+    font-family: "Fira Mono",SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",Courier,monospace;
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+/* Background colour right hand panel white */
+
+@media screen and (min-width: 1100px)
+.wy-nav-content-wrap {
+    background: rgba(0,0,0,0);
+}
+
+.wy-nav-content-wrap {
+    background: white;
+}
+
+@media screen and (min-width: 1100px)
+.wy-nav-content {
+    margin: 0;
+    background: white;
+}
+
+.wy-nav-content {
+    margin: 0;
+    background: white;
+}
+
+/* Code blocks */
+
+.rst-content div[class^='highlight'] {
+    border: none;
+    overflow-x: auto;
+}
+
+.highlight {
+    background: #f7f8f9;
+}
+
+.highlight .nn {
+    font-weight: 300;
+}
+
+.highlight .nc {
+    font-weight: 300;
+}
+
+.highlight .k {
+    font-weight: 300;
+}
+
+.highlight .kn {
+    font-weight: 300;
+}
+
+.highlight .nd {
+    font-weight: 300;
+}
+
+.highlight .ni {
+    font-weight: 300;
+}
+
+.highlight .nl {
+    font-weight: 300;
+}
+
+.highlight .nf {
+    font-weight: 300;
+}
+
+.highlight .nt {
+    font-weight: 300;
+}
+
+.highlight .se {
+    font-weight: 300;
+}
+
+.highlight .ow {
+    font-weight: 300;
+}
+
+.highlight .kr {
+    font-weight: 300;
+}
+
+.highlight .kd {
+    font-weight: 300;
+}
+
+.highlight .kc {
+    font-weight: 300;
+}
+
+.highlight .gu {
+    font-weight: 300;
+}
+
+.highlight .gp {
+    font-weight: 300;
+}
+
+.highlight .gh {
+    font-weight: 300;
+}
+
+.highlight .cs {
+    background: #f7f8f9;
+}
+
+/* Left Nav Bar */
+
+.wy-side-nav-search {
+    color: #1C2127;
+    background-color: #F7FAFD;
+}
+
+.wy-side-nav-search input[type=text] {
+    width: 100%;
+    border-radius: 50px;
+    padding-left: 18px;
+    padding-top: 9px;
+    padding-bottom: 6px;
+    border-color: #CDD5E2;
+}
+
+.wy-nav-side {
+    background: #F7FAFD;
+    color: #1C2127;
+    border-right: 1px solid #CDD5E2;
+}
+
+.wy-menu-vertical a {
+    color: #1C2127;
+}
+
+.wy-menu-vertical a:hover {
+    background: #F7FAFD;
+    color: #1C2127;
+}
+
+.wy-menu-vertical header, .wy-menu-vertical p.caption {
+    color: #1C2127;
+}
+
+.wy-menu-vertical li ul li a {
+    font-weight: 300;
+}
+
+.wy-menu-vertical li.current {
+    background: #F7FAFD;
+    color: #1C2127;
+}
+
+.wy-menu-vertical li.current a:hover {
+    background: #F7FAFD;
+    color: #1C2127;
+}
+
+.wy-menu-vertical li.toctree-l1.current>a {
+    border-bottom: 0px;
+    border-top: 0px;
+}
+
+.wy-menu-vertical li.current>a {
+    background: #F7FAFD;
+    color: #01ACE1;
+    font-weight: 400;
+}
+
+.wy-menu-vertical li.current>a:hover {
+    background: #F7FAFD;
+    color: #01ACE1;
+}
+
+.wy-menu-vertical li.toctree-l2.current>a {
+    background: #F7FAFD;
+    color: #01ACE1;
+}
+
+.wy-menu-vertical li.toctree-l2.current>a:hover {
+    background: #F7FAFD;
+    color: #01ACE1;
+}
+
+.wy-menu-vertical li.toctree-l2.current li.toctree-l3.current>a {
+    background: #F7FAFD;
+    color: #01ACE1;
+}
+
+.wy-menu-vertical li.toctree-l2.current li.toctree-l3.current>a:hover {
+    background: #F7FAFD;
+    color: #01ACE1;
+}
+
+.wy-menu-vertical li.toctree-l3.current li.toctree-l4.current>a {
+    background: #F7FAFD;
+    color: #01ACE1;
+}
+
+.wy-menu-vertical li.toctree-l3.current li.toctree-l4.current>a:hover {
+    background: #F7FAFD;
+    color: #01ACE1;
+}
+
+.wy-menu-vertical li.toctree-l2.current li.toctree-l3>a {
+    background: #F7FAFD;
+    color: #1C2127;
+}
+
+.wy-menu-vertical li.toctree-l3.current li.toctree-l4>a {
+    background: #F7FAFD;
+    color: #1C2127;
+}
+
+.wy-menu-vertical li.toctree-l3.current li.toctree-l4>a:hover {
+    background: #F7FAFD;
+    color: #1C2127;
+}
+
+.wy-menu-vertical li.toctree-l2 a, .wy-menu-vertical li.toctree-l3 a, .wy-menu-vertical li.toctree-l4 a {
+    color: #1C2127;
+}
+
+.wy-menu-vertical li.toctree-l2 span.toctree-expand {
+    color: #1C2127;
+}
+
+.wy-menu-vertical li.toctree-l2>a:hover span.toctree-expand {
+    color: #1C2127;
+}
+
+
+.wy-menu-vertical li.toctree-l2.current li.toctree-l3>a:hover span.toctree-expand {
+    background: #F7FAFD;
+    color: #1C2127;
+}
+
+/* Menu expand and collapse */
+
+.fa-plus-square-o:before, .wy-menu-vertical li span.toctree-expand:before {
+    content: "+ ";
+}
+
+.fa-minus-square-o:before, .wy-menu-vertical li.on a span.toctree-expand:before, .wy-menu-vertical li.current>a span.toctree-expand:before {
+    content: "- ";
+}
+
+/* Logo */
+
+.wy-side-nav-search>a.icon img.logo, .wy-side-nav-search .wy-dropdown>a.icon img.logo {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    height: 70px;
+    float: left;
+}
+
+/* In page Table of contents */
+.simple > li > p {
+    margin-top: 8px;
+}
+
+.rst-content .simple > li > ul > li > ul {
+    margin-top: -2px;
+    margin-bottom: 4px;
+}
+
+.rst-content .section ul p {
+    margin-bottom: 6px;
+}
+
+.toctree-wrapper > ul .toctree-l1 {
+    margin-top: 12px;
+}
+
+.rst-content .toctree-wrapper ul li ul {
+    margin-top: 6px;
+}
+
+/* Tip, note, warning, attention, caution, danger boxes - titles */
+
+/* Remove exclamation mark (for all but Danger is added later) */
+.fa-exclamation-circle:before, .wy-inline-validate.wy-inline-validate-warning .wy-input-context:before, .wy-inline-validate.wy-inline-validate-info .wy-input-context:before, .rst-content .admonition-title:before {
+    content: "";
+}
+
+/* Exclamation mark for Danger boxes only */
+.rst-content .danger .admonition-title:before {
+    content: "";
+    margin-left: 5px;
+}
+
+.rst-content .admonition-title {
+    font-weight: 400;
+    padding-left: 8px;
+    padding-top: 10px;
+}
+
+.rst-content .tip .admonition-title {
+    color: #1C2127;
+    background: #F5FAFF;
+}
+
+.rst-content .note .admonition-title {
+    color: #1C2127;
+    background: #F5FAFF;
+}
+
+.rst-content .warning .admonition-title {
+    color: #1C2127;
+    background: #FFF5F5;
+}
+
+.rst-content .attention .admonition-title {
+    color: #1C2127;
+    background: #FFF5F5;
+}
+
+.rst-content .caution .admonition-title {
+    color: #1C2127;
+    background: #FFF5F5;
+}
+
+.rst-content .danger .admonition-title {
+    color: #1C2127;
+    background: #FFF5F5;
+}
+
+/* Tip, note, warning, attention, caution, danger boxes - text */
+
+.rst-content .tip {
+    background: #F5FAFF;
+}
+
+.rst-content .note {
+    background: #F5FAFF;
+}
+
+.rst-content .warning {
+    background: #FFF5F5;
+}
+
+.rst-content .attention {
+    background: #FFF5F5;
+}
+
+.rst-content .caution {
+    background: #FFF5F5;
+}
+
+.rst-content .danger {
+    background: #FFF5F5;
+}
+
+/* Code (inline) */
+
+.rst-content code.literal {
+    color: #1C2117;
+}
+
+/* Table */
+.rst-content table.docutils {
+    border: 1px solid #CDD5E2;
+}
+
+.rst-content table.docutils:not(.field-list) tr:nth-child(2n-1) td {
+    background-color: #F7FAFD;
+}
+
+.rst-content table.docutils td {
+    border-bottom: 1px solid #CDD5E2;
+    border-left: 1px solid #CDD5E2;
+}
+
+.rst-content table.docutils th {
+    padding: 8px 16px;
+    background-color: white;
+}
+
+.rst-content table.docutils thead tr th p {
+    margin-top: 4px;    
+    margin-bottom: 4px;
+}
+
+.rst-content table.docutils thead th {
+    font-weight: bold;
+    border-bottom: solid 1px #CDD5E2;
+}
+
+/* Quote-like note*/
+
+.rst-content dl:not(.docutils) dt {
+    display: table;
+    margin: 0px 0px 12px 24px;
+    font-size: 90%;
+    line-height: normal;
+    background: white;
+    color: #1C2127;
+    border-bottom: 0px;
+    border-top: 0px;
+    padding: 0px;
+    position: relative;
+    margin-bottom: 8px;
+    padding-top: 0px;
+}

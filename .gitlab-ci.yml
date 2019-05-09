@@ -1,0 +1,25 @@
+variables:
+  CI_DISPOSABLE_ENVIRONMENT: "true"
+  CLOUD_SDK_VERSION: "248.0.0"
+  DOCKER_DRIVER: overlay2
+
+image: google/cloud-sdk:latest
+stages:
+  - deploy
+
+before_script:
+  - TMPF=$(mktemp) || exit 1
+  - echo $GCLOUD_KEY > $TMPF
+  - export GOOGLE_APPLICATION_CREDENTIALS=$TMPF
+  - gcloud auth activate-service-account --key-file=$TMPF
+  - gcloud auth list
+  - gcloud --version
+
+deploy:
+  only:
+    - master@blockstream/docs
+  stage: deploy
+  script:
+    - pip install sphinx sphinx_rtd_theme
+    - sphinx-build -b html -d _build/doctrees . _build/html
+    - gsutil -m rsync -r -d _build/html gs://docs.blockstream.com
