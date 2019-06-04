@@ -6,29 +6,29 @@ Blockstream Docs
    :maxdepth: 2
    :caption: Green Wallet
 
-   Getting Started <./_source/green/getting-started/getting-started-index> 
-   Troubleshooting and Advanced Features <./_source/green/troubleshooting-advanced/troubleshooting-advanced-index>
-   Support <./_source/green/support>
+   Getting Started <./green/getting-started/getting-started-index> 
+   Troubleshooting and Advanced Features <./green/troubleshooting-advanced/troubleshooting-advanced-index>
+   Support <./green/support>
    
 .. toctree::
    :maxdepth: 2
    :caption: Liquid Network
 
-   Technical Overview <./_source/liquid/technical_overview>
-   Node Setup <./_source/liquid/node_setup>
-   Developer Guide <./_source/liquid/developer-guide/developer-guide-index>
-   App Examples <./_source/liquid/app-examples/app-examples-index>
-   Additional Resources <./_source/liquid/additional_resources>
-   Support <./_source/liquid/support>
+   Technical Overview <./liquid/technical_overview>
+   Node Setup <./liquid/node_setup>
+   Developer Guide <./liquid/developer-guide/developer-guide-index>
+   App Examples <./liquid/app-examples/app-examples-index>
+   Additional Resources <./liquid/additional_resources>
+   Support <./liquid/support>
 
 .. toctree::
    :maxdepth: 2
    :caption: Contribute
 
-   Contributing to Blockstream Docs <./_source/contributing/contributing>
+   Contributing to Blockstream Docs <./contributing/contributing>
 
 .. toctree::
    :maxdepth: 2
    :caption: Developer Documentation
 
-   All Repositories <./_source/developer-documentation>
+   All Repositories <./developer-documentation>
