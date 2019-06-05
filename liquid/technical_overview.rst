@@ -1,15 +1,14 @@
 Technical Overview
 ******************
 
-Liquid is an interexchange settlement network linking cryptocurrency exchanges, brokers, and institutions around the world. The network enables rapid, confidential, and secure transfer of funds between members by innovating on top of Bitcoin--extending its features to securely and privately transfer Bitcoin and other Issued Assets with no single point of failure. Liquid consists of a federation of members which form the backbone of a global financial network powered by digital assets.
+Liquid is a sidechain-based, inter-exchange settlement network linking together cryptocurrency exchanges and institutions around the world, enabling faster Bitcoin transactions and the issuance of digital assets. Liquid is an implementation of `Elements <https://elementsproject.org/>`_, an open source, sidechain-capable blockchain platform, based on the Bitcoin codebase.
 
-Liquid can be used by exchanges and financial institutions for a wide variety of applications. These applications can bring additional business and solve problems your business may be facing.
+Liquid provides Bitcoin exchanges and traders with a range of powerful features:
 
-**1. Increase Trading Volume -** Exchanges who are part of the Liquid Network will increase trade volume and attract more customers by offering competitive spreads, greater liquidity, and low friction options for deposit and withdrawal.
-
-**2. Improve Liquidity -** Brokers and OTC trading desks who are members of the Liquid Network can quickly source liquidity around the clock to fulfill customer demand and reduce volatility risk.
-
-**3. Expand Your Markets -** Exchanges can expand their markets by easily adding more cryptocurrency pairs to their order book via Liquid’s Issued Assets functionality without needing to interact with other blockchains and incur the associated software development costs. This enables greater scalability without compromising security.
+* **Fast, Final Settlements:** Bitcoin moved to the Liquid sidechain (Liquid Bitcoin, "L-BTC") can achieve final settlement within two minutes.
+* **Confidential Transactions:** Amounts and type of asset transacted are hidden by default on Liquid, keeping users’ financial data safe.
+* **Secure Tokenization:** New tokens can be issued on the Liquid sidechain (Issued Assets) to represent fiat, securities, or other digital assets.
+* **Interoperability:** One Liquid integration provides support for both L-BTC and Issued Assets. All tokens are based on the same standard, allowing users to take advantage of features such as atomic swaps and Bitcoin-style multisig.
 
 Sidechain Basics
 ================
