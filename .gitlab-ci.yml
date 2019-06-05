@@ -17,7 +17,7 @@ before_script:
 
 deploy:
   only:
-    - rmsource@blockstream/docs
+    - master@blockstream/docs
   stage: deploy
   script:
     - pip install sphinx sphinx_rtd_theme
