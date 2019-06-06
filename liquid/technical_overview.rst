@@ -174,7 +174,7 @@ Tokenized Cryptocurrencies
 While Liquid supports Bitcoin through its Federation, other cryptocurrencies are not natively supported. Very few cryptocurrencies have the track record for stability and security as Bitcoin and it would be risky to include them as part of the consensus rules of the system. Instead, Liquid members can create a token that represents a collateralized cryptocurrency. These tokens can now be traded and settled between Liquid users with the same speed and privacy as Bitcoin and other Issued Assets. This approach also allows exchanges and traders to safely handle these assets without ever needing to support the underlying asset. This removes the amount of work needed to support extra blockchains and clients when supporting other assets. Owners of these tokens could then take the issued token and redeem it from the issuer. This opt-in model allows for users who wish to benefit to work with parties they trust to issue and secure the assets without requiring the entire federation to know about the asset.
 
 .. figure:: ./artwork/technical_overview/tokenized_cryptocurrencies.png
-   :width: 100 %
+   :width: 80 %
    :align: center
 
 
@@ -193,14 +193,10 @@ Institutional Traders
 
 Without Liquid, traders must split their funds allocated on different exchanges in order to take advantage of advantageous situations that may emerge within markets. This leaves the trader open to the risk of losing funds on a compromised exchange, and limits the amount that can be traded due to the elongated process of moving funds to another exchange.  Moving funds between an exchange can take over an hour, letting trade opportunities potentially slip away.
 
-.. figure:: ./artwork/technical_overview/institutional_1.png
-   :width: 100 %
-   :align: center
-
 With Liquid, traders can hold their funds in their own wallet within Liquid and send very quickly to any exchange that supports Liquid deposits to trade within minutes. In this scenario, an exchange sees a trading opportunity at Exchange A and can quickly deposit in around 2 minutes onto an exchange. Once trading is complete, the trader can now move the funds back to their own Liquid wallet or to another exchange. Custodial risk is now moved from a single exchange to the entire Liquid federation.
 
-.. figure:: ./artwork/technical_overview/institutional_2.png
-   :width: 100 %
+.. figure:: ./artwork/technical_overview/institutional.png
+   :width: 80 %
    :align: center
 
 .. |no| image:: ./artwork/technical_overview/no.png
