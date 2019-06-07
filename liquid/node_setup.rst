@@ -38,7 +38,7 @@ A desktop application (GUI/front-end) that serves as a Liquid node. It can also 
 
 A client application that allows you to make calls to liquidd or liquid-qt by issuing RPC commands. Use of liquid-cli is detailed in the :ref:`Developer Guide <developer-guide>` section.
 
-Liquid will, by default, try and connect to a local Bitcoin node in order to validate transactions where bitcoin are moved into the Liquid network (called a peg-in). We will assume that you have already installed and set up a Bitcoin node before moving on with installing Liquid. This requirement can be switched off using the ``validatepegin`` parameter within the Liquid configuration file but we advise against disabling peg-in validation unless you are aware of the implications, running in a testing environment, or are not dealing with large amounts of funds.
+Liquid will, by default, try and connect to a local Bitcoin node in order to validate transactions where bitcoin are moved into the Liquid network (called a peg-in). We will assume that you have already installed and set up a Bitcoin node before moving on with installing Liquid. This requirement can be switched off by setting ``validatepegin=0`` within the :ref:`Liquid configuration <node-configuration>` (liquid.conf) file, but we advise against disabling peg-in validation unless you are aware of the implications, running in a testing environment, or are not dealing with large amounts of funds.
 
 
 Installation
@@ -68,6 +68,7 @@ You can choose the `OSX unsigned <https://github.com/ElementsProject/elements/re
 
 After installation, you are now ready to move on to configuring your node.
 
+.. _node-configuration:
 
 Configuration
 -------------
@@ -215,8 +216,7 @@ Depending on your system set up, you may have to change the permissions on the f
 
 On Windows you can run Liquid QT as a normal desktop application and make RPC calls to it from other applications and from the liquid-cli application.
 
-
-You cannot run the liquidd application just by starting it like any other application, as it needs to be run as a background service. You will have to configure Windows to start liquidd as a background service if you want to run it this way.
+You can configure Windows to start liquidd as a background service if you want to run it this way.
 
 The liquid-cli application can be called and used from the command prompt within Windows.
 
@@ -228,6 +228,9 @@ If you installed Liquid QT from the dmg image, you can run it as a normal deskto
 .. code-block:: bash
 
 	./liquid-qt
+
+What next?
+==========
 
 You should now be set up to start using your node. 
 
