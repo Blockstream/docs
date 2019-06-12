@@ -1,3 +1,5 @@
+.. _to-confidential-transactions:
+
 -------------------------
 Confidential Transactions
 -------------------------

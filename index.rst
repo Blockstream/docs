@@ -7,6 +7,7 @@ Blockstream Docs
    :caption: Green Wallet
 
    Getting Started <./green/getting-started/getting-started-index> 
+   Liquid Wallet <./green/liquid/liquid-index>
    Troubleshooting and Advanced Features <./green/troubleshooting-advanced/troubleshooting-advanced-index>
    Support <./green/support>
    

@@ -24,12 +24,13 @@ Blockstream Green apps can be accessed through the following operating systems a
 Each of our apps can also be used on Bitcoin’s testnet, which we recommend for testing new
 features or becoming accustomed with the setup process to avoid accidental loss of coins.
 
-Create and Safely Record Your 24-Word Mnemonic
-----------------------------------------------
+.. _to-create-wallet:
+
+Create a New Wallet
+-------------------
 
 After you’ve installed the app, you’ll have the option to log in with an existing mnemonic
-, or create a new wallet. To start, make sure the Bitcoin network is selected and click on
-``Create New Wallet``.
+, or create a new wallet. To start, click on ``Create New Wallet``.
 
 .. image:: ../green-assets/landing.png
    :width: 250
@@ -84,11 +85,12 @@ of the words in the correct order.
    forget and accidentally do this, we urge you to create a brand new wallet as soon as
    possible and move your coins to that new wallet.
 
-Choose a PIN for the Device
----------------------------
+Choose a PIN for this Wallet
+----------------------------
 
 After you have recorded and confirmed your mnemonic, you will be able to choose a PIN.
-This is a 6 digit number that can be used to quickly access your wallet on that device.
+This is a 6 digit number that can be used to quickly access your wallet on that device and
+on that network.
 
 .. image:: ../green-assets/PIN-create.png
    :width: 250
@@ -101,12 +103,12 @@ access to the wallet you just created or restored. You can set this up from sett
    It is important to keep your PIN safe and secret. If it is lost, your only option to
    re-access your wallet will be through your mnemonic.
 
-Your PIN is specific to the device that it is created on. It is possible to access your
-wallet from multiple devices by using your mnemonic, but you will create a separate PIN
-for each device, so they might not be the same.
+Your **PIN is specific to the device and network** that it is created on. It is possible
+to access your wallet from multiple devices by using your mnemonic, but you will create a
+separate PIN for each device, so they might not be the same.
 
 As a security feature, your device will reset your PIN if you or someone else enters the
-wrong PIN three times in a row. This is to prevent a malicious party from continually
+wrong PIN 3 times in a row. This is to prevent a malicious party from continually
 guessing until they get your PIN right.
 
 If your PIN is reset, you will need to enter your mnemonic through ``Restore Green
@@ -180,8 +182,8 @@ recording their mnemonic. Then, when something goes wrong in the future (their p
 breaks, the PIN is entered incorrectly, etc), they suddenly lose access to their their
 coins.
 
-.. tip:: Take extra-care to safely note and store your 24-words mnemonic
-   Please take this process very seriously, and give it the time and attention that it needs.
+Take extra-care to safely note and store your 24-words mnemonic. Please take this process
+very seriously, and give it the time and attention that it needs.
 
 ---
 
@@ -193,7 +195,7 @@ Unless you immediately create more permanent alternative *Two-Factor Authenticat
 methods (which we recommend anyway), or ensure you retain access to this throw-away email
 address losing access to your email can be very inconvenient.
 
-.. tip:: Make sure you use an email address that you will be able to access in the future.
+Make sure you use an email address that you will be able to access in the future.
 
 ---
 
@@ -207,7 +209,6 @@ but it can only store one PIN-protected mnemonic at a time. This means that any 
 wallets won't be PIN-accessible on that device, and in the future must be logged into
 using the full mnemonic.
 
-.. tip:: If you wish to create a new wallet, and have your app store a PIN for the new
-   one, you will need to first disable the PIN on the original wallet. You can do
-   this by entering an incorrect PIN 3 times in a row, or from settings after you have
-   logged in.
+If you wish to create a new wallet, and have your app store a PIN for the new one, you
+will need to first disable the PIN on the original wallet. You can do this by entering an
+incorrect PIN 3 times in a row, or from settings after you have logged in.

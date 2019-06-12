@@ -32,7 +32,9 @@ Balance and Transaction List
 The main screen you’ll be using in Blockstream Green will display your wallet’s balance in
 Bitcoin and its approximate value in your selected fiat currency.
 
-Directly below this will be the send and receive buttons.
+Directly below this will be the `send <getting-started-index.html#sending-transactions>`_
+and `receive <getting-started-index.html#receiving-transactions>`_
+buttons.
 
 .. image: ../green-assets/tx-list.png
    :width: 250

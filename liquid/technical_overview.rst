@@ -12,6 +12,8 @@ Liquid provides Bitcoin exchanges and traders with a range of powerful features:
 * **Secure Tokenization:** New tokens can be issued on the Liquid sidechain (Issued Assets) to represent fiat, securities, or other digital assets.
 * **Interoperability:** One Liquid integration provides support for both L-BTC and Issued Assets. All tokens are based on the same standard, allowing users to take advantage of features such as atomic swaps and Bitcoin-style multisig.
 
+.. _to-sidechain-basics:
+
 Sidechain Basics
 ================
 
@@ -146,6 +148,8 @@ Liquid transactions include a transaction fee that is used as a denial of servic
 .. _to-ct-limit:
 
 The implementation of Confidential Transactions in Liquid has important limitations regarding the amounts of transactions that will be protected: amounts are only completely hidden up to a certain maximum. The reason for this is that a larger maximum would require larger proofs leading to a larger overall transaction size and lower transaction throughput. The exact limit is 2^36 - 1 satoshis or about 687 BTC. Any transactions that try to exceed this limit will have to be split into seperate transactions.
+
+.. _to-issued-assets:
 
 Issued Assets
 -------------
