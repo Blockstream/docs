@@ -46,7 +46,7 @@ Installation
 
 The applications listed above can be downloaded from the `Elements Github repository <https://github.com/ElementsProject/elements/releases>`_ as either an installation/setup package or as the contents of a compressed file.
 
-You will find variants for Linux, Windows, and MacOS.
+.. Note:: After you have followed the install instructions below (you will find variants for Linux, Windows, and MacOS) do not run the software until you have followed the instructions in the Configuration section.
 
 Using the 0.17 release (the latest at time of writing) as an example:
 
@@ -80,19 +80,17 @@ bitcoin.conf
 
 We will first make sure that our Bitcoin node is set up to allow our Liquid node to communicate with it.
 
-Include the following in your ``bitcoin.conf`` file:
+Include the following in your ``bitcoin.conf`` file if it is not already present:
 
 .. code-block:: text
 
 	server=1
 
-Using a cookie file is the prefered way of authenticating against a Bitcoin node. When a Bitcoin node starts up with the server parameter set (as above), it will automatically generate a cookie file for this purpose. We will later tell our Liquid node the location of this file so that it can authenticate against the Bitcoin node.
+This will ensure that your Bitcoin node creates a 'cookie' file within the data directory it is using on start up. The cookie file allows other applications to locally authenticate against your Bitcoin node, as long as they know where it is located. Using a cookie file is the prefered way of authenticating against a Bitcoin node. We will later tell our Liquid node the location of this file so that it can authenticate against the Bitcoin node.
 
-Alternatively, you can also use the RPC parameters (``rpcuser``, ``rpcport``, and ``rpcpassword``) as the authentication method.
+Alternatively, you can also use RPC parameters (``rpcuser``, ``rpcport``, and ``rpcpassword``) specified in the bitcoin.conf file as the authentication method. If you want to use the RPC parameter method of allowing access, then also set the following within bitcoin.conf.
 
-If you want to use the RPC parameter method of allowing access, then also set the following within bitcoin.conf. 
-
-*Note that these values will start your Bitcoin node in "regtest" mode*:
+*Note that the first value will start your Bitcoin node in "regtest" mode so that you can develop against it - you can omit it if you want to start the node on the live Bitcoin network*:
 
 .. code-block:: text
 
@@ -110,7 +108,7 @@ liquid.conf
 
 The liquidd, liquid-qt and liquid-cli applications will all use a configuration file named liquid.conf. The liquid.conf file tells liquidd and liquid-qt which network to connect to and can set a number of different behaviours within the applications. It also tells them what credentials must be provided in order to accept an RPC request. The liquid-cli application uses the configuration file to obtain the correct credentials in order to communicate with liquidd or liquid-qt using RPC. 
 
-When you start either of the three applications you can provide a ``datadir`` path. The path you provide tells the applications which directory to use to:
+When you later start either of the three applications you can provide a ``datadir`` path. The path you provide tells the applications which directory to use to:
 
 * Obtain RPC authentication data (user, password, port).
 
@@ -120,7 +118,7 @@ When you start either of the three applications you can provide a ``datadir`` pa
 
 If you want to use a different data directory that the defaults referenced below, for example an external hard drive, you can follow `this guide <https://bitzuma.com/posts/moving-the-bitcoin-core-data-directory/>`_.
 
-The liquid.conf configuration file is located in the following places by default:
+The liquid.conf configuration file is located in the following places by default. If you do not see the directory and the liquid.config file you should create them now. Otherwise, open the liquid.conf file for editing.
 
 **Linux**
 
@@ -133,9 +131,6 @@ The liquid.conf configuration file is located in the following places by default
 **MacOS**
 
 Select Macintosh HD and then Library/Application Support/Liquid.
-
-
-If you do not see the directory or the liquid.config file you should create them now. Otherwise, open the file for editing.
 
 .. note::
 
@@ -158,7 +153,7 @@ If you want to use the RPC parameter method of allowing access to your Bitcoin n
 
 If you want to allow your Liquid node to accept RPC requests (such as those used in the :ref:`Developer Guide <developer-guide>`) then also set the following. 
 
-*Note that these values will start your Liquid node in test/development mode*:
+*Note that these values will start your Liquid node in test/development mode. To start in live Liquid network mode, set the chain value to liquidv1*:
 
 .. code-block:: text
 
@@ -169,7 +164,7 @@ If you want to allow your Liquid node to accept RPC requests (such as those used
 	elementsregtest.port=<18886_for_example>
 
 .. tip::
-	To switch between live and test/development modes you will need to change the ``chain`` value between ``liquidv1`` (live) and ``elementsregtest`` (test/development). You must restart your node for these to take effect.
+	To switch between live and test/development modes you will need to change the ``chain`` value between ``liquidv1`` (live) and ``elementsregtest`` (test/development). You must restart your node for these to take effect if you change them in the future. Be sure to also change the mode your Bitcoin node runs in if you do this.
 
 If you do not wish to validate peg-ins against your Bitcoin node, you can set the ``validatepegin`` parameter to a value of ``0``. This can be done either in the liquid.conf file, or passed in as a command line parameter.
 
@@ -188,6 +183,7 @@ A complete `Liquid configuration file template <https://github.com/ElementsProje
 Running your Liquid Node
 ------------------------
 
+Once you have completed the steps in the Configuration section you will be able to start Liquid GUI or Liquid Daemon.
 
 **Linux**
 
