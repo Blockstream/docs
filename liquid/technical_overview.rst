@@ -152,11 +152,20 @@ Issued Assets
 
 Liquid allows for users to create and transfer other assets using a feature called Issued Assets (IA). These assets can enable applications such as tokenized fiat, tokenized non-BTC cryptocurrency, digital collectibles, reward points and attested assets (e.g. gold coins). The obligations under an IA belong to the issuer and Liquid does not verify whether the underlying asset exists or is properly maintained (in contrast to the BTC peg-in procedures).
 
-Issued Assets in Liquid are given a unique identifier (64 hexadecimal characters) when created. There is no global human readable naming scheme for assets. Users who wish to label this asset can do so in their wallets. Each asset type can optionally be configured to allow reissuance by generating reissuance tokens when it is created. Assets in Liquid can also be also be verifiably destroyed by their owner to reduce the supply.
+Issued Assets in Liquid are given a unique identifier (64 hexadecimal characters) when created. This is the only identifying information of the Issued Asset explicitly recorded on the Liquid blockchain. Any additional human readable metadata to ease Issued Assets recognition at the UI level, can be committed to during the issuance, and is published on servers such as the `Asset Registry`_. The metadata that can be linked to an asset can be:
+
+   - an extended name, up to 255 characters (e.g. "IPA pint - liquid.beer"), to give a human readable name to the Issued Assets
+   - a 3 or 4 characters ticker (e.g. "IPA"), used to denominate the amounts in a recognizable unit,
+   - the decimal precision, mainly useful for issuers. For instance, 2 places of decimal precision would mean that 199 satoshi of the Issued Asset should be interpreted as 1.99 units of the asset,
+   - a domain that must be controlled by the issuer (e.g. "liquid.beer"), which is used to tie together all of the above information to the entity that also controls the domain submitted to the registry.
+
+Each asset type can optionally be configured to allow reissuance by generating reissuance tokens when it is created. Assets in Liquid can also be also be verifiably destroyed by their owner to reduce the supply.
 
 The reissuance tokens are used to prove authority and reissue more of the newly created asset at a later date. These tokens can be set up with a multisignature scheme generally described as being "m of n". That means that the reissuance transaction requires a group of "m"  keys in order to create new tokens. 
 
 Issued Assets can be used for many different purposes, but some of the most commonly requested ones include tokenized fiat, tokenized equities, and tokenized cryptocurrencies.
+
+.. _`Asset Registry`: https://assets.blockstream.info/
 
 Security Tokens
 ---------------
