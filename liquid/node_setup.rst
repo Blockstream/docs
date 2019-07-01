@@ -1,12 +1,12 @@
 .. _node-setup:
 
-Liquid Node Setup
-*****************
+Liquid Node Setup (Advanced)
+****************************
 
 Overview
 --------
 
-In this section we will look at how to install and run a full Liquid client node. We will also see how to use the configuration file to switch the node between:
+In this section we will look at how to install and run a full Liquid client node and use the configuration file to switch the node between:
 
 * Connecting to the live Liquid network.
 
@@ -48,22 +48,22 @@ The applications listed above can be downloaded from the `Elements Github reposi
 
 .. Note:: After you have followed the install instructions below (you will find variants for Linux, Windows, and MacOS) do not run the software until you have followed the instructions in the Configuration section.
 
-Using the 0.17 release (the latest at time of writing) as an example:
+Some releases are 'code only' releases. If you only want to use the binaries, select the most recent release that has associated binary installation files. Using the 0.17 release (the latest at time of writing) as an example:
 
 
 **Linux**
 
-There are a number of Linux distrutions supported. For example; Ubuntu users can choose the `x86_64 linux <https://github.com/ElementsProject/elements/releases/download/elements-0.17.0/liquid-0.17.0-x86_64-linux-gnu.tar.gz>`_ file, whereas Raspberry Pi users should choose the `arm linux <https://github.com/ElementsProject/elements/releases/download/elements-0.17.0/liquid-0.17.0-arm-linux-gnueabihf.tar.gz>`_ file.
+There are a number of Linux distrutions supported. For example; Ubuntu users can choose the 0.17 `x86_64 linux <https://github.com/ElementsProject/elements/releases/download/elements-0.17.0/liquid-0.17.0-x86_64-linux-gnu.tar.gz>`_ file, whereas Raspberry Pi users should choose the `arm linux <https://github.com/ElementsProject/elements/releases/download/elements-0.17.0/liquid-0.17.0-arm-linux-gnueabihf.tar.gz>`_ file.
 
 
 **Windows**
 
-You can choose the `win64 setup unsigned <https://github.com/ElementsProject/elements/releases/download/elements-0.17.0/elements-0.17.0-win64-setup-unsigned.exe>`_ file if you are happy to run an unsigned setup on your Windows x64 machine. If you need a 32bit variant or a version without an installer, you should chose the appropriate file from the list.
+You can choose the 0.17 `win64 setup unsigned <https://github.com/ElementsProject/elements/releases/download/elements-0.17.0/elements-0.17.0-win64-setup-unsigned.exe>`_ file if you are happy to run an unsigned setup on your Windows x64 machine. If you need a 32bit variant or a version without an installer, you should chose the appropriate file from the list.
 
 
 **MacOS Installation**
 
-You can choose the `OSX unsigned <https://github.com/ElementsProject/elements/releases/download/elements-0.17.0/liquid-0.17.0-osx-unsigned.dmg>`_ dmg image file, or download the binaries themselves.
+You can choose the 0.17 `OSX unsigned <https://github.com/ElementsProject/elements/releases/download/elements-0.17.0/liquid-0.17.0-osx-unsigned.dmg>`_ dmg image file, or download the binaries themselves.
 
 
 After installation, you are now ready to move on to configuring your node.
@@ -118,26 +118,29 @@ When you later start either of the three applications you can provide a ``datadi
 
 If you want to use a different data directory that the defaults referenced below, for example an external hard drive, you can follow `this guide <https://bitzuma.com/posts/moving-the-bitcoin-core-data-directory/>`_.
 
-The liquid.conf configuration file is located in the following places by default. If you do not see the directory and the liquid.config file you should create them now. Otherwise, open the liquid.conf file for editing.
+The liquid.conf configuration file is located in the following places by default. If you do not see the Liquid directory and the liquid.config file you should create them now. Otherwise, open the liquid.conf file for editing.
 
 **Linux**
 
-~/.liquid/
+``~/.liquid/``
 
 **Windows**
 
-%homepath%\AppData\Roaming\Liquid
+``%homepath%\AppData\Roaming\Liquid``
 
 **MacOS**
 
-Select Macintosh HD and then Library/Application Support/Liquid.
+As the Library file is hidden, you can access it by opening Finder, selecting 'Go' then 'Go to Folder' from the menu and then entering the path as ``~/Library``. From there you can go into the ``Application Support`` folder and create the ``Liquid`` folder. Once you have created the Liquid folder, you can run the following from the Terminal app to create the Liquid config file:
+
+``touch "Library/Application Support/Liquid/liquid.conf"``
+
 
 .. note::
 
 	After making any changes to liquid.conf in the future, you will need to restart your Liquid node so that they take effect.
 
 
-If your Bitcoin node is installed in the default location, Liquid should automatically find it. If you use a non-default location for your Bitcoin node, you will have to add the following parameter to your liquid.conf file, pointing to the cookie file created by your Bitcoin node:
+If your Bitcoin node is installed in the default location, Liquid should automatically find it when you later start it. If you use a non-default location for your Bitcoin node, you will also have to add the following parameter to your liquid.conf file, pointing to the cookie file created by your Bitcoin node:
 
 .. code-block:: text
 
@@ -210,20 +213,13 @@ Depending on your system set up, you may have to change the permissions on the f
 
 **Windows**
 
-On Windows you can run Liquid QT as a normal desktop application and make RPC calls to it from other applications and from the liquid-cli application.
-
-You can configure Windows to start liquidd as a background service if you want to run it this way.
-
-The liquid-cli application can be called and used from the command prompt within Windows.
+You can run Liquid as a normal desktop application. It is worth noting that the actual application may appear in your installed apps list as 'Elements Core'.
 
 
 **MacOS**
 
-If you installed Liquid QT from the dmg image, you can run it as a normal desktop application, otherwise the applications can be started from the terminal within the folder you extracted them to. For example:
+If you installed Liquid from the dmg image, you can run it as a normal desktop application. It is worth noting that the actual application may appear in your installed apps list as 'Elements Core'.
 
-.. code-block:: bash
-
-	./liquid-qt
 
 What next?
 ==========

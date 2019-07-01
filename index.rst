@@ -15,7 +15,7 @@ Blockstream Docs
    :caption: Liquid Network
 
    Technical Overview <./liquid/technical_overview>
-   Node Setup <./liquid/node_setup>
+   Liquid Node Setup (Advanced) <./liquid/node_setup>
    Developer Guide <./liquid/developer-guide/developer-guide-index>
    App Examples <./liquid/app-examples/app-examples-index>
    General Developer Info<./liquid/general-developer-info/general-developer-info-index>
