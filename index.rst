@@ -14,11 +14,13 @@ Blockstream Docs
    :maxdepth: 2
    :caption: Liquid Network
 
+   Liquid Quickstart Guide <./liquid/quickstart>
    Technical Overview <./liquid/technical_overview>
    Liquid Node Setup (Advanced) <./liquid/node_setup>
    Developer Guide <./liquid/developer-guide/developer-guide-index>
    App Examples <./liquid/app-examples/app-examples-index>
-   General Developer Info<./liquid/general-developer-info/general-developer-info-index>
+   General Developer Info <./liquid/general-developer-info/general-developer-info-index>
+   Liquid Swap Tool <./liquid/swap_tool>
    Additional Resources <./liquid/additional_resources>
    Support <./liquid/support>
 
