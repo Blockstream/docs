@@ -9,6 +9,7 @@ Overview
 
 This guide will show you how to set up and run a Liquid node from scratch.
 
+
 .. _quickstart_installing:
 
 Installing and running Liquid
@@ -52,7 +53,7 @@ The first time Liquid runs, it will create a Liquid data directory for you and, 
 Configuring Liquid
 ------------------
 
-If you do not run a Bitcoin node on the same machine as your Liquid node, you can tell Liquid to not connect to it on startup. To do this we need to add a setting to Liquid's configuration file. Depending on the Operating System you are using.
+If you do not run a Bitcoin node on the same machine as your Liquid node, you can tell Liquid to not connect to it on startup. To do this we need to add a setting to Liquid's configuration file. Depending on the operating system you are using.
 
 
 Linux
@@ -119,36 +120,4 @@ Your Liquid node should start downloading the Liquid blockchain data from other 
 At the time of writing the 0.17 tagged release is the only release with binaries available, although this will change over time.
 
 
-.. _quickstart_pegin:
-
-Enabling Peg-in Validation
---------------------------
-
-This section will show you how to enable your Liquid node to validate Peg-ins against a Bitcoin node. This is not mandatory, but it an important part of Liquid network security.
-
-If you have not already installed and synced a Bitcoin node on your machine, you should follow the instructions on `https://bitcoincore.org/en/download <https://bitcoincore.org/en/download/>`_. Please note that it may take many hours for the initial blockchain data sync to complete. The Bitcoin blockchain will also take up a large amount of data on your machine and so you may wish to use a data directory located on an external hard drive. 
-
-.. Note::  If you do use a non-default location for your Bitcoin node, you will also have to add the following parameter to your liquid.conf file later, along with the "validatepegin=1" setting, so that Liquid knows the location of the cookie file created by your Bitcoin node: ``mainchainrpccookiefile=<location_of_your_bitcoin_datadir>``
-
-When you have a fully synced Bitcoin node running on your machine, you need to enable it to process requests from other applications, such as Liquid. To do this we need to add a line to the bitcoin.conf config file. Shutdown your Bitcoin node first before proceeding.
-
-In order to edit Bitcoin's configuration file (bitcoin.conf) you can use the process in the :ref:`Configuring Liquid <quickstart_configuring>` to locate and edit config files for your given Operating System, remembering to replace the references to liquid with bitcoin. Use the following paths to locate and open the bitcoin.conf file, depending on your Operating System:
-
-* Linux: ``~/.bitcoin/``
-
-* Windows: ``%homepath%AppDataRoaming/Bitcoin``
-
-* MacOS: ``"~/Library/Application Support/Bitcoin"``
-
-When you have located and opened the bitcoin.conf file, add the following line to it:
-
-``server=1``
-
-Save and close the file and restart your Bitcoin node.
-
-If you have not already manually set a value of "validatepegin=0" within your Liquid config file (as shown in the :ref:`Configuring Liquid <quickstart_configuring>` step of the :ref:`Liquid Quickstart <quickstart>` guide), and you have used Bitcoin's default data directory, you can now start Liquid and it will by default connect to your Bitcoin node on start up and you need not follow this guide any further.
-
-If you have previously followed the :ref:`Configuring Liquid <quickstart_configuring>` step of the :ref:`Liquid Quickstart <quickstart>` guide, we need to tell Liquid to start connecting to your Bitcoin node on startup. You can do this by following the steps in the :ref:`Configuring Liquid <quickstart_configuring>` step again to locate and edit the Liquid config file, but this time set the "validatepegin=0" value to ``validatepegin=1`` instead. 
-
-Once that is done, your Liquid node can now be started and will connect to your Bitcoin node to validate Peg-in transactions.
 

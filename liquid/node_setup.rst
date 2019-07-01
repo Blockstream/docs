@@ -229,3 +229,59 @@ You should now be set up to start using your node.
 You can connect it to the live Liquid network by setting ``chain=liquidv1`` and letting it sync its local copy of the Liquid blockchain. 
 
 You might also want to switch your Liquid node to test/development mode using ``chain=elementsregtest`` and start the :ref:`Developer Guide <developer-guide>` and :ref:`App Examples <liquid-app-examples>` sections if you want to.
+
+.. _quickstart_pegin:
+
+
+Enabling Peg-in Validation
+--------------------------
+
+This section will show you how to enable your Liquid node to validate peg-ins against a Bitcoin node. This is not mandatory, but it an important part of Liquid network security.
+
+If you have not already installed and synced a Bitcoin node on your machine, you should follow the instructions on `https://bitcoincore.org/en/download <https://bitcoincore.org/en/download/>`_.
+
+When you have a fully synced Bitcoin node running on your machine, you need to enable it to process requests from other applications, such as Liquid. To do this we need to add a line to the bitcoin.conf config file. 
+
+
+Changes to bitcoin.conf
+=======================
+
+.. |br| raw:: html
+
+    <br>
+
+1. Shutdown your Bitcoin node first before proceeding.
+   |br| |br|
+
+2. In order to edit Bitcoin's configuration file (bitcoin.conf) you can use the process in the :ref:`Configuring Liquid <quickstart_configuring>` to locate and edit config files for your given operating system, **remembering to replace the references to liquid with bitcoin**. Use the following paths to locate and open the bitcoin.conf file, depending on your operating system:
+
+   Linux: ``~/.bitcoin/``
+
+   Windows: ``%homepath%AppDataRoaming/Bitcoin``
+
+   MacOS: ``”Library/Application Support/Bitcoin”``
+   |br| |br|
+
+3. When you have located and opened the bitcoin.conf file, add the following line to it:
+
+   ``server=1``
+
+   If you use a non-default location for your Bitcoin node, you will also have to add the following parameter to your liquid.conf file, so that Liquid knows the location of the cookie file created by your Bitcoin node:
+
+   ``mainchainrpccookiefile=<location_of_your_bitcoin_datadir>``
+   |br| |br|
+
+4. Save and close the file and restart your Bitcoin node.
+
+
+Changes to liquid.conf
+======================
+
+1. Open the Liquid config file by following the steps in the :ref:`Configuring Liquid <quickstart_configuring>` section.
+   |br| |br|
+
+2. If your liquid.conf file contains an entry of ``validatepegin=0``, replace the ``0`` with a ``1``, and save and close the file. If your liquid.conf file contains no value for ``validatepegin`` at all, you can close the file, no changes are needed.
+
+Your Liquid node is now set up to validate peg-ins!
+
+
