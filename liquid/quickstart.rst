@@ -1,7 +1,7 @@
 .. _quickstart:
 
-Liquid Quickstart
-*****************
+Liquid Node Quickstart
+**********************
 
 
 Overview
@@ -42,7 +42,7 @@ MacOS users should note: The Liquid desktop application installed is named "Elem
 
 Click OK to accept the default data directory.
 
-The first time Liquid runs, it will create a Liquid data directory for you and, if you do not have a Bitcoin node running on your machine, notifies you that it "cannot get a valid response from the mainchain daemon". This just means that it cannot connect to a local Bitcoin node and is currently set to do so.
+The first time Liquid runs, it will create a Liquid data directory for you and, if you do not have a Bitcoin node running on your machine, notifies you that it "cannot get a valid response from the mainchain daemon" and then closes the application. This just means that it cannot connect to a local Bitcoin node.
 
 * **If you see the error message**: you can close it and move on to the :ref:`Configuring Liquid <quickstart_configuring>` section. 
 
@@ -115,7 +115,7 @@ Now that you have added a line to the config file telling Liquid to not try and 
 
 Your Liquid node should start downloading the Liquid blockchain data from other nodes on the network.
 
-.. Note:: The :ref:`Configuring Liquid <quickstart_configuring>` section is for those who do not have a Bitcoin node running on their machine. It should be noted that connecting to a Bitcoin node allows Liquid to validating peg-in transactions and is an important part of Liquid network security. For this reason, it is recommended that once you have followed this guide and have your Liquid node up and running, you install and sync a Bitcoin node, then follow the steps in the :ref:`Enabling Peg-in Validation <quickstart_pegin>` section.
+.. Note:: The :ref:`Configuring Liquid <quickstart_configuring>` section is for those who do not have a Bitcoin node running on their machine. Connecting to a Bitcoin node allows Liquid to validate peg-in transactions and is an important part of Liquid network security. It is recommended that once you have followed this guide and have your Liquid node up and running, you install and sync a Bitcoin node, then follow the steps in the :ref:`Enabling Peg-in Validation <quickstart_pegin>` section.
 
 At the time of writing the 0.17 tagged release is the only release with binaries available, although this will change over time.
 
