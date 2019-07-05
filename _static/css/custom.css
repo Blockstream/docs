@@ -403,6 +403,19 @@ h1, h2, .rst-content .toctree-wrapper p.caption, h3, h4, h5, h6, legend {
 }
 
 /* Table */
+
+/* Enable wrapping of text to remove horizontal scroll bar */
+@media screen and (min-width: 767px) {
+
+  .wy-table-responsive table td {
+      white-space: normal !important;
+  }
+
+  .wy-table-responsive {
+      overflow: visible !important;
+  }
+}
+
 .rst-content table.docutils {
     border: 1px solid #CDD5E2;
 }

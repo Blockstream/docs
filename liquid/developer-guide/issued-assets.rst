@@ -224,7 +224,8 @@ You will need to echo, copy and create the appropriate variable (ALICEDEMOADD) i
 .. code-block:: bash
 
 	Bob:~$ liquid-cli sendtoaddress $ALICEDEMOADD 10 "" "" false false 1 UNSET $ASSET
-	Bob:~$ liquid-cli generate 1
+	Bob:~$ ADDRGEN=$(liquid-cli getnewaddress)
+	Bob:~$ liquid-cli generatetoaddress 1 $ADDRGEN
 
 We should see that Bob's wallet has no "demoasset" in it anymore and Alice's is back to 100:
 

@@ -44,8 +44,6 @@ Create a new file named "liquidrpcruby.rb" and paste the code below into it:
 	  liquid = LiquidRPC.new('http://user1:password1@127.0.0.1:18884')
 	 
 	  p liquid.getblockcount
-	  p liquid.generate( 1 )
-	  p liquid.getblockcount
 	end
 
 Execute the code from the command line:
@@ -54,6 +52,6 @@ Execute the code from the command line:
 
 	ruby liquidrpcruby.rb
 
-The output will show the current block count, generate a new block and check the block count again.
+The output will show the current block count.
 
 You now have a functioning setup which you can use as a building block for further development.

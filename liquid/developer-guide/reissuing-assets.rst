@@ -120,7 +120,7 @@ Send the token from Alice's wallet to Bob's new address as if it were any other 
 .. code-block:: bash
 
 	Alice:~$ liquid-cli sendtoaddress $RITRECADD 1 "" "" false false 1 UNSET $TOKEN
-	Alice:~$ liquid-cli generate 1
+	Alice:~$ liquid-cli generatetoaddress 1 $ADDRGEN
 
 Check that Bob's wallet now has the token and that Alice's no longer does:
 
