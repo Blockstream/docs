@@ -9,38 +9,38 @@ Although all L-BTC must be created on the Liquid Network via a peg-in,
 there are a few different ways to obtain L-BTC so that you can start
 transacting on the Liquid Network:
 
-+---------+-------------+---------+---------------------------+
-| Method  | Required    | Level   | Notes                     |
-+=========+=============+=========+===========================+
-| Bitcoin | Exchange    | Beginner| Exchanges with            |
-| exchange| account     |         | L-BTC                     |
-|         |             |         | available:                |
-|         |             |         | `Bitfinex`_,              |
-|         |             |         | `The Rock                 |
-|         |             |         | Trading`_,                |
-|         |             |         | `Sideshift AI`_           |
-+---------+-------------+---------+---------------------------+
-| Informal| `Blockstream| Beginner| Only suitable             |
-| swaps   | Green`_     |         | for small                 |
-|         |             |         | amounts of                |
-|         |             |         | L-BTC due to              |
-|         |             |         | risk; example             |
-|         |             |         | venues: `Liquid           |
-|         |             |         | Community                 |
-|         |             |         | Telegram                  |
-|         |             |         | group`_.                  |
-+---------+-------------+---------+---------------------------+
-| Peg-in  | `Liquid     | Advanced| Requires                  |
-|         | Core`_      |         | moderate                  |
-|         |             |         | technical                 |
-|         |             |         | proficiency;              |
-|         |             |         | must wait 102             |
-|         |             |         | Bitcoin blocks            |
-|         |             |         | to complete the           |
-|         |             |         | peg-in; need a            |
-|         |             |         | Liquid member             |
-|         |             |         | to peg-out.               |
-+---------+-------------+---------+---------------------------+
++---------+--------------+---------+---------------------------+
+| Method  | Required     | Level   | Notes                     |
++=========+==============+=========+===========================+
+| Bitcoin | Exchange     | Beginner| Exchanges with            |
+| exchange| account      |         | L-BTC                     |
+|         |              |         | available:                |
+|         |              |         | `Bitfinex`_,              |
+|         |              |         | `The Rock                 |
+|         |              |         | Trading`_,                |
+|         |              |         | `Sideshift AI`_           |
++---------+--------------+---------+---------------------------+
+| Informal| `Blockstream | Beginner| Only suitable             |
+| swaps   | Green`_      |         | for small                 |
+|         |              |         | amounts of                |
+|         |              |         | L-BTC due to              |
+|         |              |         | risk; example             |
+|         |              |         | venues: `Liquid           |
+|         |              |         | Community                 |
+|         |              |         | Telegram                  |
+|         |              |         | group`_.                  |
++---------+--------------+---------+---------------------------+
+| Peg-in  | :ref:`Liquid | Advanced| Requires                  |
+|         | Core         |         | moderate                  |
+|         | <quickstart>`|         | technical                 |
+|         |              |         | proficiency;              |
+|         |              |         | must wait 102             |
+|         |              |         | Bitcoin blocks            |
+|         |              |         | to complete the           |
+|         |              |         | peg-in; need a            |
+|         |              |         | Liquid member             |
+|         |              |         | to peg-out.               |
++---------+--------------+---------+---------------------------+
 
 .. Warning:: L-BTC peg-outs must be performed via a Liquid Member, e.g. Bitfinex. Don’t acquire L-BTC unless you are sure you have a method of converting them back to BTC.
 
@@ -54,8 +54,6 @@ Some guides are shown below, explaining:
 .. _Sideshift AI: https://sideshift.ai/
 .. _Blockstream Green: https://blockstream.com/green
 .. _Liquid Community Telegram group: https://t.me/liquid_community
-.. _Liquid Core: _`quickstart`
-
 
 .. _bitfinex_lbtc:
 
