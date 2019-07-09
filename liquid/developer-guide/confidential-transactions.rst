@@ -63,12 +63,13 @@ Both should display results including the transaction with the same ID as that s
 
 .. code-block:: bash
 
+        Bob:~$ liquid-cli generatetoaddress 1 $(liquid-cli getnewaddress)
 	Alice:~$ liquid-cli getrawmempool
 	Bob:~$ liquid-cli getrawmempool
 	Alice:~$ liquid-cli getblockcount
 	Bob:~$ liquid-cli getblockcount
 
-Note that although Bob sent an amount of 1 L-BTC to himself the net effect is that he now has slightly less than he did before, this is because some of the transaction amount was spent on fees. 
+Note that although Bob sent an amount of 1 L-BTC to himself the net effect is that he now has slightly less than he did before, this is because some of the transaction amount was spent on fees that have yet to mature and be seen as spendable. 
 
 The above shows that the client's blockchains and mempools are in sync. If they are not, wait a few seconds and try the calls above again as it may take a moment for the nodes to synchronize. They display the same results because they are connected nodes on the same Liquid network and broadcast transactions and blocks between each other in very much the same was as Bitcoin nodes do.
 
@@ -101,7 +102,7 @@ Looking in the "details" section near the top, you will see that there are two a
 
 And so we can confirm that Bob's wallet can view the actual amounts being sent and received in this transaction. This is because the blinded transaction was sent from Bob's own wallet and so it has access to the required data to unblind the amount values. You will also see two other properties and their values within the two details sections: "amountblinder" and "assetblinder". These indicate that both the asset amount and the type of asset were blinded. This ensures that wallets without knowledge of the blinding key are prevented from viewing them.
 
-Looking at the transaction from Alice's wallet we would expect both amount and type to be unknown. Checking this using Alice's wallet we may initially get an error, we will see why shortly.
+Looking at the transaction from Alice's wallet, we would expect both amount and type to be unknown as they were sent using a Confidential Transaction. 
 
 In order to check Alice's view of the transaction, we need Alice's node to use the value of the transaction id that we stored in the TXID variable in Bob's terminal session. When our code examples use a variable that was set by the other node like this, we will assume that you will set the variable across terminal sessions. This can be done by using echo to print the value within one terminal session, copying the value, and then setting it within the other node's terminal session, like so:
 
@@ -129,7 +130,7 @@ This then allows us to run the code below.
 
 	Alice:~$ liquid-cli gettransaction $TXID
 
-The reason that we might get an error using this command is that Alice's wallet may not contain details of the transaction yet. We can get the raw transaction data from Alice's node's copy of the blockchain using the getrawtransaction command like this:
+This causes an error. The reason is that Alice's wallet will not contain wallet details of the transaction as it does not relate to an address contained in her wallet. We can get the raw transaction data from Alice's node's copy of the blockchain using the getrawtransaction command like this:
 
 .. code-block:: bash
 
@@ -144,48 +145,27 @@ That returns raw transaction details. If you look within the "vout" section you 
 	"amountcommitment": "0881c61d8a15ad26e6ef621ca99a188ccebbdb348d5285012393459b7e5b1e6113",
 	"assetcommitment": "0b1b7a1a4a604f4a68b3277e3a8926d74e86adce7b92e8e6ba67f9c5a8ad2cbcf4",
 
-What this shows are the "blinded ranges" of the value amounts and the commitment data that acts as proof of the actual amount and type of asset transacted.
+What this shows are the "blinded ranges" of the value amounts and the commitment data that acts as proof of the actual amount and type of asset transacted. The raw view of the transaction will be the same accross all nodes, regardless of if they hold the blinding key or not, only the results of gettransaction from a wallet aware of the blinding key used will show the actual amounts.
 
-Even if we were to import Bob's private key into Alice's wallet it would still not be able to see the amounts and type of asset because it still has no knowledge of the blinding key used. Let's show that this is true by importing the private key used by Bob's wallet into Alice's.
+Even if we were to import Bob's private key into Alice's wallet it would still not be able to see the amounts and type of asset using gettransaction because it still has no knowledge of the blinding key used. 
 
-Export Bob's private key for the address:
-
-.. code-block:: bash
-
-	Bob:~$ BOBPRIVKEY=$(liquid-cli dumpprivkey $ADDR)
-
-Echo, copy and set the variable accross terminal sessions again like we did above (steps not shown) and then import Bob's private key into Alice's wallet:
+If we want to let Alice's wallet view the actual amount details we'll need to import the address as 'watch only' so gettransaction will work, and then import the blinding key so we can see the unblinded amounts. First, import and then view the transaction. Note the use of the second argument passed to gettransaction, set to true. This tells gettransaction to include watch only addresses, such as the one we imported. Remember to copy the value of $ADDR from Bob's session and set it in Alice's before running the code below.
 
 .. code-block:: bash
 
-	Alice:~$ liquid-cli importprivkey $BOBPRIVKEY
+	Alice:~$ liquid-cli importaddress $ADDR
+	Alice:~$ liquid-cli gettransaction $TXID true
 
-Now that we have imported the private key into Alice's wallet, the call to "gettransaction" will not error:
-
-.. code-block:: bash
-
-	Alice:~$ liquid-cli gettransaction $TXID
-
-But because Alice still does not know the blinding key, the amount (towards the top of the output) will show as:
+This time the call to gettransaction does not error but, because Alice still does not know the blinding key, the amount (towards the top of the output) will show as:
 
 .. code-block:: text
 
 	"amount": {
 	  "bitcoin": 0.00000000
 
-As the amount for the transaction is unknown it will also not show up in her Wallet's list of unspent outputs.
+Without knowledge of the Blinding Key, the amount and type of asset being transacted is still hidden.
 
-.. tip:: The two parameters used below are "minimum confirmations" and "maximum confirmations". Passing 1 in for each means we only search the space the utxo above is in, although we expect not to see it anyway:
-
-.. code-block:: bash
-
-	Alice:~$ liquid-cli listunspent 1 1
-
-Which returns nothing related to the addresses derived from Bob's private key.
-
-Without knowledge of the Blinding Key, the amount and type of asset being transacted is hidden, even though Alice's wallet knows the associated private key.
-
-In order for anyone else apart from the sender and receiver of a Confidential Transaction (such as an auditor) to view the amount and type of assets being transacted, they need to know the blinding key that was used to generate the blinded address. To show this, we can export the blinding key Bob's wallet used, import it into Alice's wallet and try to view the transaction again. Let's export the key for that particular address from Bob's wallet and import it into Alice's.
+In order for anyone else apart from the sender and receiver of a Confidential Transaction (such as an auditor) to view the amount and type of assets being transacted, they need to know the blinding key that was used to generate the blinded address. To show this, we can export the blinding key Bob's wallet used for the related address, import it into Alice's wallet and try to view the transaction again. Let's export the key for that particular address from Bob's wallet and import it into Alice's.
 
 Export Bob's blinding key for the address:
 
@@ -203,32 +183,14 @@ Now that Alice's wallet has knowledge of the blinding key used on that address, 
 
 .. code-block:: bash
 
-	Alice:~$ liquid-cli getwalletinfo
+	Alice:~$ liquid-cli gettransaction $TXID true
 
-Magic! Alice's wallet now shows the previous value, plus the 1 L-BTC of Bob's:
+Magic! Alice's wallet now shows the actual value sent in the transaction.
 
 .. code-block:: text
 
-	"balance": {
-	  "bitcoin": 101.00000000
-
-Checking the unspent outputs Alice's wallet is aware of should now also show the output in its list. Remember that we previously imported the private key from Bob's wallet so Alice's now treats it as her own:
-
-.. code-block:: bash
-
-	Alice:~$ liquid-cli listunspent 1 1
-
-This shows that both the amount and the type of asset sent to Bob's address within the unspent outputs in Alice's wallet.
-
-We can now show that Alice's wallet's view of the transaction is now identical to Bob's. Test this by running the following and comparing it to the result of running the same command through Bob's client.
-
-.. code-block:: bash
-
-	Alice:~$ liquid-cli gettransaction $TXID
-
-.. code-block:: bash
-
-	Bob:~$ liquid-cli gettransaction $TXID
+	"amount": {
+	  "bitcoin": 1.00000000
 
 We've seen that the use of a blinding key hides the amount and type of assets in an address and that by importing the right blinding key, we can reveal those values. In practical use, a blinding key may be given to an auditor, should there be a need to verify the amounts and types of assets held by a party. The Confidential Transactions feature of Liquid also allows for "range proofs" to be performed without the need to expose actual amounts. This allows statements such as "address abc holds at least an amount x of asset y" to be cryptographically proven as true or false.
 
