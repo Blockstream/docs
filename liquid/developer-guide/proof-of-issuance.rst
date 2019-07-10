@@ -2,68 +2,94 @@
 Proof of Issuance
 -----------------
 
-In this example we aim to show how an asset issuer can prove that they were the ones who issued a particular asset. We do that by making use of the Contract Hash argument of rawissueasset. We will refer to the idea of a public 'Asset Registry' although no specific implementation is suggested at present.
+This example shows how to use Blockstream's `Liquid asset registry`_. The asset registry allows you to register an asset and prove ownership against a domain name. 
 
-We need to get a 'legacy' type address and can directly use that:
+The code below creates an asset and an associated token. It outputs two files:
+
+* A file that must be placed on the server of the registered domain.
+
+* A .sh file that will post the asset registration data to the blockstream asset registry.
+
+We'll be using Liquid in test mode, so the registration will not complete if you run the output registration script. The code can easily be adapted for live use. To start Liquid in test mode, set the following in your config file.
+
+.. _Liquid asset registry: https://assets.blockstream.info
+
+.. code-block:: text
+
+	chain=elementsregtest
+	daemon=1
+	listen=1
+	txindex=1
+	validatepegin=0
+	initialfreecoins=2100000000000000
+
+First of all, set the values you want associated with the asset. These are required.
+
+.. code-block:: bash
+
+	Alice:~$ NAME="Liquid XYZ Asset"
+	Alice:~$ TICKER="LXYZ"
+	Alice:~$ DOMAIN="lxzy.com"
+	Alice:~$ ASSET_AMOUNT=100
+	Alice:~$ TOKEN_AMOUNT=1
+
+Next, set the precision. For most uses, zero will be fine.
+
+.. code-block:: bash
+
+	Alice:~$ PRECISION=0
+
+Do not change the following value.
+
+.. code-block:: bash
+
+	Alice:~$ VERSION=0 
+
+Next we need to get a 'legacy' type address, extract the public key, and store the address so we can issue the asset to it later.
 
 .. code-block:: bash
 
 	Alice:~$ NEWADDR=$(liquid-cli getnewaddress "" legacy)
 	Alice:~$ VALIDATEADDR=$(liquid-cli getaddressinfo $NEWADDR)
 	Alice:~$ PUBKEY=$(echo $VALIDATEADDR | jq '.pubkey' | tr -d '"')
-	Alice:~$ ADDR=$NEWADDR
+	Alice:~$ ASSET_ADDR=$NEWADDR
 
-Record a message (MSG) to some form of public asset registry to prove we (ABC Company) control the address in question:
-
-.. code-block:: bash
-
-	Alice:~$ MSG="THE ADDRESS THAT I, ABC, HAVE CONTROL OVER IS:[$ADDR] PUBKEY:[$PUBKEY]"
-	Alice:~$ SIGNEDMSG=$(liquid-cli signmessage $ADDR "$MSG")
-	Alice:~$ VERIFIED=$(liquid-cli verifymessage $ADDR $SIGNEDMSG "$MSG")
-
-Write that proof to the registry:
+We also need an address for the token.
 
 .. code-block:: bash
 
-	Alice:~$ echo "REGISTRY ENTRY = MESSAGE:[$MSG] SIGNED MESSAGE:[$SIGNEDMSG]"
-	Alice:~$ FUNDINGADDR=$(liquid-cli getnewaddress)
-	Alice:~$ liquid-cli sendtoaddress $FUNDINGADDR 2
+	Alice:~$ NEWADDR=$(liquid-cli getnewaddress "" legacy)
+	Alice:~$ VALIDATEADDR=$(liquid-cli getaddressinfo $NEWADDR)
+	Alice:~$ TOKEN_ADDR=$NEWADDR
 
-Wait for the transaction to confirm.
+Create the contract and calculate the contract hash. The contract is formatted for use in the Blockstream Asset Registry.
 
 .. code-block:: bash
 
-	Alice:~$ RAWTX=$(liquid-cli createrawtransaction [] '''{"'''$FUNDINGADDR'''":1.00}''')
+	Alice:~$ CONTRACT_REGISTRY_ENTRY="{\"name\": \"$NAME\", \"ticker\": \"$TICKER\", \"precision\": $PRECISION, \"entity\": {\"domain\": \"$DOMAIN\"}, \"issuer_pubkey\": \"$PUBKEY\", \"version\": $VERSION}"
+
+We will hash using openssl to create the contratc hash. Other options are available.
+
+.. code-block:: bash
+
+	Alice:~$ CONTRACT_TEXT_HASH=$(echo -n $CONTRACT_REGISTRY_ENTRY | openssl dgst -sha256)
+	Alice:~$ CONTRACT_TEXT_HASH=$(echo ${CONTRACT_TEXT_HASH#"(stdin)= "})
+
+Create and fund the transaction.
+
+.. code-block:: bash
+
+	Alice:~$ RAWTX=$(liquid-cli createrawtransaction '''[]''' '''{"''data''":"''00''"}''')
 	Alice:~$ FRT=$(liquid-cli fundrawtransaction $RAWTX)
 	Alice:~$ HEXFRT=$(echo $FRT | jq '.hex' | tr -d '"')
 
-Write whatever you want as a contract text. Include reference to signed proof of ownership above:
+Create the raw issuance.
 
 .. code-block:: bash
 
-	Alice:~$ CONTRACTTEXT="THIS IS THE CONTRACT TEXT FOR THE XYZ ASSET. CREATED BY ABC. ADDRESS:[$ADDR] PUBKEY:[$PUBKEY]"
+	Alice:~$ RIA=$(liquid-cli rawissueasset $HEXFRT '''[{"''asset_amount''":'$ASSET_AMOUNT', "''asset_address''":"'''$ASSET_ADDR'''", "''token_amount''":'$TOKEN_AMOUNT', "''token_address''":"'''$TOKEN_ADDR'''", "''blind''":false, "''contract_hash''":"'''$CONTRACT_TEXT_HASH'''"}]''')
 
-Sign it using the same address it references:
-
-.. code-block:: bash
-
-	Alice:~$ SIGNEDCONTRACTTEXT=$(liquid-cli signmessage $ADDR "$CONTRACTTEXT")
-
-Hash that signed message, which we will use as the contract hash. We need to use a hash of size 32 bytes. You can do this a number of ways, we will use openssl commandline in the example:
-
-.. code-block:: bash
-
-	Alice:~$ CONTRACTTEXTHASH=$(echo -n $SIGNEDCONTRACTTEXT | openssl dgst -sha256)
-	Alice:~$ CONTRACTTEXTHASH=$(echo ${CONTRACTTEXTHASH#"(stdin)= "})
-	Alice:~$ echo $CONTRACTTEXTHASH
-
-Issue the asset to the address that we signed for earlier and which we included in the signed contract hash:
-
-.. code-block:: bash
-
-	Alice:~$ RIA=$(liquid-cli rawissueasset $HEXFRT '''[{"''asset_amount''":33, "''asset_address''":"'''$ADDR'''", "''blind''":"''false''", "''contract_hash''":"'''$CONTRACTTEXTHASH'''"}]''')
-
-Details of the issuance:
+Show details of the issuance. These are not all essential to the registry, but may be useful for reference.
 
 .. code-block:: bash
 
@@ -72,50 +98,35 @@ Details of the issuance:
 	Alice:~$ ENTROPY=$(echo $RIA | jq '.[0].entropy' | tr -d '"')
 	Alice:~$ TOKEN=$(echo $RIA | jq '.[0].token' | tr -d '"')
 
-Blind, sign and send the issuance transaction:
+Blind, sign and send the issuance transaction.
 
 .. code-block:: bash
 
-	Alice:~$ BRT=$(liquid-cli blindrawtransaction $HEXRIA)
+	Alice:~$ BRT=$(liquid-cli blindrawtransaction $HEXRIA true '''[]''' false)
 	Alice:~$ SRT=$(liquid-cli signrawtransactionwithwallet $BRT)
 	Alice:~$ HEXSRT=$(echo $SRT | jq '.hex' | tr -d '"')
 	Alice:~$ ISSUETX=$(liquid-cli sendrawtransaction $HEXSRT)
 
-Wait for sufficient confirmations and then in the output from decoderawtransaction you will see in the vout section the asset being issued to the address we signed from earlier:
+Confirm the transaction and check the results.
 
 .. code-block:: bash
 
-	Alice:~$ RT=$(liquid-cli getrawtransaction $ISSUETX)
-	Alice:~$ DRT=$(liquid-cli decoderawtransaction $RT)
-
-Build an asset registry entry saying that we issued the asset:
-
-.. code-block:: bash
-
-	Alice:~$ ASSETREGISTERMESSAGE="I, ABC, CREATED ASSET:[$ASSET] WITH ASSET ENTROPY:[$ENTROPY] AT ADDRESS:[$ADDR] IN TX:[$ISSUETX]"
-	Alice:~$ SIGNEDMSG=$(liquid-cli signmessage $ADDR "$ASSETREGISTERMESSAGE")
-	Alice:~$ liquid-cli verifymessage $ADDR $SIGNEDMSG "$ASSETREGISTERMESSAGE"
-
-Then make the entry in the aset registry:
-
-.. code-block:: bash
-
-	Alice:~$ echo "REGISTRY ENTRY = ASSET CREATION MESSAGE:[$ASSETREGISTERMESSAGE] SIGNED VERSION:[$SIGNEDMSG]"
+	Alice:~$ liquid-cli generatetoaddress 101 $ADDRGEN1
 	Alice:~$ liquid-cli listissuances
 	Alice:~$ liquid-cli getwalletinfo
 
-To prove the issuance was indeed made against the contract hash, we need to provide the following to anyone wishing to validate that the contract has was used to produce the asset: Hex of funded raw transaction used to fund the issuance and the contract_hash. Not needed: asset_amount, asset_address, blind.
+We have the required data and have formatted the contract data so can now create the required files that will allow the registration.
 
-If someone else tries to claim they created the asset and we didn't, they will need to prove they can sign for the address it was sent to and explain how come we can sign messages (as found in the asset registry) for that address.
+Write the domain and asset ownership proof to a file. The file should then be placed in a directory within the root of your domain. The directory should be named ".well_known". Note that the file should have no extension and just copied as it is created. Do not change the contents of the file in any way.
 
 .. code-block:: bash
 
-	Alice:~$ VERIFYISSUANCE=$(liquid-cli rawissueasset $HEXFRT '''[{"''asset_amount''":33, "''asset_address''":"'''$ADDR'''", "''blind''":"''false''", "''contract_hash''":"'''$CONTRACTTEXTHASH'''"}]''')
+	Alice:~$ echo "Authorize linking the domain name $DOMAIN to the Liquid asset $ASSET" > liquid-asset-proof-$ASSET
 
-	Alice:~$ ASSETVERIFY=$(echo $VERIFYISSUANCE | jq '.[0].asset' | tr -d '"')
-	Alice:~$ ENTROPYVERIFY=$(echo $VERIFYISSUANCE | jq '.[0].entropy' | tr -d '"')
-	Alice:~$ TOKENVERIFY=$(echo $VERIFYISSUANCE | jq '.[0].token' | tr -d '"')
-	Alice:~$ [[ $ASSET = $ASSETVERIFY ]] && echo ASSET HEX: VERIFIED || echo ASSET HEX: NOT VERIFIED
-	Alice:~$ [[ $ENTROPY = $ENTROPYVERIFY ]] && echo ENTROPY: VERIFIED || echo ENTROPY: NOT VERIFIED
-	Alice:~$ [[ $TOKEN = $TOKENVERIFY ]] && echo TOKEN: VERIFIED || echo TOKEN: NOT VERIFIED
+After you have placed the file output above on your domain, you can run the register_asset.sh script created below to post the asset data to the registry.
 
+.. code-block:: bash
+
+	Alice:~$ echo "curl https://assets.blockstream.info/ --data-raw '{\"asset_id\":\"$ASSET\",\"contract\":$CONTRACT_REGISTRY_ENTRY,\"issuance_txin\":{\"txid\":\"$ISSUETX\",\"vin\":0}}'" > register_asset.sh
+
+Once the required checks against the domain and issuance transaction have been made, the registration can be found on Blockstream's `Liquid asset registry`_.
