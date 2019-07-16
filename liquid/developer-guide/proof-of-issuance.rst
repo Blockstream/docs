@@ -52,11 +52,14 @@ Save the code below in a file named issue_and_prepare_register.sh
 	TICKER="WTX"
 	# Do not use a domain prefix in the following:
 	DOMAIN="wintercooled.github.io"
-	ASSET_AMOUNT=100
-	TOKEN_AMOUNT=1
+	# Issue 100 assets using the satoshi unit, dependant on precision when viewed from 
+	# applications using Asset Registry data.
+	ASSET_AMOUNT=0.00000100
+	# Issue 1 reissuance token using the satoshi unit, dependant on precision when viewed from 
+	# applications using Asset Registry data.
+	TOKEN_AMOUNT=0.00000001
 	
 	# Amend the following if needed:
-	# See https://github.com/Blockstream/liquid_multisig_issuance for info.
 	PRECISION=0
 	
 	# Don't change the following:
