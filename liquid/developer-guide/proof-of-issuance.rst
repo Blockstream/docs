@@ -2,19 +2,34 @@
 Proof of Issuance - Blockstream's Liquid Asset Registry
 -------------------------------------------------------
 
-This example shows how to use Blockstream's `Liquid asset registry`_. The asset registry allows you to register an asset and prove ownership against a domain name. 
+This example shows how to use Blockstream's `Liquid Asset Registry`_. The asset registry allows you to register an asset and prove ownership against a domain name. 
 
 The code below creates an asset, an associated token, and outputs two files:
 
 * A 'liquid-asset-proof-' file that must be placed on the server of the registered domain.
 
-* A 'register_asset.sh' file that, when run, will post the asset registration data to Blockstream's Liquid asset registry.
+* A 'register_asset.sh' file that, when run, will post the asset registration data to Blockstream's Liquid Asset Registry.
 
 The use of the output files will be explained later.
 
-We'll be using Liquid in live mode. The code can easily be adapted for test use.
+There are six fields that need setting within the script:
 
-.. _Liquid asset registry: https://assets.blockstream.info
+* NAME - The name of the asset as it will apear in the registry and applications that use asset registry data, such as the `Blockstream Explorer`_. Length must be 5 to 255 ascii characters.
+
+* TICKER - The ticker you would like to assign to the asset. Length must be 3 to 5 characters (valid characters are a-z and A-Z).
+
+* DOMAIN - The domain that will be used to verify the asset. Must be a valid domain name format, for example: example.com or sub.example.com. Do not include the http/s or www prefixes.
+
+* ASSET_AMOUNT - The amount to be issued. How this is displayed within applications that use asset registry data is affected by the 'PRECISION' field.
+
+* TOKEN_AMOUNT - The amount of reissuance tokens to be created. A value of 1 will create a value of 1.00 when viewed from Liquid Core and 100,000,000 when viewed on an app that uses satoshi sized units, such as the `Blockstream Explorer`_.
+
+* PRECISION - The precision used to display the asset amount within applications that use `Liquid Asset Registry`_ data, such as the `Blockstream Explorer`_. Examples: a precision value of 0 for an ASSET_AMOUNT of 100 will create a value of 100.00 when viewed from Liquid Core and 10,000,000,000 when viewed in an app that uses the asset registry data. A precision value of 8 for an ASSET_AMOUNT of 100 will create a value of 100.00 when viewed from Liquid Core and 100 when viewed in the same app. The default is 0 and the maximum value is 8. 
+
+.. _Blockstream Explorer: https://blockstream.info/liquid/
+.. _Liquid Asset Registry: https://assets.blockstream.info
+
+The code below uses Liquid in live mode. The code can easily be adapted for test use.
 
 Save the code below in a file named issue_and_prepare_register.sh
 
@@ -144,7 +159,7 @@ Save the code below in a file named issue_and_prepare_register.sh
 	#                                   #
 	#####################################
 	
-	# Blockstream's Liquid asset registry (https://assets.blockstream.info/) can be used to register an asset to an issuer.
+	# Blockstream's Liquid Asset Registry (https://assets.blockstream.info/) can be used to register an asset to an issuer.
 	# We already have the required data and have formatted the contract plain text into a format that we can use for this.
 	
 	# Write the domain and asset ownership proof to a file. The file should then be placed in a directory 
@@ -198,4 +213,4 @@ So the path used to check asset to domain registry would end up being:
 
 	www.your-example-domain-here.com/.well-known/liquid-asset-proof-123abc
 
-Once that file is accessible you can then run the 'register_asset.sh' script and, when the required checks against the domain and issuance transaction have been made, the registration will be found on Blockstream's `Liquid asset registry`_.
+Once that file is accessible you can then run the 'register_asset.sh' script and, when the required checks against the domain and issuance transaction have been made, the registration will be found on Blockstream's `Liquid Asset Registry`_.
