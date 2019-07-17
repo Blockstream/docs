@@ -14,17 +14,17 @@ The use of the output files will be explained later.
 
 There are six fields that need setting within the script:
 
-* NAME - The name of the asset as it will apear in the registry and applications that use asset registry data, such as the `Blockstream Explorer`_. Length must be 5 to 255 ascii characters.
+* ``NAME`` The name of the asset as it will apear in the registry and applications that use asset registry data, such as the `Blockstream Explorer`_. Length must be 5 to 255 ascii characters.
 
-* TICKER - The ticker you would like to assign to the asset. Length must be 3 to 5 characters (valid characters are a-z and A-Z).
+* ``TICKER`` The ticker you would like to assign to the asset. Length must be 3 to 5 characters (valid characters are a-z and A-Z).
 
-* DOMAIN - The domain that will be used to verify the asset. Must be a valid domain name format, for example: example.com or sub.example.com. Do not include the http/s or www prefixes.
+* ``DOMAIN`` The domain that will be used to verify the asset. Must be a valid domain name format, for example: example.com or sub.example.com. Do not include the http/s or www prefixes.
 
-* ASSET_AMOUNT - The amount to be issued. It is preferable to consider one satoshi unit as representing one asset. So to issue am amount of 100 of an asset, a value of 0.00000100 should be used. Please note that how this value is displayed within applications that use asset registry data is affected by the 'PRECISION' field. 
+* ``ASSET_AMOUNT`` The amount to be issued. It is preferable to consider one satoshi unit as representing one asset. So to issue an amount of 100 of an asset, a value of 0.00000100 should be used. Please note that how this value is displayed within applications that use asset registry data is affected by the ``PRECISION`` field. 
 
-* TOKEN_AMOUNT - The amount of reissuance tokens to be created. It is preferable to consider one satoshi unit as representing one reissuance token, so a value of 0.00000001 will create 0.00000001 reissuance tokens and when viewed from Liquid Core it will also show as 0.00000001. When viewed from an app that uses satoshi sized units, such as the `Blockstream Explorer`_ it will show as 1. This field is not affected by the 'PRECISION' field.
+* ``TOKEN_AMOUNT`` The amount of reissuance tokens to be created. It is preferable to consider one satoshi unit as representing one reissuance token, so a value of 0.00000001 will create 0.00000001 reissuance tokens and when viewed from Liquid Core it will also show as 0.00000001. When viewed from an app that uses satoshi sized units, such as the `Blockstream Explorer`_ it will show as 1. This field is not affected by the ``PRECISION`` field.
 
-* PRECISION - The precision used to display the asset amount within applications that use `Liquid Asset Registry`_ data, such as the `Blockstream Explorer`_. Examples: a precision value of 0 for an ASSET_AMOUNT of 0.00000100 will create a value of 0.00000100 when viewed from Liquid Core and 100 when viewed in an app that uses the asset registry data. A precision value of 2 for an ASSET_AMOUNT of 0.00000100 will create a value of 0.00000100 when viewed from Liquid Core and 1 when viewed in the same app. The default is 0 and the maximum value is 8. 
+* ``PRECISION`` The precision used to display the asset amount within applications that use `Liquid Asset Registry`_ data, such as the `Blockstream Explorer`_. Examples: a ``PRECISION`` value of 0 for an ``ASSET_AMOUNT`` of 0.00000100 will create a value of 0.00000100 when viewed from Liquid Core and 100 when viewed in an app that uses the asset registry data. A ``PRECISION`` value of 2 for an ``ASSET_AMOUNT`` of 0.00000100 will create a value of 0.00000100 when viewed from Liquid Core and 1 when viewed in the same app. The default is 0 and the maximum value is 8. 
 
 .. _Blockstream Explorer: https://blockstream.info/liquid/
 .. _Liquid Asset Registry: https://assets.blockstream.info
@@ -52,11 +52,10 @@ Save the code below in a file named issue_and_prepare_register.sh
 	TICKER="WTX"
 	# Do not use a domain prefix in the following:
 	DOMAIN="wintercooled.github.io"
-	# Issue 100 assets using the satoshi unit, dependant on precision when viewed from 
+	# Issue 100 assets using the satoshi unit, dependant on PRECISION when viewed from 
 	# applications using Asset Registry data.
 	ASSET_AMOUNT=0.00000100
-	# Issue 1 reissuance token using the satoshi unit, dependant on precision when viewed from 
-	# applications using Asset Registry data.
+	# Issue 1 reissuance token using the satoshi unit, unaffected by PRECISION.
 	TOKEN_AMOUNT=0.00000001
 	
 	# Amend the following if needed:
