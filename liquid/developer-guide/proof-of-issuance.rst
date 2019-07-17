@@ -24,7 +24,7 @@ There are six fields that need setting within the script:
 
 * ``TOKEN_AMOUNT`` The amount of reissuance tokens to be created. It is preferable to consider one satoshi unit as representing one reissuance token, so a value of 0.00000001 will create 0.00000001 reissuance tokens and when viewed from Liquid Core it will also show as 0.00000001. When viewed from an app that uses satoshi sized units, such as the `Blockstream Explorer`_ it will show as 1. This field is not affected by the ``PRECISION`` field.
 
-* ``PRECISION`` The precision used to display the asset amount within applications that use `Liquid Asset Registry`_ data, such as the `Blockstream Explorer`_. Examples: a ``PRECISION`` value of 0 for an ``ASSET_AMOUNT`` of 0.00000100 will create a value of 0.00000100 when viewed from Liquid Core and 100 when viewed in an app that uses the asset registry data. A ``PRECISION`` value of 2 for an ``ASSET_AMOUNT`` of 0.00000100 will create a value of 0.00000100 when viewed from Liquid Core and 1 when viewed in the same app. The default is 0 and the maximum value is 8. 
+* ``PRECISION`` The precision used to display the asset amount within applications that use `Liquid Asset Registry`_ data, such as the `Blockstream Explorer`_. Examples: a ``PRECISION`` value of 0 for an ``ASSET_AMOUNT`` of 0.00000100 will create a value of 0.00000100 when viewed from Liquid Core and 100 when viewed in an app that uses the asset registry data. A ``PRECISION`` value of 2 for an ``ASSET_AMOUNT`` of 0.00000100 will create a value of 0.00000100 when viewed from Liquid Core and 1.00 when viewed in the same app. The default is 0 and the maximum value is 8. 
 
 .. _Blockstream Explorer: https://blockstream.info/liquid/
 .. _Liquid Asset Registry: https://assets.blockstream.info
