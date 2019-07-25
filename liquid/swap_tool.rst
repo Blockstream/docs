@@ -68,7 +68,39 @@ Windows
 
 Using Liquid Swap Tool
 ----------------------
-Once started, follow the instructions on the `Liquid Swap Tool repository <https://github.com/Blockstream/liquid-swap/>`_ to perform a Liquid asset swap.
+The Liquid Swap Tool can generate, check and sign Liquid asset swap data. The data it generates during the swap process must be exchanged between the two parties outside of the tool itself. The swap data is just plain text and can be copied and pasted into whatever communication method the two parties choose to use.
+
+In this guide, we'll refer to the person who initiates the swap as the Proposer, and the party on the other side of the swap as the Respondent.
+
+The Proposer starts the swap by clicking ``Start New Swap``.
+
+.. image:: ./artwork/swap_tool/swap01.png
+   :align: center
+
+The Proposer selects the asset and the amount of the asset they will send, the asset and amount of that asset that they would like to receive in return, and then clicks the ``Generate Proposal`` button.
+
+.. image:: ./artwork/swap_tool/swap02.png
+   :align: center
+
+The Proposer copies the generated proposal and sends it to the Respondent.
+
+The Respondent will start their side of the swap by clicking ``Continue Swap`` within their Liquid Swap Tool, and pasting in the text the Proposer sent them.
+
+The Respondent can then view the details of the proposed swap. If they decide to accept the proposal, they click ``Accept Proposal``, which gives them the chance to review the fees that will be paid, along with the address that they will receive funds to.
+
+.. image:: ./artwork/swap_tool/swap03.png
+   :align: center
+
+If the Respondent accepts the swap, they are presented with the signed acceptence data, which they have to send back to the Proposer. At this stage, the swap is not yet complete.
+
+If the Proposer wants to complete the swap, they click ``Continue Swap`` from the Liquid Swap Tool's welcome screen, paste in the text the Respondent sent them, and verify the contents of the trade. If the Proposer accepts the swap, they click ``Execute Swap``, before finally confirming that they are willing to pay the fees needed for their part of the swap. 
+
+The Liquid Swap Tool signs and broadcasts the transaction, completing the swap for both parties.
+
+.. image:: ./artwork/swap_tool/swap04.png
+   :align: center
+
+For more information, refer to the `Liquid Swap Tool repository <https://github.com/Blockstream/liquid-swap/>`_.
 
 
 Wallet Compatibility Notice
