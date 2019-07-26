@@ -70,7 +70,7 @@ Using Liquid Swap Tool
 ----------------------
 The Liquid Swap Tool can generate, check and sign Liquid asset swap data. The data it generates during the swap process must be exchanged between the two parties outside of the tool itself. The swap data is just plain text and can be copied and pasted into whatever communication method the two parties choose to use.
 
-In this guide, we'll refer to the person who initiates the swap as the Proposer, and the party on the other side of the swap as the Respondent.
+In this guide, we'll refer to the person who initiates the swap as the Proposer, and the party on the other side of the swap as the Respondent. We'll be swapping some ``L-BTC`` for ``USDt``.
 
 The Proposer starts the swap by clicking ``Start New Swap``.
 
@@ -80,6 +80,11 @@ The Proposer starts the swap by clicking ``Start New Swap``.
 The Proposer selects the asset and the amount of the asset they will send, the asset and amount of that asset that they would like to receive in return, and then clicks the ``Generate Proposal`` button.
 
 .. image:: ./artwork/swap_tool/swap02.png
+   :align: center
+
+The ``Add New Asset`` button can be used to map an asset id to a locally stored label. This makes it easier to perform swaps without having to remember the id of individual assets. The example below shows how to map an asset with the id ``946cfcc80...`` to a local label of ``YourLocalAssetLabel``. Please be aware that the labels you create are not shared with others on the Liquid network, who will see either the asset id, or their own locally assigned asset label during the swap.
+
+.. image:: ./artwork/swap_tool/swap02_01.png
    :align: center
 
 The Proposer copies the generated proposal and sends it to the Respondent.
