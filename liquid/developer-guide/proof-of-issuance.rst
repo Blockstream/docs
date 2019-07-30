@@ -39,7 +39,7 @@ Save the code below in a file named issue_and_prepare_register.sh
 	set -x
 	shopt -s expand_aliases
 	
-	# ASSUMES liquidd IS ALREADY RUNNING
+	# ASSUMES elementsd IS ALREADY RUNNING
 	
 	######################################################
 	#                                                    #
@@ -69,9 +69,8 @@ Save the code below in a file named issue_and_prepare_register.sh
 	# error. We'll assume this is the case:
 	FEERATE=0.00003000
 	
-	# Change the following point to your liquid-cli binary and liquid data directory.
-	# If you have not changed the data directory, you can delete that argument below.
-	alias e1-cli="$HOME/liquid/liquid-0.17.0/bin/liquid-cli -datadir=$HOME/liquid"
+	# Change the following to point to your elements-cli binary and liquid data directory.
+	alias e1-cli="$HOME/elements-0.17.0.1/bin/elements-cli -datadir=$HOME/.elements"
 	
 	##############################
 	#                            #
@@ -183,7 +182,7 @@ Save the code below in a file named issue_and_prepare_register.sh
 	echo "Completed without error"
 
 
-When you have saved the above to the file, edit the variables at the top and of the file and start Liquid QT or liquidd using an argument of ``-server=1`` to allow the Liquid client to communicate with it. Execute the script from the directory you created it in by opening a Terminal session and running:
+When you have saved the above to the file, edit the variables at the top and of the file and start elements-qt or elementsd using an argument of ``-server=1`` to allow the Liquid client to communicate with it. Execute the script from the directory you created it in by opening a Terminal session and running:
 
 .. code-block:: bash
 

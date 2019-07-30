@@ -10,11 +10,11 @@ If you have not already installed and run Liquid on your machine, follow the :re
 
 Once you have Liquid installed and running on your machine, you need to tell Liquid to allow connections from other applications, such as the Liquid Swap Tool.
 
-To do this, follow the process in :ref:`Configuring Liquid <quickstart_configuring>` to locate and edit the Liquid config file and add the following line to the liquid.conf file:
+To do this, follow the process in :ref:`Configuring Liquid <quickstart_configuring>` to locate and edit the Liquid config file and add the following line to the elements.conf file:
 
 ``server=1``
 
-After you have saved the change to the liquid.conf file you can start your Liquid node and it will be ready to accept connections from the Liquid Swap Tool.
+After you have saved the change to the elements.conf file you can start your Liquid node and it will be ready to accept connections from the Liquid Swap Tool.
 
 
 Downloading and running Liquid Swap Tool

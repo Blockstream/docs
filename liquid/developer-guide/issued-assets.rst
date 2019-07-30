@@ -8,7 +8,7 @@ First, let's take a look at Alice's wallet to see what it currently holds.
 
 .. code-block:: bash
 
-	Alice:~$ liquid-cli getwalletinfo
+	Alice:~$ elements-cli getwalletinfo
 
 We see that Alice holds a lot of the "bitcoin" asset and nothing else:
 
@@ -22,7 +22,7 @@ Every asset you issue within Liquid (including the "bitcoin" default) will be as
 
 .. code-block:: bash
 
-	Alice:~$ liquid-cli dumpassetlabels
+	Alice:~$ elements-cli dumpassetlabels
 
 Which returns:
 
@@ -38,7 +38,7 @@ Run the following to perform a blinded issuance of 100 of a new asset, along wit
 
 .. code-block:: bash
 
-	Alice:~$ ISSUE=$(liquid-cli issueasset 100 1)
+	Alice:~$ ISSUE=$(elements-cli issueasset 100 1)
 
 .. tip:: To manually issue an asset using the rawissueasset command, please see the Creating Raw Issuances example. Additionally, the Proof of Issuance example shows how to prove that you were the one who issued the asset using the "contract hash" parameter.
 
@@ -75,7 +75,7 @@ In order to view all asset issuances that have been made we run the "listissuanc
 
 .. code-block:: bash
 
-	Alice:~$ liquid-cli listissuances
+	Alice:~$ elements-cli listissuances
 
 That will show the asset we just issued. You'll notice tha it has the following property:
 
@@ -97,9 +97,9 @@ Or you can do this by passing in "assetdir" as a parameter when you start the no
 
 .. code-block:: bash
 
-	Alice:~$ liquid-cli stop
-	Alice:~$ liquidd -assetdir=$ASSET:demoasset
-	Alice:~$ liquid-cli listissuances
+	Alice:~$ elements-cli stop
+	Alice:~$ elementsd -assetdir=$ASSET:demoasset
+	Alice:~$ elements-cli listissuances
 
 This shows that the asset we issued has the label we assigned to its hex value:
 
@@ -123,7 +123,7 @@ When the transaction has confirmed, we can take a look using Bob's wallet to see
 
 .. code-block:: bash
 
-	Bob:~$ liquid-cli listissuances
+	Bob:~$ elements-cli listissuances
 
 Bob's wallet isn't aware of the issuance, so we'll import the address into his wallet.
 
@@ -131,7 +131,7 @@ In order to check Bob's view of the issuance, we need Bob's node to use the addr
 
 .. code-block:: bash
 
-	Alice:~$ IADDR=$(liquid-cli gettransaction $ITXID | jq '.details[0].address' | tr -d '"')
+	Alice:~$ IADDR=$(elements-cli gettransaction $ITXID | jq '.details[0].address' | tr -d '"')
 	Alice:~$ echo $IADDR
 
 Copy the result, which will be similar to:
@@ -152,13 +152,13 @@ Bob can now import the address relating to Alice's issuance:
 
 .. code-block:: bash
 
-	Bob:~$ liquid-cli importaddress $IADDR
+	Bob:~$ elements-cli importaddress $IADDR
 
 If we try and view the list of issuances from Bob's node now we'll see the issuance, but notice that the amount of the asset and the amount of its associated token are hidden:
 
 .. code-block:: bash
 
-	Bob:~$ liquid-cli listissuances
+	Bob:~$ elements-cli listissuances
 
 The asset amount and the token amount are both blinded and show as -1:
 
@@ -173,17 +173,17 @@ First, we need to export the issuance blinding key. We refer to issuances by the
 
 .. code-block:: bash
 
-	Alice:~$ ISSUEKEY=$(liquid-cli dumpissuanceblindingkey $ITXID $IVIN)
+	Alice:~$ ISSUEKEY=$(elements-cli dumpissuanceblindingkey $ITXID $IVIN)
 
 .. code-block:: bash
 
-	Bob:~$ liquid-cli importissuanceblindingkey $ITXID $IVIN $ISSUEKEY
+	Bob:~$ elements-cli importissuanceblindingkey $ITXID $IVIN $ISSUEKEY
 
 Now when we run the command to list known issuances from Bob's wallet we should see the actual values:
 
 .. code-block:: bash
 
-	Bob:~$ liquid-cli listissuances
+	Bob:~$ elements-cli listissuances
 
 Which returns:
 
@@ -200,18 +200,18 @@ You will need to echo, copy and create the appropriate variable (BOBDEMOADD) in 
 
 .. code-block:: bash
 
-	Bob:~$ BOBDEMOADD=$(liquid-cli getnewaddress)
+	Bob:~$ BOBDEMOADD=$(elements-cli getnewaddress)
 
 .. code-block:: bash
 
-	Alice:~$ liquid-cli sendtoaddress $BOBDEMOADD 10 "" "" false false 1 UNSET demoasset
+	Alice:~$ elements-cli sendtoaddress $BOBDEMOADD 10 "" "" false false 1 UNSET demoasset
 
 After confirmation, Bob's wallet will now show an amount of 10 "demoasset" and Alice's will show 90:
 
 .. code-block:: bash
 
-	Bob:~$ liquid-cli getwalletinfo
-	Alice:~$ liquid-cli getwalletinfo
+	Bob:~$ elements-cli getwalletinfo
+	Alice:~$ elements-cli getwalletinfo
 
 As we didn't assign a label in Bob's node for the asset we created, it will be identified by its hex value instead. We will therefore have to use the hex identifier instead of the asset label when we send it from his node. Remember that asset labels are local only to each node and are not part of the network's protocol rules. We'll demonstrate how Bob can send the asset using the hex value by transferring the 10 "demoasset" back to Alice:
 
@@ -219,20 +219,20 @@ You will need to echo, copy and create the appropriate variable (ALICEDEMOADD) i
 
 .. code-block:: bash
 
-	Alice:~$ ALICEDEMOADD=$(liquid-cli getnewaddress)
+	Alice:~$ ALICEDEMOADD=$(elements-cli getnewaddress)
 
 .. code-block:: bash
 
-	Bob:~$ liquid-cli sendtoaddress $ALICEDEMOADD 10 "" "" false false 1 UNSET $ASSET
-	Bob:~$ ADDRGEN=$(liquid-cli getnewaddress)
-	Bob:~$ liquid-cli generatetoaddress 1 $ADDRGEN
+	Bob:~$ elements-cli sendtoaddress $ALICEDEMOADD 10 "" "" false false 1 UNSET $ASSET
+	Bob:~$ ADDRGEN=$(elements-cli getnewaddress)
+	Bob:~$ elements-cli generatetoaddress 1 $ADDRGEN
 
 We should see that Bob's wallet has no "demoasset" in it anymore and Alice's is back to 100:
 
 .. code-block:: bash
 
-	Bob:~$ liquid-cli getwalletinfo
-	Alice:~$ liquid-cli getwalletinfo
+	Bob:~$ elements-cli getwalletinfo
+	Alice:~$ elements-cli getwalletinfo
 
 We can see that is indeed the case.
 

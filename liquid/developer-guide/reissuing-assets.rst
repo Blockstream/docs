@@ -6,7 +6,7 @@ In this section we'll look at reissuing an amount of the asset we previously iss
 
 .. code-block:: bash
 
-	Alice:~$ RTRANS=$(liquid-cli reissueasset $ASSET 99)
+	Alice:~$ RTRANS=$(elements-cli reissueasset $ASSET 99)
 	Alice:~$ RTXID=$(echo $RTRANS | jq '.txid' | tr -d '"')
 
 We've just created 99 more units of our new asset. As an aside, because we already labelled the asset in the previous example, we could have also passed "demoasset" in as the first parameter instead of the hex identifier and it would have worked exactly the same.
@@ -15,7 +15,7 @@ To check this issuance history of our asset (and ignore the "bitcoin" issuance) 
 
 .. code-block:: bash
 
-	Alice:~$ liquid-cli listissuances $ASSET
+	Alice:~$ elements-cli listissuances $ASSET
 
 For the above command you may also pass the asset label in instead of the hex value. As has been noted before, be aware that labels are stored locally and are not network-wide.
 
@@ -31,7 +31,7 @@ Let's look at the details of the transaction where we reissued our asset:
 
 .. code-block:: bash
 
-	Alice:~$ liquid-cli gettransaction $RTXID
+	Alice:~$ elements-cli gettransaction $RTXID
 
 Scroll to the top of the returned transaction data as there are a few things worth noting here. The first is that within the "amount" section we can see that 0 "bitcoin" and 99 "demoasset" were transacted:
 
@@ -74,8 +74,8 @@ To check that the blinding works the same for a reissuance transaction as it doe
 
 .. code-block:: bash
 
-	Bob:~$ RAWRTRANS=$(liquid-cli getrawtransaction $RTXID)
-	Bob:~$ liquid-cli decoderawtransaction $RAWRTRANS
+	Bob:~$ RAWRTRANS=$(elements-cli getrawtransaction $RTXID)
+	Bob:~$ elements-cli decoderawtransaction $RAWRTRANS
 
 We can see that the amounts and asset types are indeed blinded with results like this:
 
@@ -92,8 +92,8 @@ Let's send the reissuance token from Alice to Bob so that Bob can reissue some "
 
 .. code-block:: bash
 
-	Alice:~$ liquid-cli getwalletinfo
-	Bob:~$ liquid-cli getwalletinfo
+	Alice:~$ elements-cli getwalletinfo
+	Bob:~$ elements-cli getwalletinfo
 
 Alice's wallet has "bitcoin", "demoasset" and the demo asset's reissuance token whereas Bob's only has "bitcoin".
 
@@ -101,7 +101,7 @@ We'll just prove that the token is needed to reissue by trying to reissue from B
 
 .. code-block:: bash
 
-	Bob:~$ liquid-cli reissueasset $ASSET 10
+	Bob:~$ elements-cli reissueasset $ASSET 10
 
 That fails as expected and gives the following error message:
 
@@ -113,21 +113,21 @@ So let's send the reissuance token to Bob so that he can reissue some of our "de
 
 .. code-block:: bash
 
-	Bob:~$ RITRECADD=$(liquid-cli getnewaddress)
+	Bob:~$ RITRECADD=$(elements-cli getnewaddress)
 
 Send the token from Alice's wallet to Bob's new address as if it were any other asset. We'll use the hex of the token to say what type of asset we are sending and also generate a block so the transaction confirms:
 
 .. code-block:: bash
 
-	Alice:~$ liquid-cli sendtoaddress $RITRECADD 1 "" "" false false 1 UNSET $TOKEN
-	Alice:~$ liquid-cli generatetoaddress 1 $ADDRGEN
+	Alice:~$ elements-cli sendtoaddress $RITRECADD 1 "" "" false false 1 UNSET $TOKEN
+	Alice:~$ elements-cli generatetoaddress 1 $ADDRGEN
 
 Check that Bob's wallet now has the token and that Alice's no longer does:
 
 .. code-block:: bash
 
-	Alice:~$ liquid-cli getwalletinfo
-	Bob:~$ liquid-cli getwalletinfo
+	Alice:~$ elements-cli getwalletinfo
+	Bob:~$ elements-cli getwalletinfo
 
 The token and right to reissue it provides is now Bob's!
 
@@ -137,8 +137,8 @@ Bob still doesn't have any of the "demoasset" itself yet but, now that his walle
 
 .. code-block:: bash
 
-	Bob:~$ RISSUE=$(liquid-cli reissueasset $ASSET 10)
-	Bob:~$ liquid-cli getwalletinfo
+	Bob:~$ RISSUE=$(elements-cli reissueasset $ASSET 10)
+	Bob:~$ elements-cli getwalletinfo
 
 Bob's wallet now has "bitcoin", the reissuance token for our new asset, and an amount of the new asset itself:
 
@@ -154,21 +154,21 @@ Remember that the new asset we issued will still only display using its hex valu
 
 .. code-block:: bash
 
-	Alice:~$ liquid-cli listissuances
+	Alice:~$ elements-cli listissuances
 
 Import the address so that it can:
 
 .. code-block:: bash
 
 	Bob:~$ RITXID=$(echo $RISSUE | jq '.txid' | tr -d '"')
-	Bob:~$ RIADDR=$(liquid-cli gettransaction $RITXID | jq '.details[0].address' | tr -d '"')
-	Alice:~$ liquid-cli importaddress $RIADDR
+	Bob:~$ RIADDR=$(elements-cli gettransaction $RITXID | jq '.details[0].address' | tr -d '"')
+	Alice:~$ elements-cli importaddress $RIADDR
 
 Now Alice's wallet can see the reissuance:
 
 .. code-block:: bash
 
-	Alice:~$ liquid-cli listissuances
+	Alice:~$ elements-cli listissuances
 
 As expected though, the amounts are blinded. You can unblind by importing the blinding key as we did earlier should you want to.
 
@@ -176,41 +176,41 @@ In Liquid you can also carry out an unblinded asset issue:
 
 .. code-block:: bash
 
-	Bob:~$ UBRISSUE=$(liquid-cli issueasset 55 1 false)
+	Bob:~$ UBRISSUE=$(elements-cli issueasset 55 1 false)
 	Bob:~$ UBASSET=$(echo $UBRISSUE | jq '.asset' | tr -d '"')
 
 Which shows up as normal in Bob's wallet after he issues it:
 
 .. code-block:: bash
 
-	Bob:~$ liquid-cli getwalletinfo
+	Bob:~$ elements-cli getwalletinfo
 
 And this time if we import the address into Alice's wallet she should be able to see the amount issued, proving it was issued unblinded. Following the same process as before to import the address into Alice's wallet:
 
 .. code-block:: bash
 
-	Alice:~$ liquid-cli listissuances
+	Alice:~$ elements-cli listissuances
 	Bob:~$ UBRITXID=$(echo $UBRISSUE | jq '.txid' | tr -d '"')
-	Bob:~$ UBRIADDR=$(liquid-cli gettransaction $UBRITXID | jq '.details[0].address' | tr -d '"')
-	Alice:~$ liquid-cli importaddress $UBRIADDR
+	Bob:~$ UBRIADDR=$(elements-cli gettransaction $UBRITXID | jq '.details[0].address' | tr -d '"')
+	Alice:~$ elements-cli importaddress $UBRIADDR
 
 We can now see that Alice's wallet can see both the issuance and the amount issued (55) without the need to import the blinding key:
 
 .. code-block:: bash
 
-	Alice:~$ liquid-cli listissuances
+	Alice:~$ elements-cli listissuances
 
 It may also be necessary to destroy asset amounts as well as create them in an Liquid based blockchain. This is easily done using the "destroyamount" command:
 
 .. code-block:: bash
 
-	Bob:~$ liquid-cli destroyamount $UBASSET 5
+	Bob:~$ elements-cli destroyamount $UBASSET 5
 
 Check the amount has gone from the 55 issued down to 50:
 
 .. code-block:: bash
 
-	Bob:~$ liquid-cli getwalletinfo
+	Bob:~$ elements-cli getwalletinfo
 
 It will show the amount as 50, proving that an amount of 5 were indeed destroyed:
 

@@ -2,19 +2,19 @@
 Basic Commands
 --------------
 
-The Liquid Client (liquid-cli) application allows you to issue Remote Procedure Call (RPC) commands to the Liquid Daemon (liquidd) or Liquid Core GUI (liquid-qt) from the terminal.
+The Liquid Client (elements-cli) application allows you to issue Remote Procedure Call (RPC) commands to the Liquid Daemon (elementsd) or Liquid Core GUI (elements-qt) from the terminal.
 
 A full list of all the commands you can issue over RPC can be be seen by running:
 
 .. code-block:: bash
 
-	liquid-cli help
+	elements-cli help
 
 To see further information on how to use a certain command you can append the name of the command like this:
 
 .. code-block:: bash
 
-	liquid-cli help sendtoaddress
+	elements-cli help sendtoaddress
 
 This returns examples of how to use the command, a list of arguments that can be passed to it and and the format of the results returned.
 
@@ -24,7 +24,7 @@ For example, to use the sendtoaddress command to send an amount of 1 L-BTC and s
 
 .. code-block:: bash
 
-	liquid-cli sendtoaddress AzppUfWkYpjiThupf2t6Kn1yPTgseg3buBexuMSbZxpPWAsQcucHXFpr4HHGFQAiyBiddvcjAYyoVeMD 1 "" "" true
+	elements-cli sendtoaddress AzppUfWkYpjiThupf2t6Kn1yPTgseg3buBexuMSbZxpPWAsQcucHXFpr4HHGFQAiyBiddvcjAYyoVeMD 1 "" "" true
 
 The result returned from sendtoaddress is the transaction id. For example:
 
@@ -36,7 +36,7 @@ The result was returned as a string value. Many results are returned as JSON for
 
 .. code-block:: bash
 
-	liquid-cli getwalletinfo
+	elements-cli getwalletinfo
 
 This returns JSON formatted data similar to that below:
 
@@ -64,4 +64,4 @@ This returns JSON formatted data similar to that below:
 	  "private_keys_enabled": true
 	}
 
-In the remaining code examples we will continue using the terminal and the liquid-cli application to send commands to liquidd. Other languages can be used to send RPC commands as mentioned previously.
+In the remaining code examples we will continue using the terminal and the elements-cli application to send commands to elementsd. Other languages can be used to send RPC commands as mentioned previously.

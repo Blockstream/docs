@@ -2,7 +2,7 @@
 Go
 --
 
-In this example we will be using Go to make a Remote Procedure Call (RPC) to the Liquid daemon (liquidd), which you will need to start using the config file settings :ref:`outlined above <config>`. 
+In this example we will be using Go to make a Remote Procedure Call (RPC) to the Liquid daemon, which you will need to start using the config file settings :ref:`outlined above <config>`. 
 
 Our aim is simply to make a call to Liquid using RPC by executing some basic Go code.
 

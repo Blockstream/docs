@@ -2,7 +2,7 @@
 Python Web (Flask)
 ------------------
 
-In this example we will be using Python (running within the `Flask <http://flask.pocoo.org/>`_ web framework) to make a Remote Procedure Call (RPC) to the Liquid daemon (liquidd), which you will need to start using the config file settings :ref:`outlined above <config>`. 
+In this example we will be using Python (running within the `Flask <http://flask.pocoo.org/>`_ web framework) to make a Remote Procedure Call (RPC) to the Liquid daemon, which you will need to start using the config file settings :ref:`outlined above <config>`. 
 
 Our aim is simply to make a call to Liquid using RPC by executing some basic Python code. We will be using the popular `AuthServiceProxy <https://github.com/jgarzik/python-bitcoinrpc>`_ Python JSON-RPC interface to handle the connection, authentication and data typing for us as we communicate with our node. We'll also use `virtualenv <https://virtualenv.pypa.io/>`_ to create an isolated environment to run our code in.
 

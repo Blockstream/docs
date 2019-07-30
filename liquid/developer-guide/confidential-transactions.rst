@@ -12,7 +12,7 @@ First Bob will generate a new address and store it in a variable named "ADDR" so
 
 .. code-block:: bash
 
-	Bob:~$ ADDR=$(liquid-cli getnewaddress)
+	Bob:~$ ADDR=$(elements-cli getnewaddress)
 
 To see the new address Bob created he can print out the value that was stored in the "ADDR" variable.
 
@@ -28,7 +28,7 @@ After running the echo command above you should see something similar to this:
 
 	Azpr7BwzjwdiB1pNZKcLkk6Esn5NWAE7wtrC4UzEsshpKe3eUZzPQBvfJ7q9wzJLbt9yn8hYZmZDayGG
 
-.. tip:: As of Liquid v0.17, getnewaddress defaults to creating P2SH-P2WPKH addresses. You can create "CTE" prefixed addresses (the default for versions of Liquid previous to 0.17) by calling getnewaddress like this: ``liquid-cli getnewaddress "" legacy``. You can also set the ``addresstype=legacy`` argument on node startup, or set it in your config file to always get legacy addresses from "getnewaddress". Some commands require a "legacy" style address in order to work, such as message signing.
+.. tip:: As of Liquid v0.17, getnewaddress defaults to creating P2SH-P2WPKH addresses. You can create "CTE" prefixed addresses (the default for versions of Liquid previous to 0.17) by calling getnewaddress like this: ``elements-cli getnewaddress "" legacy``. You can also set the ``addresstype=legacy`` argument on node startup, or set it in your config file to always get legacy addresses from "getnewaddress". Some commands require a "legacy" style address in order to work, such as message signing.
 
 Let's look at the address in more detail to check that it is indeed a confidential one. To do this we can use the "getaddressinfo" command, passing in the address that we stored in the ADDR variable as a parameter:
 
@@ -48,26 +48,26 @@ We'll now send an amount of 1 "bitcoin" (L-BTC) from Bob's wallet to the new add
 
 .. code-block:: bash
 
-	Bob:~$ TXID=$(liquid-cli sendtoaddress $ADDR 1)
+	Bob:~$ TXID=$(elements-cli sendtoaddress $ADDR 1)
 
 In order to have the transaction confirm we need a block to be generated. As an aside, at this stage we can query the mempool of each of our Liquid nodes to see the transaction waiting to be added to a block, as well as the current block count of each node's blockchain:
 
 .. code-block:: bash
 
-	Alice:~$ liquid-cli getrawmempool
-	Bob:~$ liquid-cli getrawmempool
-	Alice:~$ liquid-cli getblockcount
-	Bob:~$ liquid-cli getblockcount
+	Alice:~$ elements-cli getrawmempool
+	Bob:~$ elements-cli getrawmempool
+	Alice:~$ elements-cli getblockcount
+	Bob:~$ elements-cli getblockcount
 
 Both should display results including the transaction with the same ID as that stored in the "TXID" variable and the same block count value. Once a new block has been created, we can check the mempool again for each client to see that the transaction has been confirmed:
 
 .. code-block:: bash
 
-        Bob:~$ liquid-cli generatetoaddress 1 $(liquid-cli getnewaddress)
-	Alice:~$ liquid-cli getrawmempool
-	Bob:~$ liquid-cli getrawmempool
-	Alice:~$ liquid-cli getblockcount
-	Bob:~$ liquid-cli getblockcount
+        Bob:~$ elements-cli generatetoaddress 1 $(elements-cli getnewaddress)
+	Alice:~$ elements-cli getrawmempool
+	Bob:~$ elements-cli getrawmempool
+	Alice:~$ elements-cli getblockcount
+	Bob:~$ elements-cli getblockcount
 
 Note that although Bob sent an amount of 1 L-BTC to himself the net effect is that he now has slightly less than he did before, this is because some of the transaction amount was spent on fees that have yet to mature and be seen as spendable. 
 
@@ -77,7 +77,7 @@ Now let's examine the transaction as it is seen by Bob's wallet and also how it 
 
 .. code-block:: bash
 
-	Bob:~$ liquid-cli gettransaction $TXID
+	Bob:~$ elements-cli gettransaction $TXID
 
 The output from that initially looks like just a huge random assortment of letters and numbers (the hex value of the transaction), but if you scroll up you will see some more readable content above that.
 
@@ -128,13 +128,13 @@ This then allows us to run the code below.
 
 .. code-block:: bash
 
-	Alice:~$ liquid-cli gettransaction $TXID
+	Alice:~$ elements-cli gettransaction $TXID
 
 This causes an error. The reason is that Alice's wallet will not contain wallet details of the transaction as it does not relate to an address contained in her wallet. We can get the raw transaction data from Alice's node's copy of the blockchain using the getrawtransaction command like this:
 
 .. code-block:: bash
 
-	Alice:~$ liquid-cli getrawtransaction $TXID 1
+	Alice:~$ elements-cli getrawtransaction $TXID 1
 
 That returns raw transaction details. If you look within the "vout" section you can see that there are three instances. The first two instances are the receiving and change amounts and the third is the transaction fee. Of these three amounts, the fee is the only one in which you can see a value, as the fee itself is unblinded. For the first two instances you will see (amongst others) properties with values similar to this:
 
@@ -153,8 +153,8 @@ If we want to let Alice's wallet view the actual amount details we'll need to im
 
 .. code-block:: bash
 
-	Alice:~$ liquid-cli importaddress $ADDR
-	Alice:~$ liquid-cli gettransaction $TXID true
+	Alice:~$ elements-cli importaddress $ADDR
+	Alice:~$ elements-cli gettransaction $TXID true
 
 This time the call to gettransaction does not error but, because Alice still does not know the blinding key, the amount (towards the top of the output) will show as:
 
@@ -171,19 +171,19 @@ Export Bob's blinding key for the address:
 
 .. code-block:: bash
 
-	Bob:~$ BOBBLINDINGKEY=$(liquid-cli dumpblindingkey $ADDR)
+	Bob:~$ BOBBLINDINGKEY=$(elements-cli dumpblindingkey $ADDR)
 
 Echo, copy and set the variable accross terminal sessions again like we did above (steps not shown) and then import Bob's blinding key into Alice's wallet:
 
 .. code-block:: bash
 
-	Alice:~$ liquid-cli importblindingkey $ADDR $BOBBLINDINGKEY
+	Alice:~$ elements-cli importblindingkey $ADDR $BOBBLINDINGKEY
 
 Now that Alice's wallet has knowledge of the blinding key used on that address, we can run the checks we did above from Alice's wallet, this time expecting to see the actual amount value:
 
 .. code-block:: bash
 
-	Alice:~$ liquid-cli gettransaction $TXID true
+	Alice:~$ elements-cli gettransaction $TXID true
 
 Magic! Alice's wallet now shows the actual value sent in the transaction.
 

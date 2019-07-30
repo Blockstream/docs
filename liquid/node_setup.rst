@@ -6,6 +6,11 @@ Liquid Node Setup (Advanced)
 Overview
 --------
 
+Liquid is built using open-source `Elements <https://github.com/ElementsProject/elements>`_ code. This is why we'll download the application from the Elements
+repository, execute commands against elementsd (daemon) and elements-cli (client), and edit things like the elements.conf config file.
+
+As the Elements code defaults to using the live Liquid network, we'll be referring to installing and running Liquid, and not Elements, within this guide and throughout the `docs.blockstream.info <https://docs.blockstream.com>`_ site.
+
 In this section we will look at how to install and run a full Liquid client node and use the configuration file to switch the node between:
 
 * Connecting to the live Liquid network.
@@ -26,19 +31,19 @@ To set a Liquid node up we need to:
 
 Before we begin, it is worth giving a brief overview of the applications we will be downloading and using.
 
-**Liquid Daemon (liquidd)**
+**Liquid Daemon (elementsd)**
 
-A Liquid node that runs as a background service. It can also processes requests made from other applications using Remote Procedure Call (RPC). It cannot be run at the same time as liquid-qt if they share the same data directory, which they will by default.
+A Liquid node that runs as a background service. It can also processes requests made from other applications using Remote Procedure Call (RPC). It cannot be run at the same time as elements-qt if they share the same data directory, which they will by default.
 
-**Liquid QT (liquid-qt)**
+**Liquid Core/QT (elements-qt)**
 
-A desktop application (GUI/front-end) that serves as a Liquid node. It can also process requests using Remote Procedure Call (RPC). It cannot be run at the same time as liquidd if they share the same data directory, which they will by default.
+A desktop application (GUI/front-end) that serves as a Liquid node. It can also process requests using Remote Procedure Call (RPC). It cannot be run at the same time as elements if they share the same data directory, which they will by default.
 
-**Liquid Client (liquid-cli)**
+**Liquid Client (elements-cli)**
 
-A client application that allows you to make calls to liquidd or liquid-qt by issuing RPC commands. Use of liquid-cli is detailed in the :ref:`Developer Guide <developer-guide>` section.
+A client application that allows you to make calls to elementsd or elements-qt by issuing RPC commands. Use of elements-cli is detailed in the :ref:`Developer Guide <developer-guide>` section.
 
-Liquid will, by default, try and connect to a local Bitcoin node in order to validate transactions where bitcoin are moved into the Liquid network (called a peg-in). We will assume that you have already installed and set up a Bitcoin node before moving on with installing Liquid. This requirement can be switched off by setting ``validatepegin=0`` within the :ref:`Liquid configuration <node-configuration>` (liquid.conf) file, but we advise against disabling peg-in validation unless you are aware of the implications, running in a testing environment, or are not dealing with large amounts of funds.
+Liquid will, by default, try and connect to a local Bitcoin node in order to validate transactions where bitcoin are moved into the Liquid network (called a peg-in). We will assume that you have already installed and set up a Bitcoin node before moving on with installing Liquid. This requirement can be switched off by setting ``validatepegin=0`` within the :ref:`Liquid configuration <node-configuration>` (elements.conf) file, but we advise against disabling peg-in validation unless you are aware of the implications, running in a testing environment, or are not dealing with large amounts of funds.
 
 
 Installation
@@ -53,17 +58,17 @@ Some releases are 'code only' releases. If you only want to use the binaries, se
 
 **Linux**
 
-There are a number of Linux distrutions supported. For example; Ubuntu users can choose the 0.17 `x86_64 linux <https://github.com/ElementsProject/elements/releases/download/elements-0.17.0/liquid-0.17.0-x86_64-linux-gnu.tar.gz>`_ file, whereas Raspberry Pi users should choose the `arm linux <https://github.com/ElementsProject/elements/releases/download/elements-0.17.0/liquid-0.17.0-arm-linux-gnueabihf.tar.gz>`_ file.
+There are a number of Linux distrutions supported. For example; Ubuntu users can choose the ``elements-0.17.0.1-x86_64-linux-gnu.tar.gz`` file, whereas Raspberry Pi users should choose the ``elements-0.17.0.1-arm-linux-gnueabihf.tar.gz`` file.
 
 
 **Windows**
 
-You can choose the 0.17 `win64 setup unsigned <https://github.com/ElementsProject/elements/releases/download/elements-0.17.0/elements-0.17.0-win64-setup-unsigned.exe>`_ file if you are happy to run an unsigned setup on your Windows x64 machine. If you need a 32bit variant or a version without an installer, you should chose the appropriate file from the list.
+You can choose the ``elements-0.17.0.1-win64-setup-unsigned.exe`` file if you are happy to run an unsigned setup on your Windows x64 machine. If you need a 32bit variant or a version without an installer, you should chose the appropriate file from the list.
 
 
 **MacOS Installation**
 
-You can choose the 0.17 `OSX unsigned <https://github.com/ElementsProject/elements/releases/download/elements-0.17.0/liquid-0.17.0-osx-unsigned.dmg>`_ dmg image file, or download the binaries themselves.
+You can choose the ``elements-0.17.0.1-osx-unsigned.dmg`` dmg image file, or download the binaries themselves.
 
 
 After installation, you are now ready to move on to configuring your node.
@@ -103,10 +108,10 @@ Alternatively, you can also use RPC parameters (``rpcuser``, ``rpcport``, and ``
 You may also want to include the ``prune`` parameter in your Bitcoin node settings. Pruned mode reduces disk space requirements but will will not change the initial amount of time required for download and validation of the chain.
 
 
-liquid.conf
-===========
+elements.conf
+=============
 
-The liquidd, liquid-qt and liquid-cli applications will all use a configuration file named liquid.conf. The liquid.conf file tells liquidd and liquid-qt which network to connect to and can set a number of different behaviours within the applications. It also tells them what credentials must be provided in order to accept an RPC request. The liquid-cli application uses the configuration file to obtain the correct credentials in order to communicate with liquidd or liquid-qt using RPC. 
+The elementsd, elements-qt and elements-cli applications will all use a configuration file named elements.conf. The elements.conf file tells elementsd and elements-qt which network to connect to and can set a number of different behaviours within the applications. It also tells them what credentials must be provided in order to accept an RPC request. The elements-cli application uses the configuration file to obtain the correct credentials in order to communicate with elementsd or elements-qt using RPC. 
 
 When you later start either of the three applications you can provide a ``datadir`` path. The path you provide tells the applications which directory to use to:
 
@@ -118,35 +123,35 @@ When you later start either of the three applications you can provide a ``datadi
 
 If you want to use a different data directory that the defaults referenced below, for example an external hard drive, you can follow `this guide <https://bitzuma.com/posts/moving-the-bitcoin-core-data-directory/>`_.
 
-The liquid.conf configuration file is located in the following places by default. If you do not see the Liquid directory and the liquid.config file you should create them now. Otherwise, open the liquid.conf file for editing.
+The elements.conf configuration file is located in the following places by default. If you do not see the Liquid directory and the elements.config file you should create them now. Otherwise, open the elements.conf file for editing.
 
 **Linux**
 
-``~/.liquid/``
+``~/.elements/``
 
 **Windows**
 
-``%homepath%\AppData\Roaming\Liquid``
+``%homepath%\AppData\Roaming\Elements``
 
 **MacOS**
 
-As the Library file is hidden, you can access it by opening Finder, selecting 'Go' then 'Go to Folder' from the menu and then entering the path as ``~/Library``. From there you can go into the ``Application Support`` folder and create the ``Liquid`` folder. Once you have created the Liquid folder, you can run the following from the Terminal app to create the Liquid config file:
+As the Library file is hidden, you can access it by opening Finder, selecting 'Go' then 'Go to Folder' from the menu and then entering the path as ``~/Library``. From there you can go into the ``Application Support`` folder and create the ``Elements`` folder. Once you have created the Elements folder, you can run the following from the Terminal app to create the Liquid config file:
 
-``touch "Library/Application Support/Liquid/liquid.conf"``
+``touch "Library/Application Support/Elements/elements.conf"``
 
 
 .. note::
 
-	After making any changes to liquid.conf in the future, you will need to restart your Liquid node so that they take effect.
+	After making any changes to elements.conf in the future, you will need to restart your Liquid node so that they take effect.
 
 
-If your Bitcoin node is installed in the default location, Liquid should automatically find it when you later start it. If you use a non-default location for your Bitcoin node, you will also have to add the following parameter to your liquid.conf file, pointing to the cookie file created by your Bitcoin node:
+If your Bitcoin node is installed in the default location, Liquid should automatically find it when you later start it. If you use a non-default location for your Bitcoin node, you will also have to add the following parameter to your elements.conf file, pointing to the cookie file created by your Bitcoin node:
 
 .. code-block:: text
 
 	mainchainrpccookiefile=<location_of_your_bitcoin_datadir>
 
-If you want to use the RPC parameter method of allowing access to your Bitcoin node then also set the following within liquid.conf, using the same user, password, and port that you set in bitcoin.conf:
+If you want to use the RPC parameter method of allowing access to your Bitcoin node then also set the following within elements.conf, using the same user, password, and port that you set in bitcoin.conf:
 
 .. code-block:: text
 
@@ -169,7 +174,7 @@ If you want to allow your Liquid node to accept RPC requests (such as those used
 .. tip::
 	To switch between live and test/development modes you will need to change the ``chain`` value between ``liquidv1`` (live) and ``elementsregtest`` (test/development). You must restart your node for these to take effect if you change them in the future. Be sure to also change the mode your Bitcoin node runs in if you do this.
 
-If you do not wish to validate peg-ins against your Bitcoin node, you can set the ``validatepegin`` parameter to a value of ``0``. This can be done either in the liquid.conf file, or passed in as a command line parameter.
+If you do not wish to validate peg-ins against your Bitcoin node, you can set the ``validatepegin`` parameter to a value of ``0``. This can be done either in the elements.conf file, or passed in as a command line parameter.
 
 .. code-block:: text
 
@@ -194,31 +199,31 @@ You will be able to run each of the applications from the command line within th
 
 .. code-block:: bash
 
-	./liquidd
+	./elementsd
 
 or
 
 .. code-block:: bash
 
-	./liquid-qt
+	./elements-qt
 
 and 
 
 .. code-block:: bash
 
-	./liquid-cli
+	./elements-cli
 
 Depending on your system set up, you may have to change the permissions on the files before they will run.
 
 
 **Windows**
 
-You can run Liquid as a normal desktop application. It is worth noting that the actual application may appear in your installed apps list as 'Elements Core'.
+You can run Liquid as a normal desktop application. It is worth noting that the actual application will appear in your installed apps list as 'Elements Core'.
 
 
 **MacOS**
 
-If you installed Liquid from the dmg image, you can run it as a normal desktop application. It is worth noting that the actual application may appear in your installed apps list as 'Elements Core'.
+If you installed Liquid from the dmg image, you can run it as a normal desktop application. It is worth noting that the actual application will appear in your installed apps list as 'Elements Core'.
 
 
 What next?
@@ -253,7 +258,7 @@ Changes to bitcoin.conf
 1. Shutdown your Bitcoin node first before proceeding.
    |br| |br|
 
-2. In order to edit Bitcoin's configuration file (bitcoin.conf) you can use the process in the :ref:`Configuring Liquid <quickstart_configuring>` to locate and edit config files for your given operating system, **remembering to replace the references to liquid with bitcoin**. Use the following paths to locate and open the bitcoin.conf file, depending on your operating system:
+2. In order to edit Bitcoin's configuration file (bitcoin.conf) you can use the process in the :ref:`Configuring Liquid <quickstart_configuring>` to locate and edit config files for your given operating system, **remembering to replace the references to elements with bitcoin**. Use the following paths to locate and open the bitcoin.conf file, depending on your operating system:
 
    Linux: ``~/.bitcoin/``
 
@@ -266,7 +271,7 @@ Changes to bitcoin.conf
 
    ``server=1``
 
-   If you use a non-default location for your Bitcoin node, you will also have to add the following parameter to your liquid.conf file, so that Liquid knows the location of the cookie file created by your Bitcoin node:
+   If you use a non-default location for your Bitcoin node, you will also have to add the following parameter to your elements.conf file, so that Liquid knows the location of the cookie file created by your Bitcoin node:
 
    ``mainchainrpccookiefile=<location_of_your_bitcoin_datadir>``
    |br| |br|
@@ -274,13 +279,13 @@ Changes to bitcoin.conf
 4. Save and close the file and restart your Bitcoin node.
 
 
-Changes to liquid.conf
-======================
+Changes to elements.conf
+========================
 
 1. Open the Liquid config file by following the steps in the :ref:`Configuring Liquid <quickstart_configuring>` section.
    |br| |br|
 
-2. If your liquid.conf file contains an entry of ``validatepegin=0``, replace the ``0`` with a ``1``, and save and close the file. If your liquid.conf file contains no value for ``validatepegin`` at all, you can close the file, no changes are needed.
+2. If your elements.conf file contains an entry of ``validatepegin=0``, replace the ``0`` with a ``1``, and save and close the file. If your elements.conf file contains no value for ``validatepegin`` at all, you can close the file, no changes are needed.
 
 Your Liquid node is now set up to validate peg-ins!
 

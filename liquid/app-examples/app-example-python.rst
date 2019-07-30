@@ -3,7 +3,7 @@ Python
 ------
 .. _python-app:
 
-In this example we will be using Python to make a Remote Procedure Call (RPC) to the Liquid daemon (liquidd), which you will need to start using the config file settings :ref:`outlined above <config>`. 
+In this example we will be using Python to make a Remote Procedure Call (RPC) to the Liquid daemon, which you will need to start using the config file settings :ref:`outlined above <config>`. 
 
 Our aim is simply to make a call to Liquid using RPC by executing some basic Python code. We will be using the popular `AuthServiceProxy <https://github.com/jgarzik/python-bitcoinrpc>`_ Python JSON-RPC interface to handle the connection, authentication and data typing for us as we communicate with our node. We'll also use `virtualenv <https://virtualenv.pypa.io/>`_ to create an isolated environment to run our code in.
 
@@ -65,7 +65,7 @@ Create a new file named **liquidpython.py** in the "liquidpython" directory and 
 
 The code defines the details needed to connect to Liquid using RPC commands, sets up the method we want to execute and the parameter we want to pass in, executes the call and prints out the "balance" value from the results.
 
-Before we try running the code make sure the Liquid daemon or Liquid QT are running.
+Before we try running the code make sure the Liquid daemon (elementsd) or Liquid QT (elements-qt) are running.
 
 To run our Python code execute the following command:
 

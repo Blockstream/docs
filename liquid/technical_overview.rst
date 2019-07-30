@@ -12,6 +12,11 @@ Liquid provides Bitcoin exchanges and traders with a range of powerful features:
 * **Secure Tokenization:** New tokens can be issued on the Liquid sidechain (Issued Assets) to represent fiat, securities, or other digital assets.
 * **Interoperability:** One Liquid integration provides support for both L-BTC and Issued Assets. All tokens are based on the same standard, allowing users to take advantage of features such as atomic swaps and Bitcoin-style multisig.
 
+Liquid is built using open-source `Elements <https://github.com/ElementsProject/elements>`_ code. This is why you download the application from the Elements
+repository, execute commands against elementsd (daemon) and elements-cli (client), and edit things like the elements.conf config file.
+
+As the Elements code defaults to using the live Liquid network, we'll be referring to installing and running Liquid, and not Elements, throughout the `docs.blockstream.info <https://docs.blockstream.com>`_ site.
+
 .. _to-sidechain-basics:
 
 Sidechain Basics
