@@ -82,11 +82,14 @@ The Proposer then selects the asset and the amount of the asset they will send, 
 .. image:: ./artwork/swap_tool/swap02.png
    :align: center
 
-* The drop down list of assets that can be sent is populated with assets that are currently held in your local Liquid node's wallet. Either the asset id or the asset label is displayed, depending on if a label has been set. Information on using labels can be found `here <https://elementsproject.org/elements-code-tutorial/issuing-assets>`_. The ``L-BTC`` label is mapped by default to the L-BTC asset. 
+.. note:: The drop down list of assets that can be sent is populated with assets that are currently held in your local Liquid node's wallet. Either the asset id or the asset label is displayed, depending on if a label has been set. You can set the label by assigning it against the hex identifier of the asset. This can be done in the relevant elements.conf file by adding a line for each asset you want to label using the format ``assetdir=asset_hex_here:your_label_here``
 
-* The receive asset drop down also contains assets currently held in your local wallet. You can add a new asset (for example, one that you have yet to receive) by pasting in the asset id from the person who wants to send it to you. You can cross-reference the asset id against `Blockstream's Liquid Asset Registry <https://assets.blockstream.info/>`_ if the asset has been registered by the original issuer.
 
-The ``Add New Asset`` button can be used to map an asset id that you do not yet have in your wallet to a label. This makes it easier to perform swaps in the future without having to remember the id of individual assets each time. The example below shows how to map an asset with the id ``946cfcc80...`` to a local label of ``YourLocalAssetLabel``. Please be aware that the labels you create are not shared with others on the Liquid network, who will see either the asset id, or their own locally assigned asset label during the swap.
+The ``L-BTC`` label is mapped by default to the L-BTC asset. 
+
+The receive asset drop down also contains assets currently held in your local wallet. You can add a new asset (for example, one that you have yet to receive) by pasting in the asset id from the person who wants to send it to you. You can cross-reference the asset id against `Blockstream's Liquid Asset Registry <https://assets.blockstream.info/>`_ if the asset has been registered by the original issuer.
+
+The ``Add New Asset`` button can be used to map an asset id that you do not yet have in your wallet to a label. This makes it easier to perform swaps without having to remember the id of individual assets each time. The example below shows how to map an asset with the id ``946cfcc80...`` to a local label of ``YourLocalAssetLabel``. Please be aware that the labels you create are not shared with others on the Liquid network, who will see either the asset id, or their own locally assigned asset label during the swap.
 
 .. image:: ./artwork/swap_tool/swap02_01.png
    :align: center
