@@ -149,7 +149,8 @@ convenient solution.
 7.  In the console, get a peg-in address using the following command.
     ``getpeginaddress``
 
-8.  Note the **mainchain_address** value.
+8.  Save the **mainchain_address** and **claim_script** values for use
+    later.
 
 9.  Send Bitcoin to the **mainchain_address** and keep a copy of the
     transaction id returned.
@@ -180,7 +181,7 @@ convenient solution.
 
     ::
 
-       claimpegin <raw> <proof>
+       claimpegin <raw> <proof> <claim_script>
 
 14. The claim transaction should confirm in around two minutes. Once
     confirmed, you should see your L-BTC balance updated in your Liquid
