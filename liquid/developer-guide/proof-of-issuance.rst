@@ -6,7 +6,7 @@ This example shows how to use Blockstream's `Liquid Asset Registry`_. The asset 
 
 The code below creates an asset, an associated token, and outputs two files:
 
-* A 'liquid-asset-proof-' file that must be placed on the server of the registered domain.
+* A 'liquid-asset-proof-' file that must be placed on the server of the registered domain over the entire lifecycle of the asset.
 
 * A 'register_asset.sh' file that, when run, will post the asset registration data to Blockstream's Liquid Asset Registry.
 
@@ -163,8 +163,8 @@ Save the code below in a file named issue_and_prepare_register.sh
 	# Blockstream's Liquid Asset Registry (https://assets.blockstream.info/) can be used to register an asset to an issuer.
 	# We already have the required data and have formatted the contract plain text into a format that we can use for this.
 	
-	# Write the domain and asset ownership proof to a file. The file should then be placed in a directory 
-	# within the root of your domain named ".well-known"
+	# Write the domain and asset ownership proof to a file. The file should then be placed over the entire lifecycle of
+	# the asset in a directory within the root of your domain named ".well-known"
 	# The file should have no extension and just copied as it is created.
 	
 	echo "Authorize linking the domain name $DOMAIN to the Liquid asset $ASSET" > liquid-asset-proof-$ASSET
@@ -192,7 +192,7 @@ In order to register the asset just created:
 
 * Wait a couple of minutes for the issuance transaction to confirm.
 
-* Place the 'liquid-asset-proof-' file in a folder named '.well-known' in the root of your domain.
+* Place the 'liquid-asset-proof-' file in a folder named '.well-known' in the root of your domain. **This proof should be stored there over the entire lifecycle of the asset.**
 
 * Run the 'register_asset.sh' script. 
 
