@@ -31,6 +31,7 @@ wallets. You can see detailed instructions how to use each type below.
    frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope;
    picture-in-picture" allowfullscreen></iframe>
 
+
 New Wallet Set Up and Log In
 ----------------------------
 
@@ -71,3 +72,20 @@ device.
 
 After this physical confirmation, you will also be required to provide a Two-Factor
 authentication code (if any, which we strongly advise you to set up).
+
+Restore a Green Wallet Created with Hardware Wallet
+---------------------------------------------------
+
+If you ever lose or break the hardware wallet device you normally use to log into your
+Green wallet, you have two options to restore your Green wallet:
+
+1. Restore on a new hardware wallet device the 24-words backup mnemonic phrase (which you
+   have generated earlier_ at point 0. when you initialized your hardware wallet device).
+   Follow the hardware wallet manufacturer instructions to restore the backup mnemonic.
+   Then follow the same instructions provided above_, starting from point 1.
+  
+2. Restore by typing 24-words mnemonic (which you have generated earlier_ at point 0. when
+   you initialized your hardware wallet device) via the ``Restore Green Wallet`` on the
+   Onboarding screen.
+
+.. _earlier: troubleshooting-advanced-index.html#new-wallet-set-up-and-log-in
