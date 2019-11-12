@@ -22,15 +22,16 @@ Installing and running Liquid
 
 **1. Downloading Liquid**
 
-Download the application setup files from the `release page <https://github.com/ElementsProject/elements/releases>`_.
+Download the latest application setup files from the `release page <https://github.com/ElementsProject/elements/releases>`_.
+For example:
 
-Ubuntu: ``elements-0.17.0.1-x86_64-linux-gnu.tar.gz``
+Ubuntu: ``elements-<version>-x86_64-linux-gnu.tar.gz``
 
-MacOS: ``elements-0.17.0.1-osx-unsigned.dmg``
+MacOS: ``elements-<version>-osx-unsigned.dmg``
 
-Windows: ``elements-0.17.0.1-win64-setup-unsigned.exe``
+Windows: ``elements-<version>-win64-setup-unsigned.exe``
 
-Raspberry Pi: ``elements-0.17.0.1-arm-linux-gnueabihf.tar.gz``
+Raspberry Pi: ``elements-<version>-arm-linux-gnueabihf.tar.gz``
 
 **2. Installing Liquid**
 
