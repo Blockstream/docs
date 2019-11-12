@@ -22,7 +22,8 @@ Installing and running Liquid
 
 **1. Downloading Liquid**
 
-Download the application setup files from the `release page <https://github.com/ElementsProject/elements/releases>`_.
+Download the latest application setup files from the `release page <https://github.com/ElementsProject/elements/releases>`_.
+For example:
 
 Ubuntu: ``elements-<version>-x86_64-linux-gnu.tar.gz``
 

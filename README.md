@@ -41,7 +41,7 @@ After any changes are made, run the following from your `/blockstream-rtd/` dire
 $ make clean && make html
 ```
 
-To view the generated html files, navigate to `/blockstream-rtd/_build/html/` and open `index.html` in your browser.
+To view the generated html files, navigate to `_build/html/` and open `index.html` in your browser.
 
 Make a Pull Request for review when you have finished making changes.
 

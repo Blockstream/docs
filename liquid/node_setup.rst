@@ -222,7 +222,7 @@ the cookie file created by your Bitcoin node:
 
 .. code-block:: text
 
-	mainchainrpccookiefile=<location_of_your_bitcoin_datadir>
+	mainchainrpccookiefile=<location_of_your_bitcoin_cookie_file>
 
 If you want to use the RPC parameter method of allowing access to your Bitcoin node then
 also set the following within elements.conf, using the same user, password, and port that
