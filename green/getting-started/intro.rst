@@ -49,6 +49,32 @@ Blockstream Green is available for `Android
 <https://play.google.com/store/apps/details?id=com.greenaddress.greenbits_android_wallet>`_
 and `iOS <https://itunes.apple.com/app/id1402243590>`_.
 
+Several hardware wallets also support Blockstream Green.
+
+.. note::
+   Additional hardware wallet support for Blockstream Green is in progress, and the below table will be updated with new support types.
+
+   To share feedback or support requests, join a Bockstream Green community channel or `contact support <https://docs.blockstream.com/green/support.html>`_.
+
++-------------------+-------------------------------------------------------------------------------------------------------+
+| Supporting Wallet | Support Type *                                                                                        |
++===================+=================================+==================================+==================================+
+|                   | **Android (USB)**               | **Android (Bluetooth)**          | **iOS (Bluetooth)**              |
++-------------------+----------------+----------------+-----------------+----------------+-----------------+----------------+
+|                   |*Bitcon Mainnet*|*Liquid Mainnet*|*Bitcoin Mainnet*|*Liquid Mainnet*|*Bitcoin Mainnet*|*Liquid Mainnet*|
++-------------------+----------------+----------------+-----------------+----------------+-----------------+----------------+
+|*Trezor One*       | ✓              | x              | x               | x              | x               | x              |
++-------------------+----------------+----------------+-----------------+----------------+-----------------+----------------+
+|*Trezor T*         | ✓              | x              | x               | x              | x               | x              |
++-------------------+----------------+----------------+-----------------+----------------+-----------------+----------------+
+|*Ledger Nano S*    | ✓              | ✓ **           | x               | x              | x               | x              |
++-------------------+----------------+----------------+-----------------+----------------+-----------------+----------------+
+|*Ledger Nano X*    | x              | x              | x               | x              | x               | x              |
++-------------------+----------------+----------------+-----------------+----------------+-----------------+----------------+
+| * *Support only includes 2-of-2 multisig wallets. 1-of-1 wallets are not currently supported.                             |
+| * **Only available with developer mode turned on in Ledger Live.                                                          |
++---------------------------------------------------------------------------------------------------------------------------+
+
 Testnet Versions
 ----------------
 
