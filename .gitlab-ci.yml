@@ -1,9 +1,7 @@
 variables:
   CI_DISPOSABLE_ENVIRONMENT: "true"
-  CLOUD_SDK_VERSION: "248.0.0"
-  DOCKER_DRIVER: overlay2
 
-image: google/cloud-sdk:latest
+image: google/cloud-sdk:slim
 stages:
   - deploy
 
@@ -14,12 +12,37 @@ before_script:
   - gcloud auth activate-service-account --key-file=$TMPF
   - gcloud auth list
   - gcloud --version
+  - pip install sphinx sphinx_rtd_theme
+
+deploy_preview:
+  only:
+    - branches@blockstream/docs
+  except:
+    - master@blockstream/docs
+  stage: deploy
+  environment:
+    name: preview
+    url: https://docs.blockstream.com/preview/${CI_BUILD_REF}/
+  script:
+    - sphinx-build -b html -d _build/doctrees . _build/html || { echo "Something broke. Sleeping for an hour to debug"; sleep 3600; exit 1; }
+    - gsutil -m rsync -r -d _build/html gs://docs.blockstream.com/preview/${CI_BUILD_REF}
 
 deploy:
   only:
     - master@blockstream/docs
   stage: deploy
+  when: manual
   script:
-    - pip install sphinx sphinx_rtd_theme
-    - sphinx-build -b html -d _build/doctrees . _build/html
+    - sphinx-build -b html -d _build/doctrees . _build/html || { echo "Something broke. Sleeping for an hour to debug"; sleep 3600; exit 1; }
     - gsutil -m rsync -r -d _build/html gs://docs.blockstream.com
+
+cleanup_preview:
+  only:
+    - branches@blockstream/docs
+  except:
+    - master@blockstream/docs
+  stage: deploy
+  when: manual
+  script:
+    - echo "Cleanup preview"
+    - gsutil -m rm -r gs://docs.blockstream.com/preview/*
