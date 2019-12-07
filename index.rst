@@ -25,6 +25,7 @@ Blockstream Docs
    Liquid Swap Tool <./liquid/swap_tool>
    Additional Resources <./liquid/additional_resources>
    Support <./liquid/support>
+   FAQ <./liquid/faq>
 
 .. toctree::
    :maxdepth: 2
