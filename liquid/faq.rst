@@ -11,7 +11,7 @@ The Liquid Network was built to address the particular needs of traders who use 
 Liquid’s sidechain is built on the Elements codebase and uses Blockstream’s Strong Federation technology to support the 1-to-1 exchange of bitcoin between chains.
 
 
-What are the benefits of Liquid?
+What are the benefits of Liquid? 
 ================================
 
 - Faster Trading - Near instant bitcoin transfers between exchanges allow users to take advantage of arbitrage opportunities like never before.
