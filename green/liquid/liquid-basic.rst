@@ -13,8 +13,7 @@ your PIN for the Liquid Network (or for the last accessed network).
 
 .. attention::
    If you have forgotten your PIN, you will need to enter your 24-word mnemonic to access
-   your wallet. After you have done this, you will be prompted to create a new PIN to
-   easily access the wallet you just restored.
+   your wallet.
 
 You will also need to access your wallet with your mnemonic if you or someone else has
 incorrectly entered your PIN 3 times in a row. In this scenario, your app will reset your
@@ -25,9 +24,10 @@ from continually guessing your PIN until they get it right.
 Balance and Transaction List
 ----------------------------
 
-The main screen you will be using in Blockstream Green will display your wallet’s balance
-in Liquid Bitcoin (L-BTC) and its approximate value in the reference fiat currency you
-selected from settings.
+After login you'll see your wallet’s balance.
+
+Tap on the stacked cards icon on the top right corner to
+`see the accounts list <liquid-index.html#accounts-list>`_ and add new accounts.
 
 Directly below this will be the `send <liquid-index.html#sending-transactions>`_ and
 `receive <liquid-index.html#receiving-l-btc-and-issued-assets>`_ buttons.
@@ -36,8 +36,7 @@ Directly below this will be the `send <liquid-index.html#sending-transactions>`_
    :width: 250
    :align: center
 
-Beneath these, you can find a button ``X assets in this account``, tap on it to 
-`go to the asset list <liquid-index.html#asset-list>`_.
+Tap on the ``X assets in this account`` to `go to the asset list <liquid-index.html#asset-list>`_.
 
 You can also view from this screen all of your wallet’s incoming and outgoing
 transactions. Transactions are listed in reverse chronological order, starting with the
@@ -51,6 +50,48 @@ to the amount, depending on whether the issuer registered his asset on the
 You can also select any transaction to get more information about it, such as the assets
 involved in the transaction, or the Transaction Hash, which can be used as a
 proof-of-payment.
+
+Accounts List
+-------------
+
+From the accounts list you can ``Add New Account`` or switch between them when you have
+more than one.
+
+.. image:: ../green-assets/account-list.png
+   :width: 250
+   :align: center
+
+When you add an account you can select between Standard Accounts and Liquid Securities
+Accounts
+
+.. image:: ../green-assets/liquid-account-types.png
+   :width: 250
+   :align: center
+
+
+Standard Account
+^^^^^^^^^^^^^^^^^
+Standard accounts allow you to separate your funds. It's especially useful when you don't
+want funds with different provenance to be mixed or used together, e.g. you don't want
+funds from different exchanges to be summed together, or you don't want them to be spent
+together.
+
+Each account will have its own receiving addresses, and moving funds across accounts
+requires a transaction.
+
+Liquid Securities Account
+^^^^^^^^^^^^^^^^^^^^^^^^^
+Liquid securities accounts are only available on Liquid wallets. 
+
+Liquid Securities are special authorized assets that require you to get authorization from
+the issuer to transfer them.
+
+Go to Receive to get your Account ID, copy it to clipboard and provide it to the asset
+issuer to get authorization.
+
+.. image:: ../green-assets/account-id.png
+   :width: 250
+   :align: center
 
 Asset List
 ----------

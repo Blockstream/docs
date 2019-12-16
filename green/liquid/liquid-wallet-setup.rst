@@ -5,12 +5,17 @@ Your privacy is preserved, while your funds are 2FA secured
 -----------------------------------------------------------
 
 The Green server is able to authorize and sign your transactions – upon 2FA verification –
-without knowing anything about the asset or the amount you are sending, or receiving. 
+without knowing anything about the asset or the amount you are sending, or receiving on
+`standard accounts <liquid-index.html#standard-account>`_.
 
 The only information available to Green servers is the list of the confidential outputs
 you own. These outputs are served to your wallet, and only the client on your device is
 able to unblind these outputs and to compute the total balances of your assets, or to
 create transactions.
+
+`Liquid securities accounts <liquid-index.html#liquid-securities-account>`_ are an
+exception, as the issuer needs to be able to know whether the recipient of a Liquid
+security transaction is an authorized investor.
 
 Switch Network to Liquid
 ------------------------
