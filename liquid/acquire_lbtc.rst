@@ -18,7 +18,8 @@ transacting on the Liquid Network:
 |         |              |         | `Bitfinex`_,              |
 |         |              |         | `The Rock                 |
 |         |              |         | Trading`_,                |
-|         |              |         | `Sideshift AI`_           |
+|         |              |         | `Sideshift AI`_,          |
+|         |              |         | `BTSE`_.                  |
 +---------+--------------+---------+---------------------------+
 | Informal| `Blockstream | Beginner| Only suitable             |
 | swaps   | Green`_      |         | for small                 |
@@ -52,6 +53,7 @@ Some guides are shown below, explaining:
 .. _Bitfinex: https://www.bitfinex.com/
 .. _The Rock Trading: https://www.therocktrading.com/
 .. _Sideshift AI: https://sideshift.ai/
+.. _BTSE: https://www.btse.com/
 .. _Blockstream Green: https://blockstream.com/green
 .. _Liquid Community Telegram group: https://t.me/liquid_community
 
