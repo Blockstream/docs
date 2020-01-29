@@ -48,7 +48,7 @@ transacting on the Liquid Network:
 Some guides are shown below, explaining:
 
 -  :ref:`How to exchange BTC for L-BTC on Bitfinex <bitfinex_lbtc>`
--  :ref:`How to peg-in Liquid Bitcoin (L-BTC) with Liquid Core <pegin_lbtc>`
+-  :ref:`How to peg-in Liquid Bitcoin (L-BTC) with Elements Core <pegin_lbtc>`
 
 .. _Bitfinex: https://www.bitfinex.com/
 .. _The Rock Trading: https://www.therocktrading.com/
@@ -82,6 +82,7 @@ page.
 6.  Still on the **Wallets** page, enter the following details into the
     **Currency Conversions** section:
     ``Amount: <amount of bitcoin you would like to convert>  From: BTC  To: LBTC  From Wallet: Exchange  To Wallet: Exchange``
+
     |image0|
 
     Double-check the details are correct, then click **Convert**.
@@ -120,12 +121,12 @@ BTC to a Bitcoin wallet.
 .. _Wallets: https://www.bitfinex.com/wallets
 .. _Withdraw: https://www.bitfinex.com/withdraw
 
-.. |image0| image:: https://i.imgur.com/gCOGdSe.png
-.. |image1| image:: https://i.imgur.com/0eDygN6.png
+.. |image0| image:: ../liquid/artwork/technical_overview/lbtc1.png
+.. |image1| image:: ../liquid/artwork/technical_overview/lbtc2.png
 
 .. _pegin_lbtc:
 
-How to Peg-In Liquid Bitcoin (L-BTC) with Liquid Core
+How to Peg-In Liquid Bitcoin (L-BTC) with Elements Core
 -----------------------------------------------------
 
 This guide requires a moderate level of technical proficiency. Some
@@ -133,6 +134,8 @@ users may prefer to go use one of the exchange methods for a more
 convenient solution.
 
 .. Warning:: L-BTC peg-outs must be performed via a Liquid Member, e.g. Bitfinex. Don’t peg-in L-BTC unless you are sure you have a method of converting them back to BTC.
+
+|image2|
 
 1.  `Download and install Bitcoin Core`_ (use `Node Launcher`_ for fast
     setup).
@@ -145,7 +148,7 @@ convenient solution.
 
 5.  Run and sync your Liquid node.
 
-6.  In the Liquid Core client, open the console window by clicking
+6.  In the Elements Core client, open the console window by clicking
     Help/Debug Window -> Console tab.
 
 7.  In the console, get a peg-in address using the following command.
@@ -176,7 +179,7 @@ convenient solution.
 
        gettxoutproof '["'<yourTXID>'"]'
 
-13. Go back to the Liquid Core client and open the console window as before. Enter the
+13. Go back to the Elements Core client and open the console window as before. Enter the
     following command, using the result from
     ``getrawtransaction <yourTXID>`` as ``<raw>`` and the result from
     ``gettxoutproof '["'<yourTXID>'"]'`` as ``<proof>``.
@@ -191,6 +194,7 @@ convenient solution.
 
 Congratulations! You’re now the proud owner of some Liquid Bitcoin. These can be transferred to other Liquid users, exchanges and other businesses that support Liquid, or used to cover the transaction fee when creating and transferring Issued Assets.
 
+.. |image2| image:: ../liquid/artwork/technical_overview/peg_in.png
 .. _Download and install Bitcoin Core: https://bitcoincore.org/en/download/
 .. _Node Launcher: https://github.com/lightning-power-users/node-launcher/releases
 .. _Blockstream Explorer: https://blockstream.info

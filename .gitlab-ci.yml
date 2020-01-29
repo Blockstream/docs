@@ -12,7 +12,7 @@ before_script:
   - gcloud auth activate-service-account --key-file=$TMPF
   - gcloud auth list
   - gcloud --version
-  - pip install sphinx sphinx_rtd_theme
+  - pip3 install sphinx sphinx_rtd_theme
 
 deploy_preview:
   only:

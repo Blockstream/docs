@@ -4,13 +4,13 @@ Blockstream Docs
 
 .. toctree::
    :maxdepth: 2
-   :caption: Green Wallet
+   :caption: Blockstream Green
 
    Getting Started <./green/getting-started/getting-started-index> 
    Liquid Wallet <./green/liquid/liquid-index>
    Troubleshooting and Advanced Features <./green/troubleshooting-advanced/troubleshooting-advanced-index>
    Support <./green/support>
-   
+
 .. toctree::
    :maxdepth: 2
    :caption: Liquid Network
