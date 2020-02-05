@@ -8,6 +8,7 @@ Blockstream Docs
 
    Getting Started <./green/getting-started/getting-started-index>
    Liquid Wallet <./green/liquid/liquid-index>
+   Hardware Wallets <./green/hww>
    Troubleshooting and Advanced Features <./green/troubleshooting-advanced/troubleshooting-advanced-index>
    Support <./green/support>
 
