@@ -2,7 +2,7 @@ Liquid Network FAQs
 *******************
 
 What is Liquid?
-==============
+===============
 
 Liquid is an implementation of a federated sidechain - a blockchain with different features, capabilities, and benefits than the Bitcoin blockchain.
 

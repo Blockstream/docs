@@ -127,7 +127,7 @@ BTC to a Bitcoin wallet.
 .. _pegin_lbtc:
 
 How to Peg-In Liquid Bitcoin (L-BTC) with Elements Core
------------------------------------------------------
+-------------------------------------------------------
 
 This guide requires a moderate level of technical proficiency. Some
 users may prefer to go use one of the exchange methods for a more

@@ -71,8 +71,8 @@ Several hardware wallets also support Blockstream Green.
 +-------------------+----------------+----------------+-----------------+----------------+-----------------+----------------+
 |*Ledger Nano X*    | x              | x              | x               | x              | x               | x              |
 +-------------------+----------------+----------------+-----------------+----------------+-----------------+----------------+
-| * *Support only includes 2-of-2 multisig wallets. 1-of-1 wallets are not currently supported.                             |
-| * **Only available with developer mode turned on in Ledger Live.                                                          |
+| \*Support only includes 2-of-2 multisig wallets. 1-of-1 wallets are not currently supported.                              |
+| \*\*Only available with developer mode turned on in Ledger Live.                                                          |
 +---------------------------------------------------------------------------------------------------------------------------+
 
 Testnet Versions
