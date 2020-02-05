@@ -12,10 +12,6 @@ Troubleshooting and Advanced Features
 
 ----------
 
-.. include:: ./hardware-wallets.rst
-
-----------
-
 .. include:: ./multiple-wallets.rst
 
 ----------
